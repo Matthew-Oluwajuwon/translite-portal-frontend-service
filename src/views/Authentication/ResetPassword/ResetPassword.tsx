@@ -1,74 +1,9 @@
 /* eslint-disable prettier/prettier */
-import { Button, Form, Popover } from "antd"
+import { Button, Form } from "antd"
 import CardHeader from "../components/CardHeader"
 import LabeledInput from "../components/LabelInput"
-import Warning from "../../assets/icons/warning.svg"
-import GrayChecker from "../../assets/icons/gray-check.svg"
-import WarningLight from "../../assets/icons/warningLight.svg"
-import RedCheck from "../../assets/icons/red-check.svg"
-import GreenCheck from "../../assets/icons/green-check.svg"
-import { useAppSelector } from "../../../store/hooks"
 
 const ResetPassword: React.FC = () => {
-  //   const contentData = [
-  //     {
-  //       text: "Minimum number of characters: 8",
-  //       img:
-  //         state.request?.password === ""
-  //           ? GrayChecker
-  //           : state.request?.password === undefined
-  //           ? GrayChecker
-  //           : state.isPasswordLength
-  //           ? GreenCheck
-  //           : RedCheck,
-  //     },
-  //     {
-  //       text: "Contains a capital letter",
-  //       img:
-  //         state.request?.password === ""
-  //           ? GrayChecker
-  //           : state.request?.password === undefined
-  //           ? GrayChecker
-  //           : state.isUpperCase
-  //           ? GreenCheck
-  //           : RedCheck,
-  //     },
-  //     {
-  //       text: "Contains a lowercase letter",
-  //       img:
-  //         state.request?.password === ""
-  //           ? GrayChecker
-  //           : state.request?.password === undefined
-  //           ? GrayChecker
-  //           : state.isLowerCase
-  //           ? GreenCheck
-  //           : RedCheck,
-  //     },
-  //     {
-  //       text: "Contains a number",
-  //       img:
-  //         state.request?.password === ""
-  //           ? GrayChecker
-  //           : state.request?.password === undefined
-  //           ? GrayChecker
-  //           : state.hasNumber
-  //           ? GreenCheck
-  //           : RedCheck,
-  //     },
-  //     {
-  //       text: "Includes a special character",
-  //       img:
-  //         state.request?.password === ""
-  //           ? GrayChecker
-  //           : state.request?.password === undefined
-  //           ? GrayChecker
-  //           : state.isSpecialChar
-  //           ? GreenCheck
-  //           : RedCheck,
-  //     },
-  //   ]
-    const state = useAppSelector((state) => state.auth)
-
   return (
     <div className="sm:ml-20 lg:ml-7">
       <CardHeader
@@ -81,17 +16,18 @@ const ResetPassword: React.FC = () => {
         }
       />
       <Form className="grid gap-7 mt-20">
-        <Popover>
+        <div>
+          
           <LabeledInput
             label={"Password"}
             type={"password"}
             htmlFor={"password"}
             value={undefined}
           />
-        </Popover>
-        <p className="text-[#94A0B4] mt-0 font-normal text-[0.8rem]">
+        <p className="text-[#94A0B4] mt-1 font-normal text-[0.8rem]">
           You need a stronger password 💪🏽
         </p>
+        </div>
         <LabeledInput
           label={"Confirm Password"}
           type={"password"}

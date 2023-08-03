@@ -64,19 +64,19 @@ const LabeledInput: React.FC<LabelInputProps> = ({
   return (
     <div
       onClick={handleFocus}
-      className={`outline-[#DEDFEC] outline outline-1 rounded-lg px-5 ${
-        isFocused ? "p-3" : "p-4"
+      className={`outline-[#DEDFEC] h-14 relative p-2 outline outline-1 rounded-lg px-5 ${
+        isFocused ? "" : ""
       }`}
     >
       <label
         htmlFor={htmlFor}
-        className={`text-[#717E95] relative ${
-          isFocused ? "text-[0.7rem] font-medium" : "text-base top-3"
+        className={`text-[#717E95] absolute ${
+          isFocused ? "text-[0.7rem] font-medium top-2" : "text-base top-4"
         }`}
       >
         {label}
       </label>
-      <div className="flex items-center justify-between relative">
+      <div className="flex items-center w-full absolute bottom-1">
         <input
           type={inputType}
           ref={inputRef}
@@ -91,7 +91,7 @@ const LabeledInput: React.FC<LabelInputProps> = ({
             src={isRevealPassword ? Eye : EyeClosed}
             onClick={() => togglePassword(isRevealPassword)}
             alt=""
-            className={`absolute right-2 cursor-pointer hover:scale-125 hover:transition-all`}
+            className={`absolute right-10 bottom-4 cursor-pointer hover:scale-125 hover:transition-all`}
           />
         )}
       </div>
