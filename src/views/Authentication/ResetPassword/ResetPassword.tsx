@@ -1,9 +1,27 @@
 /* eslint-disable prettier/prettier */
-import { Button, Form } from "antd"
+import { Button, Form, Popover } from "antd"
 import CardHeader from "../components/CardHeader"
 import LabeledInput from "../components/LabelInput"
+import { useAuthQuery } from "../../../custom-hooks/useAuthQuery"
+import { useAppSelector } from "../../../store/hooks"
 
 const ResetPassword: React.FC = () => {
+  const state = useAppSelector((state) => {
+    return state.auth
+  })
+  const { contentData, passwordValidator, setResetInputField } = useAuthQuery()
+
+  const content = (
+    <div className="grid gap-3">
+      {contentData.map((item, index) => (
+        <span key={index} className="flex gap-3 items-center">
+          <img src={item.img} className="w-[1.50rem]" alt="checker-img" />
+          <p>{item.text}</p>
+        </span>
+      ))}
+    </div>
+  )
+
   return (
     <div className="sm:ml-20 lg:ml-7">
       <CardHeader
@@ -15,25 +33,75 @@ const ResetPassword: React.FC = () => {
           </span>
         }
       />
-      <Form className="grid gap-7 mt-20">
+      <Form
+        fields={[
+          {
+            name: "newPassword",
+            value: state.request?.newPassword,
+          },
+          {
+            name: "password",
+            value: state.request?.password,
+          },
+        ]}
+        className="grid gap-7 mt-20"
+      >
         <div>
-          
-          <LabeledInput
-            label={"Password"}
-            type={"password"}
-            htmlFor={"password"}
-            value={undefined}
-          />
-        <p className="text-[#94A0B4] mt-1 font-normal text-[0.8rem]">
-          You need a stronger password 💪🏽
-        </p>
+          <Popover content={content} trigger="focus" placement="top">
+            <div>
+              <Form.Item
+                name={"newPassword"}
+                required
+                rules={[
+                  { required: true, message: "Please enter password" },
+                  { validator: passwordValidator },
+                ]}
+              >
+                <LabeledInput
+                  label={"Password"}
+                  type={"password"}
+                  htmlFor={"password"}
+                  onChange={(e) =>
+                    setResetInputField(e.target.value, "newPassword")
+                  }
+                  value={state.request?.newPassword}
+                />
+              </Form.Item>
+            </div>
+          </Popover>
+          {(state.request?.newPassword?.length as any) < 8 && (
+            <p className="text-[#94A0B4] text-[0.7rem]">
+              You need a stronger password 💪🏽
+            </p>
+          )}
         </div>
-        <LabeledInput
-          label={"Confirm Password"}
-          type={"password"}
-          htmlFor={"confirmPassword"}
-          value={undefined}
-        />
+        <Form.Item
+          name={"password"}
+          required
+          rules={[
+            { required: true, message: "Please enter password" },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue("newPassword") === value) {
+                  return Promise.resolve()
+                }
+                return Promise.reject(
+                  new Error("The two passwords that you entered do not match!"),
+                )
+              },
+            }),
+          ]}
+          validateTrigger={["onChange", "onBlur"]}
+          dependencies={["newPassword"]}
+        >
+          <LabeledInput
+            label={"Confirm Password"}
+            type={"password"}
+            htmlFor={"confirmPassword"}
+            value={state.request?.password}
+            onChange={(e) => setResetInputField(e.target.value, "password")}
+          />
+        </Form.Item>
         <div className="flex items-center justify-center mt-14">
           <Button
             type="primary"

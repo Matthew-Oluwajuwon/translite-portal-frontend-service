@@ -1,14 +1,18 @@
 /* eslint-disable prettier/prettier */
 
-import { useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import Eye from "../../../assets/icons/Eye.svg"
 import EyeClosed from "../../../assets/icons/Hide.svg"
+import { useAppDispatch, useAppSelector } from "../../../store/hooks"
+import useLabeledInput from "../../../custom-hooks/useLabeledInput"
+import { setStateKey } from "../../../store"
 
 interface LabelInputProps {
   label: string
   type: string
   htmlFor: string
-  value: any
+  value?: any
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const LabeledInput: React.FC<LabelInputProps> = ({
@@ -16,80 +20,58 @@ const LabeledInput: React.FC<LabelInputProps> = ({
   label,
   type,
   value,
+  onChange,
 }) => {
-  const [isFocused, setIsFocused] = useState<boolean>(false)
-  const [hasValue, setHasValue] = useState<boolean>(false)
-  const [inputType, setInputType] = useState<string>(type)
-  const [isRevealPassword, setIsRevealPassword] = useState<boolean>(false)
+  const dispatch = useAppDispatch()
+  const state = useAppSelector((state) => {
+    return state.auth
+  })
 
   const inputRef = useRef(null) as any
 
-  const handleFocus = () => {
-    inputRef.current.focus()
-    setIsFocused(true)
-  }
+  const { handleBlur, handleFocus, togglePassword } = useLabeledInput(
+    state,
+    dispatch,
+    inputRef,
+    type,
+    label,
+  )
 
-  const handleBlur = () => {
-    setIsFocused(hasValue ? true : false)
-  }
-
-  const handleChange = (e: string) => {
-    if (e.length === 0) {
-      setHasValue(false)
-    } else {
-      setHasValue(true)
-    }
-  }
-
-  const togglePassword = (isReveal: boolean) => {
-    if (isReveal) {
-      setInputType(
-        type?.toLowerCase() === "password" &&
-          label?.toLowerCase().includes("password")
-          ? "password"
-          : "text",
-      )
-      setIsRevealPassword(false)
-    } else {
-      setInputType(
-        type?.toLowerCase() === "password" &&
-          label?.toLowerCase().includes("password")
-          ? "text"
-          : "password",
-      )
-      setIsRevealPassword(true)
-    }
-  }
+  useEffect(() => {
+    dispatch(setStateKey({ key: "inputType", value: type }))
+  }, [dispatch, type])
 
   return (
     <div
       onClick={handleFocus}
       className={`outline-[#DEDFEC] h-14 relative p-2 outline outline-1 rounded-lg px-5 ${
-        isFocused ? "" : ""
+        state.isFocused ? "" : ""
       }`}
     >
       <label
         htmlFor={htmlFor}
         className={`text-[#717E95] absolute ${
-          isFocused ? "text-[0.7rem] font-medium top-2" : "text-base top-4"
+          state.isFocused
+            ? "text-[0.7rem] font-medium top-2"
+            : "text-base top-4"
         }`}
       >
         {label}
       </label>
       <div className="flex items-center w-full absolute bottom-1">
         <input
-          type={inputType}
+          type={state.inputType}
           ref={inputRef}
-          onChange={(e) => handleChange(e.target.value)}
-          value={value}
+          onChange={onChange}
+          value={value && value}
           onFocus={handleFocus}
           onBlur={handleBlur}
           className="outline-none border-none bg-transparent text-base text-[#272848] font-medium"
         />
-        {type?.toLowerCase() === "password" && isFocused && (
+        {type?.toLowerCase() === "password" && state.isFocused && (
           <img
-            src={isRevealPassword ? Eye : EyeClosed}
-            onClick={() => togglePassword(isRevealPassword)}
+            src={state.isRevealPassword ? Eye : EyeClosed}
+            onClick={() => togglePassword(state.isRevealPassword as boolean)}
             alt=""
             className={`absolute right-10 bottom-4 cursor-pointer hover:scale-125 hover:transition-all`}
           />
