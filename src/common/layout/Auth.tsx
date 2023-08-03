@@ -21,7 +21,7 @@ const Auth: React.FC = () => {
         className="lg:absolute lg:top-10 lg:left-10 mb-5 lg:mb-0"
       />
       <Card
-        className={`bg-white h-[80%] w-[93%] max-w-[45rem] rounded-2xl shadow-xl relative lg:px-14 py-10 pb-14 md:pb-36`}
+        className={`bg-white min-h-[85svh] w-[93%] max-w-[45rem] rounded-2xl shadow-xl relative lg:px-14 py-10`}
       >
         {pathname !== ROUTE.INDEX && (
           <img
