@@ -7,6 +7,7 @@ import Login from "./views/Authentication/Login/Login"
 import SendMailForPasswordChange from "./views/Authentication/SendMailForPasswordChange/SendMailForPasswordChange"
 import { ROUTE } from "./routes"
 import ResetPassword from "./views/Authentication/ResetPassword/ResetPassword"
+import { Dashboard } from "./views/dashboard/dashboard"
 
 const App = () => {
   const router = createBrowserRouter([
@@ -26,6 +27,10 @@ const App = () => {
           element: <ResetPassword />,
         },
       ],
+    },
+    {
+      element: <Dashboard />,
+      path: ROUTE.DASHBOARD,
     },
   ])
 
