@@ -8,6 +8,7 @@ import SendMailForPasswordChange from "./views/Authentication/SendMailForPasswor
 import { ROUTE } from "./routes"
 import ResetPassword from "./views/Authentication/ResetPassword/ResetPassword"
 import { Dashboard } from "./views/dashboard/dashboard"
+import { PageNotFound } from "./page-not-found"
 
 const App = () => {
   const router = createBrowserRouter([
@@ -31,6 +32,10 @@ const App = () => {
     {
       element: <Dashboard />,
       path: ROUTE.DASHBOARD,
+    },
+    {
+      element: <PageNotFound />,
+      path: ROUTE.PAGE_NOT_FOUND,
     },
   ])
 
