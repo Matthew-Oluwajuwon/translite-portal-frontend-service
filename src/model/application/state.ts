@@ -18,5 +18,6 @@ export namespace State {
     showVerficationCodeModal: boolean
     showChangePasswordResponseModal: boolean
     showResetPasswordResponseModal: boolean
+    showForgotPasswordResponseModal: boolean
   }
 }

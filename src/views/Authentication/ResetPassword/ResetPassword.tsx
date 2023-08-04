@@ -4,9 +4,10 @@ import CardHeader from "../components/CardHeader"
 import LabeledInput from "../components/LabelInput"
 import { useAuthQuery } from "../../../custom-hooks/useAuthQuery"
 import { useAppSelector, useAppDispatch } from "../../../store/hooks"
-import { ResetPasswordResponseModal } from "./ResetPasswordModal"
 import { setStateKey } from "../../../store"
-import { VerificationCode } from "../components/verification-code" 
+import { VerificationCode } from "../components/verification-code"
+import { ForgotPasswordResponseModal } from "../SendMailForPasswordChange/ForgotPasswordResponeModal"
+import { ResetPasswordResponseModal } from "./ResetPasswordModal"
 
 const ResetPassword: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -29,6 +30,7 @@ const ResetPassword: React.FC = () => {
   return (
     <div className="sm:ml-20 lg:ml-7">
       <VerificationCode />
+      <ForgotPasswordResponseModal />
       <ResetPasswordResponseModal />
       <CardHeader
         cardDescription="Please reset your admin password to continue, this will only happen the first time you login!"
@@ -50,11 +52,6 @@ const ResetPassword: React.FC = () => {
             value: state.request?.password,
           },
         ]}
-        onFinish={() =>
-          dispatch(
-            setStateKey({ key: "showVerficationCodeModal", value: true }),
-          )
-        }
         className="grid gap-7 mt-20"
       >
         <div>
@@ -117,6 +114,11 @@ const ResetPassword: React.FC = () => {
           <Button
             type="primary"
             className="flex items-center justify-center p-5 px-7 bg-[#6D71F9] font-semibold"
+            onClick={() =>
+              dispatch(
+                setStateKey({ key: "showVerficationCodeModal", value: true }),
+              )
+            }
           >
             Reset my Password
           </Button>

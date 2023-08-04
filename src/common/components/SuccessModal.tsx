@@ -22,7 +22,7 @@ export const SuccessModal: React.FC<PageProps.SuccessModal> = ({
       <Button
         type="primary"
         htmlType="submit"
-        className="text-[#ffffff]font-[PoppinsRegular] px-[2rem] py-[1.5rem] lg:py-5 flex items-center justify-center hover:scale-90 mx-auto"
+        className="text-[#ffffff]font-[PoppinsRegular] px-[2rem] py-[1.5rem] bg-[#6D71F9] lg:py-5 flex items-center justify-center hover:scale-90 mx-auto"
         onClick={onClick}
       >
         Continue

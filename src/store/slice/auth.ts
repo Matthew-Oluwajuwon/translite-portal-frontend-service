@@ -18,6 +18,7 @@ const initialState: State.Authentication = {
   showVerficationCodeModal: false,
   showChangePasswordResponseModal: false,
   showResetPasswordResponseModal: false,
+  showForgotPasswordResponseModal: false,
   inputType: "",
   showLogoutModal: false,
 }

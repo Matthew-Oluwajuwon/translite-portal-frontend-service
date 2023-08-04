@@ -71,7 +71,7 @@ export const VerificationCode: React.FC = () => {
           onClick={handleClick}
           type="primary"
           htmlType="button"
-          className="text-[#ffffff]font-[PoppinsRegular] px-[2rem] py-[1.5rem] lg:py-5 flex items-center justify-center hover:scale-90 mx-auto"
+          className="text-[#ffffff] bg-[#6D71F9] font-[PoppinsRegular] px-[2rem] py-[1.5rem] lg:py-5 flex items-center justify-center hover:scale-90 mx-auto"
         >
           Continue
         </Button>

@@ -3,9 +3,18 @@
 import { Button, Form } from "antd"
 import CardHeader from "../components/CardHeader"
 import LabeledInput from "../components/LabelInput"
+import { ForgotPasswordResponseModal } from "./ForgotPasswordResponeModal"
+import { setStateKey } from "../../../store"
+import { useAppSelector, useAppDispatch } from "../../../store/hooks"
+
 const SendMailForPasswordChange: React.FC = () => {
+  const dispatch = useAppDispatch()
+  const state = useAppSelector((state) => {
+    return state.auth
+  })
   return (
     <div className="sm:ml-20 lg:ml-7">
+      <ForgotPasswordResponseModal />
       <CardHeader
         cardTitle={
           <span>
@@ -24,11 +33,21 @@ const SendMailForPasswordChange: React.FC = () => {
           htmlFor={"email or username"}
           value={undefined}
         />
-        <p className="text-[#94A0B4] mt-2 font-normal text-[0.8rem]">Please enter email linked to your Translite account ⚠️</p>
+        <p className="text-[#94A0B4] mt-2 font-normal text-[0.8rem]">
+          Please enter email linked to your Translite account ⚠️
+        </p>
         <div className="flex items-center justify-center mt-14">
           <Button
             type="primary"
             className="flex items-center justify-center p-5 px-7 bg-[#6D71F9] font-semibold"
+            onClick={() =>
+              dispatch(
+                setStateKey({
+                  key: "showForgotPasswordResponseModal",
+                  value: !state.showForgotPasswordResponseModal,
+                }),
+              )
+            }
           >
             Continue
           </Button>
