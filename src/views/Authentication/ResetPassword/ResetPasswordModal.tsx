@@ -1,0 +1,32 @@
+/* eslint-disable prettier/prettier */
+import { useCallback } from "react"
+import { useAppDispatch, useAppSelector } from "../../../store/hooks"
+import { SuccessModal } from "../../../common/components/SuccessModal"
+import { setStateKey } from "../../../store"
+
+export const ResetPasswordResponseModal: React.FC = () => {
+  const dispatch = useAppDispatch()
+  const state = useAppSelector((state) => state.auth)
+
+  const handleClick = useCallback(() => {
+    dispatch(
+      setStateKey({ key: "showResetPasswordResponseModal", value: true }),
+    )
+  }, [dispatch])
+
+  return (
+    <SuccessModal
+      onClick={handleClick}
+      openModal={state.showChangePasswordResponseModal}
+    >
+      <div className="my-10 mx-10">
+        <h1 className="text-[#272848] font-[PoppinsBold] text-xl font-bold text-center">
+          Successful
+        </h1>
+        <p className="text-[#717E95] my-3 mx-auto text-center text-md w-full lg:w-[75%]">
+          Your Password has changed, please continue to login
+        </p>
+      </div>
+    </SuccessModal>
+  )
+}

@@ -3,9 +3,12 @@ import { Button, Form, Popover } from "antd"
 import CardHeader from "../components/CardHeader"
 import LabeledInput from "../components/LabelInput"
 import { useAuthQuery } from "../../../custom-hooks/useAuthQuery"
-import { useAppSelector } from "../../../store/hooks"
+import { useAppSelector, useAppDispatch } from "../../../store/hooks"
+import { ResetPasswordResponseModal } from "./ResetPasswordModal"
+import { setStateKey } from "../../../store"
 
 const ResetPassword: React.FC = () => {
+  const dispatch = useAppDispatch()
   const state = useAppSelector((state) => {
     return state.auth
   })
@@ -24,6 +27,7 @@ const ResetPassword: React.FC = () => {
 
   return (
     <div className="sm:ml-20 lg:ml-7">
+      <ResetPasswordResponseModal />
       <CardHeader
         cardDescription="Please reset your admin password to continue, this will only happen the first time you login!"
         cardTitle={
@@ -44,6 +48,14 @@ const ResetPassword: React.FC = () => {
             value: state.request?.password,
           },
         ]}
+        onFinish={() => {
+          dispatch(
+            setStateKey({
+              key: "showResetPasswordResponseModal",
+              value: true,
+            }),
+          )
+        }}
         className="grid gap-7 mt-20"
       >
         <div>

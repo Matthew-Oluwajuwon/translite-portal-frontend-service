@@ -5,20 +5,21 @@ import { Auth } from "../../model/application/payload"
 import { ApiRequest } from "../../model/client/request"
 
 const initialState: State.Authentication = {
-    hasValue: false,
-    isFocused: false,
-    isRevealPassword: false,
-    request: new ApiRequest.Auth(),
-    showPassword: false,
-    isPasswordLength: false,
-    isUpperCase: false,
-    isLowerCase: false,
-    hasNumber: false,
-    isSpecialChar: false,
-    showVerficationCodeModal: false,
-    showChangePasswordResponseModal: false,
-    inputType: "",
-    showLogoutModal: false
+  hasValue: false,
+  isFocused: false,
+  isRevealPassword: false,
+  request: new ApiRequest.Auth(),
+  showPassword: false,
+  isPasswordLength: false,
+  isUpperCase: false,
+  isLowerCase: false,
+  hasNumber: false,
+  isSpecialChar: false,
+  showVerficationCodeModal: false,
+  showChangePasswordResponseModal: false,
+  showResetPasswordResponseModal: false,
+  inputType: "",
+  showLogoutModal: false,
 }
 
 const AuthSlice = createSlice({

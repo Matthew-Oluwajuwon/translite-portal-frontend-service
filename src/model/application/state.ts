@@ -17,5 +17,6 @@ export namespace State {
     isSpecialChar: boolean
     showVerficationCodeModal: boolean
     showChangePasswordResponseModal: boolean
+    showResetPasswordResponseModal: boolean
   }
 }
