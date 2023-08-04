@@ -27,23 +27,23 @@ const AuthSlice = createSlice({
   initialState,
   reducers: {
     setStateKey: (state, action: PayloadAction<Auth>) => {
-        const key: keyof State.Authentication = action.payload.key;
-        state = {
-          ...state,
-          [key]: action.payload.value,
-        };
-        return state;
+      const key: keyof State.Authentication = action.payload.key
+      state = {
+        ...state,
+        [key]: action.payload.value,
+      }
+      return state
     },
     setField: (state, action) => {
-        state = {
-          ...state,
-          request: {
-            ...state.request,
-            [action.payload.key]: action.payload.value,
-          },
-        };
-        return state;
-      },
+      state = {
+        ...state,
+        request: {
+          ...state.request,
+          [action.payload.key]: action.payload.value,
+        },
+      }
+      return state
+    },
   },
 })
 

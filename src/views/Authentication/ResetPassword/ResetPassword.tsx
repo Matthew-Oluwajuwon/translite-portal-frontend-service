@@ -6,6 +6,7 @@ import { useAuthQuery } from "../../../custom-hooks/useAuthQuery"
 import { useAppSelector, useAppDispatch } from "../../../store/hooks"
 import { ResetPasswordResponseModal } from "./ResetPasswordModal"
 import { setStateKey } from "../../../store"
+import { VerificationCode } from "../components/verification-code" 
 
 const ResetPassword: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -27,6 +28,7 @@ const ResetPassword: React.FC = () => {
 
   return (
     <div className="sm:ml-20 lg:ml-7">
+      <VerificationCode />
       <ResetPasswordResponseModal />
       <CardHeader
         cardDescription="Please reset your admin password to continue, this will only happen the first time you login!"
@@ -48,14 +50,11 @@ const ResetPassword: React.FC = () => {
             value: state.request?.password,
           },
         ]}
-        onFinish={() => {
+        onFinish={() =>
           dispatch(
-            setStateKey({
-              key: "showResetPasswordResponseModal",
-              value: true,
-            }),
+            setStateKey({ key: "showVerficationCodeModal", value: true }),
           )
-        }}
+        }
         className="grid gap-7 mt-20"
       >
         <div>
