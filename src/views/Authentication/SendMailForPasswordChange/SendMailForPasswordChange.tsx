@@ -4,7 +4,7 @@ import { Button, Form } from "antd"
 import CardHeader from "../components/CardHeader"
 import LabeledInput from "../components/LabelInput"
 import { ForgotPasswordResponseModal } from "./ForgotPasswordResponeModal"
-import { setStateKey } from "../../../store"
+import { setAuthKey } from "../../../store"
 import { useAppSelector, useAppDispatch } from "../../../store/hooks"
 
 const SendMailForPasswordChange: React.FC = () => {
@@ -42,7 +42,7 @@ const SendMailForPasswordChange: React.FC = () => {
             className="flex items-center justify-center p-5 px-7 bg-[#6D71F9] font-semibold"
             onClick={() =>
               dispatch(
-                setStateKey({
+                setAuthKey({
                   key: "showForgotPasswordResponseModal",
                   value: !state.showForgotPasswordResponseModal,
                 }),

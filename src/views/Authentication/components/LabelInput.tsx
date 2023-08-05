@@ -5,7 +5,7 @@ import Eye from "../../../assets/icons/Eye.svg"
 import EyeClosed from "../../../assets/icons/Hide.svg"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import useLabeledInput from "../../../custom-hooks/useLabeledInput"
-import { setStateKey } from "../../../store"
+import { setAuthKey } from "../../../store"
 
 interface LabelInputProps {
   label: string
@@ -38,7 +38,7 @@ const LabeledInput: React.FC<LabelInputProps> = ({
   )
 
   useEffect(() => {
-    dispatch(setStateKey({ key: "inputType", value: type }))
+    dispatch(setAuthKey({ key: "inputType", value: type }))
   }, [dispatch, type])
 
   return (

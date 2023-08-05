@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { useAppSelector, useAppDispatch } from "../../../store/hooks"
-import { setStateKey } from "../../../store"
+import { setAuthKey } from "../../../store"
 import { SuccessModal } from "../../../common/components/SuccessModal"
 import { useCallback } from "react"
 export const ForgotPasswordResponseModal: React.FC = () => {
@@ -9,7 +9,7 @@ export const ForgotPasswordResponseModal: React.FC = () => {
 
   const handleClick = useCallback(() => {
     dispatch(
-      setStateKey({ key: "showForgotPasswordResponseModal", value: true }),
+      setAuthKey({ key: "showForgotPasswordResponseModal", value: true }),
     )
     window.history.back()
   }, [dispatch])

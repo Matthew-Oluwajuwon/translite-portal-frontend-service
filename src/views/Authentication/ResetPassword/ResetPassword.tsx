@@ -4,7 +4,7 @@ import CardHeader from "../components/CardHeader"
 import LabeledInput from "../components/LabelInput"
 import { useAuthQuery } from "../../../custom-hooks/useAuthQuery"
 import { useAppSelector, useAppDispatch } from "../../../store/hooks"
-import { setStateKey } from "../../../store"
+import { setAuthKey } from "../../../store"
 import { VerificationCode } from "../components/verification-code"
 import { ForgotPasswordResponseModal } from "../SendMailForPasswordChange/ForgotPasswordResponeModal"
 import { ResetPasswordResponseModal } from "./ResetPasswordModal"
@@ -116,7 +116,7 @@ const ResetPassword: React.FC = () => {
             className="flex items-center justify-center p-5 px-7 bg-[#6D71F9] font-semibold"
             onClick={() =>
               dispatch(
-                setStateKey({ key: "showVerficationCodeModal", value: true }),
+                setAuthKey({ key: "showVerficationCodeModal", value: true }),
               )
             }
           >

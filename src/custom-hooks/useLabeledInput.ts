@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { State } from "../model/application/state"
-import { AppDispatch, setStateKey } from "../store"
+import { AppDispatch, setAuthKey } from "../store"
 
 const useLabeledInput = (
   state: State.Authentication,
@@ -11,27 +11,27 @@ const useLabeledInput = (
 ) => {
   const handleFocus = () => {
     inputRef.current.focus()
-    dispatch(setStateKey({ key: "isFocused", value: true }))
+    dispatch(setAuthKey({ key: "isFocused", value: true }))
   }
 
   const handleBlur = () => {
     dispatch(
-      setStateKey({ key: "isFocused", value: state.hasValue ? true : false }),
+      setAuthKey({ key: "isFocused", value: state.hasValue ? true : false }),
     )
   }
 
   const handleChange = (e: string) => {
     if (e.length === 0) {
-      dispatch(setStateKey({ key: "hasValue", value: false }))
+      dispatch(setAuthKey({ key: "hasValue", value: false }))
     } else {
-      dispatch(setStateKey({ key: "hasValue", value: true }))
+      dispatch(setAuthKey({ key: "hasValue", value: true }))
     }
   }
 
   const togglePassword = (isReveal: boolean) => {
     if (isReveal) {
       dispatch(
-        setStateKey({
+        setAuthKey({
           key: "inputType",
           value:
             type?.toLowerCase() === "password" &&
@@ -40,10 +40,10 @@ const useLabeledInput = (
               : "text",
         }),
       )
-      dispatch(setStateKey({ key: "isRevealPassword", value: false }))
+      dispatch(setAuthKey({ key: "isRevealPassword", value: false }))
     } else {
       dispatch(
-        setStateKey({
+        setAuthKey({
           key: "inputType",
           value:
             type?.toLowerCase() === "password" &&
@@ -52,7 +52,7 @@ const useLabeledInput = (
               : "password",
         }),
       )
-      dispatch(setStateKey({ key: "isRevealPassword", value: true }))
+      dispatch(setAuthKey({ key: "isRevealPassword", value: true }))
     }
   }
 

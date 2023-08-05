@@ -2,7 +2,7 @@
 import { useCallback } from "react"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import { SuccessModal } from "../../../common/components/SuccessModal"
-import { setStateKey } from "../../../store"
+import { setAuthKey } from "../../../store"
 
 export const ResetPasswordResponseModal: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -10,7 +10,7 @@ export const ResetPasswordResponseModal: React.FC = () => {
 
   const handleClick = useCallback(() => {
     dispatch(
-      setStateKey({ key: "showResetPasswordResponseModal", value: true }),
+      setAuthKey({ key: "showResetPasswordResponseModal", value: true }),
     )
   }, [dispatch])
 

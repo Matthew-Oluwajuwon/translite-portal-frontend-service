@@ -9,3 +9,12 @@ export class Auth {
     this.value = value
   }
 }
+
+export class Global {
+  key: keyof State.Global
+  value?: any
+  constructor(key: keyof State.Global, value: any) {
+    this.key = key
+    this.value = value
+  }
+}

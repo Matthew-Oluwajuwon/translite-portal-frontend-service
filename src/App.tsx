@@ -7,8 +7,9 @@ import Login from "./views/Authentication/Login/Login"
 import SendMailForPasswordChange from "./views/Authentication/SendMailForPasswordChange/SendMailForPasswordChange"
 import { ROUTE } from "./routes"
 import ResetPassword from "./views/Authentication/ResetPassword/ResetPassword"
-import { Dashboard } from "./views/dashboard/dashboard"
 import { PageNotFound } from "./page-not-found"
+import Dashboard from "./views/Dashboard/Dashboard"
+import PageLayout from "./common/layout/page-layout"
 
 const App = () => {
   const router = createBrowserRouter([
@@ -30,12 +31,14 @@ const App = () => {
       ],
     },
     {
-      element: <Dashboard />,
-      path: ROUTE.DASHBOARD,
-    },
-    {
-      element: <PageNotFound />,
-      path: ROUTE.PAGE_NOT_FOUND,
+      element: <PageLayout />,
+      children: [
+        {
+          element: <Dashboard />,
+          path: ROUTE.DASHBOARD,
+        }
+      ],
+      errorElement: <PageNotFound />
     },
   ])
 

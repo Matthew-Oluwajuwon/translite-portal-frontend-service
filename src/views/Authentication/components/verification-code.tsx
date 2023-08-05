@@ -2,7 +2,7 @@
 import { Button } from "antd"
 import React, { useCallback } from "react"
 import PinInput from "react-pin-input"
-import { setStateKey } from "../../../store"
+import { setAuthKey } from "../../../store"
 import { PageModal } from "../../../common/components/modal"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 
@@ -14,13 +14,13 @@ export const VerificationCode: React.FC = () => {
 
   const handleClick = useCallback(() => {
     dispatch(
-      setStateKey({
+      setAuthKey({
         key: "showVerficationCodeModal",
         value: !state.showVerficationCodeModal,
       }),
     )
     dispatch(
-      setStateKey({ key: "showChangePasswordResponseModal", value: true }),
+      setAuthKey({ key: "showChangePasswordResponseModal", value: true }),
     )
   }, [dispatch, state.showVerficationCodeModal])
   return (

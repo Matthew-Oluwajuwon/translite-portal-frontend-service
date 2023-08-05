@@ -4,7 +4,7 @@ import GrayChecker from "../assets/icons/gray-check.svg"
 import GreenCheck from "../assets/icons/green-check.svg"
 import RedCheck from "../assets/icons/red-check.svg"
 import { useAppDispatch, useAppSelector } from "../store/hooks"
-import { setStateKey, setField } from "../store"
+import { setAuthKey, setField } from "../store"
 import { ApiRequest } from "../model/client/request"
 
 export const useAuthQuery = () => {
@@ -15,29 +15,29 @@ export const useAuthQuery = () => {
   const setResetInputField = useCallback(
     (value: any, key: keyof ApiRequest.Auth) => {
       if (value.length === 0) {
-        dispatch(setStateKey({ key: "hasValue", value: false }))
+        dispatch(setAuthKey({ key: "hasValue", value: false }))
       } else {
-        dispatch(setStateKey({ key: "hasValue", value: true }))
+        dispatch(setAuthKey({ key: "hasValue", value: true }))
       }
       const UpperCase = /(?=.*[A-Z])/
       const LowerCase = /(?=.*[a-z])/
       const NumberCase = /(?=.*[0-9])/
       const SpecialChar = /([^A-Za-z0-9])/
       if (value?.length < 8) {
-        dispatch(setStateKey({ key: "isPasswordLength", value: false }))
+        dispatch(setAuthKey({ key: "isPasswordLength", value: false }))
       } else {
-        dispatch(setStateKey({ key: "isPasswordLength", value: true }))
+        dispatch(setAuthKey({ key: "isPasswordLength", value: true }))
       }
       dispatch(setField({ key, value }))
       dispatch(
-        setStateKey({ key: "isUpperCase", value: UpperCase.test(value) }),
+        setAuthKey({ key: "isUpperCase", value: UpperCase.test(value) }),
       )
       dispatch(
-        setStateKey({ key: "isLowerCase", value: LowerCase.test(value) }),
+        setAuthKey({ key: "isLowerCase", value: LowerCase.test(value) }),
       )
-      dispatch(setStateKey({ key: "hasNumber", value: NumberCase.test(value) }))
+      dispatch(setAuthKey({ key: "hasNumber", value: NumberCase.test(value) }))
       dispatch(
-        setStateKey({ key: "isSpecialChar", value: SpecialChar.test(value) }),
+        setAuthKey({ key: "isSpecialChar", value: SpecialChar.test(value) }),
       )
     },
     [dispatch],

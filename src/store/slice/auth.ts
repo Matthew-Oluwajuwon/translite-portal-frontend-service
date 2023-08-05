@@ -27,7 +27,7 @@ const AuthSlice = createSlice({
   name: "authSlice",
   initialState,
   reducers: {
-    setStateKey: (state, action: PayloadAction<Auth>) => {
+    setAuthKey: (state, action: PayloadAction<Auth>) => {
       const key: keyof State.Authentication = action.payload.key
       state = {
         ...state,
@@ -48,6 +48,6 @@ const AuthSlice = createSlice({
   },
 })
 
-export const { setStateKey, setField } = AuthSlice.actions
+export const { setAuthKey, setField } = AuthSlice.actions
 
 export const AuthReducer = AuthSlice.reducer

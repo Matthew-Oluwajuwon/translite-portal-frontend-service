@@ -1,11 +1,20 @@
 /* eslint-disable prettier/prettier */
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit"
-import { AuthReducer, setStateKey, setField } from "./slice/auth"
+import {
+  configureStore,
+  ThunkAction,
+  Action,
+  combineReducers,
+} from "@reduxjs/toolkit"
+import { AuthReducer, setAuthKey, setField } from "./slice/auth"
+import { GlobalReducer, setGlobalKey } from "./slice/global"
+
+const reducer = combineReducers({
+  auth: AuthReducer,
+  global: GlobalReducer,
+})
 
 export const store = configureStore({
-  reducer: {
-    auth: AuthReducer,
-  },
+  reducer,
   devTools: import.meta.env.PROD === false,
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({
@@ -14,7 +23,7 @@ export const store = configureStore({
   },
 })
 
-export { setStateKey, setField }
+export { setAuthKey, setField, setGlobalKey }
 
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>

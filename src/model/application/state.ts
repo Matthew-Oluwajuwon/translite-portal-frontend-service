@@ -20,4 +20,8 @@ export namespace State {
     showResetPasswordResponseModal: boolean
     showForgotPasswordResponseModal: boolean
   }
+  
+  export interface Global {
+    menuCollapsed: boolean
+  }
 }

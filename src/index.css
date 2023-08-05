@@ -19,3 +19,6 @@ body {
   font-family: "poppins-500";
 }
   
+.ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
+  border-radius: 13px !important;
+}
