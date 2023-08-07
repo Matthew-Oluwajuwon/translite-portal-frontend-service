@@ -32,10 +32,10 @@ export const VerificationCode: React.FC = () => {
       centered={true}
     >
       <div className="md:m-[1rem] lg:m-[3rem]">
-        <h1 className="text-3xl text-[#272848] mb-2 font-[Poppins] font-bold">
+        <h1 className="text-3xl text-[#272848] mb-2 font-bold">
           Verification Code
         </h1>
-        <p className="text-[#94A0B4] font-[poppins]">
+        <p className="text-[#94A0B4]">
           Please enter verification code attached to email
         </p>
         <div className="my-20">
@@ -60,10 +60,10 @@ export const VerificationCode: React.FC = () => {
             autoSelect={true}
             regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
           />
-          <p className="text-[#272848] font-[poppins] mt-3">
+          <p className="text-[#272848] font-bold mt-3">
             Couldn’t find OTP?{" "}
           </p>
-          <p className="text-[#94A0B4] font-[poppins] w-[75%]">
+          <p className="text-[#94A0B4] w-[75%]">
             Please check your inbox, below password reset link
           </p>
         </div>
@@ -71,7 +71,7 @@ export const VerificationCode: React.FC = () => {
           onClick={handleClick}
           type="primary"
           htmlType="button"
-          className="text-[#ffffff] bg-[#6D71F9] font-[PoppinsRegular] px-[2rem] py-[1.5rem] lg:py-5 flex items-center justify-center hover:scale-90 mx-auto"
+          className="text-[#ffffff] bg-[#6D71F9] px-[2rem] py-[1.5rem] lg:py-5 flex items-center justify-center hover:scale-90 mx-auto"
         >
           Continue
         </Button>

@@ -15,17 +15,12 @@ export const getThemeConfig = (): ThemeConfig | undefined => {
         itemSelectedBg: "#6D71F9",
         itemSelectedColor: "#ffffff",
         itemColor: "#94A0B4",
-        subMenuItemBg: "#6D71F9",
+        subMenuItemBg: "#f5f5f5",
         itemHoverColor: "#ffffff",
         controlHeightLG: 55,
-        radiusSubMenuItem: 20
-      },
-      Radio: {
-        colorPrimary: "#6D71F9",
-      },
-      Select: {
-        controlHeight: 40,
-      },
+        subMenuItemBorderRadius: 20,
+        lineWidth: 0
+      }
     },
   }
 }

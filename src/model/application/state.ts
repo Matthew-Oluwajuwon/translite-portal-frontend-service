@@ -23,5 +23,8 @@ export namespace State {
   
   export interface Global {
     menuCollapsed: boolean
+    selectedKey: string
+    pageTitle?: string
+    breadcrumb?: string
   }
 }

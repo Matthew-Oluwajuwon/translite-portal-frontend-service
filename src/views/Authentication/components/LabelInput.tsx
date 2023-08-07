@@ -6,6 +6,7 @@ import EyeClosed from "../../../assets/icons/Hide.svg"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import useLabeledInput from "../../../custom-hooks/useLabeledInput"
 import { setAuthKey } from "../../../store"
+import { Input } from "antd"
 
 interface LabelInputProps {
   label: string
@@ -29,7 +30,7 @@ const LabeledInput: React.FC<LabelInputProps> = ({
 
   const inputRef = useRef(null) as any
 
-  const { handleBlur, handleFocus, togglePassword } = useLabeledInput(
+  const { handleBlur, handleFocus } = useLabeledInput(
     state,
     dispatch,
     inputRef,
@@ -44,36 +45,47 @@ const LabeledInput: React.FC<LabelInputProps> = ({
   return (
     <div
       onClick={handleFocus}
-      className={`outline-[#DEDFEC] h-14 relative p-2 outline outline-1 rounded-lg px-5 ${
-        state.isFocused ? "" : ""
-      }`}
+      className={`outline-[#DEDFEC] h-14 w-full relative p-2 outline outline-1 rounded-lg px-5`}
     >
       <label
         htmlFor={htmlFor}
-        className={`text-[#717E95] absolute ${
+        className={`text-[#717E95] absolute z-40 ${
           state.isFocused
-            ? "text-[0.7rem] font-medium top-2"
-            : "text-base top-4"
+            ? "text-[0.5rem] mb-2 font-medium top-1"
+            : "text-base top-3"
         }`}
       >
         {label}
       </label>
-      <div className="flex items-center w-full absolute bottom-1">
-        <input
-          type={state.inputType}
-          ref={inputRef}
-          onChange={onChange}
-          value={value && value}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          className="outline-none border-none bg-transparent text-base text-[#272848] font-medium"
-        />
-        {type?.toLowerCase() === "password" && state.isFocused && (
-          <img
-            src={state.isRevealPassword ? Eye : EyeClosed}
-            onClick={() => togglePassword(state.isRevealPassword as boolean)}
-            alt=""
-            className={`absolute right-10 bottom-4 cursor-pointer hover:scale-125 hover:transition-all`}
+      <div
+        className={`absolute ${
+          state.isFocused ? "bottom-3" : "bottom-1"
+        } w-full pl-2 left-0`}
+      >
+        {type?.toLowerCase().includes("password") ? (
+          <Input.Password
+            ref={inputRef}
+            onChange={onChange}
+            value={value && value}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            bordered={false}
+            iconRender={(visible) =>
+              visible ? (
+                <img src={Eye} alt="" />
+              ) : (
+                <img src={EyeClosed} alt="" />
+              )
+            }
+          />
+        ) : (
+          <Input
+            ref={inputRef}
+            onChange={onChange}
+            value={value && value}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            bordered={false}
           />
         )}
       </div>

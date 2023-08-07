@@ -3,10 +3,10 @@ import {
   configureStore,
   ThunkAction,
   Action,
-  combineReducers,
+  combineReducers
 } from "@reduxjs/toolkit"
 import { AuthReducer, setAuthKey, setField } from "./slice/auth"
-import { GlobalReducer, setGlobalKey } from "./slice/global"
+import { GlobalReducer, setGlobalKey, setAllGlobalKey } from "./slice/global"
 
 const reducer = combineReducers({
   auth: AuthReducer,
@@ -23,7 +23,7 @@ export const store = configureStore({
   },
 })
 
-export { setAuthKey, setField, setGlobalKey }
+export { setAuthKey, setField, setGlobalKey, setAllGlobalKey }
 
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>
@@ -33,3 +33,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >
+

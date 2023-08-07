@@ -4,19 +4,19 @@ import { useLayoutEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { setAllGlobalKey } from "../../store"
 import { MENU_KEYS, MENU_NAMES } from "../../common/constants"
-const Dashboard: React.FC = () => {
+const Transactions: React.FC = () => {
   const dispatch = useAppDispatch()
   const state = useAppSelector((state) => {
     return state.global
   })
   useLayoutEffect(() => {
-    document.title = MENU_NAMES.DASHBOARD + " | Translite"
+    document.title = MENU_NAMES.TRANSACTION + " | Translite"
     dispatch(
       setAllGlobalKey({
         ...state,
-        selectedKey: MENU_KEYS.DASHBOARD,
-        pageTitle: "Dashbaord",
-        breadcrumb: "Home > Dashboard"
+        selectedKey: MENU_KEYS.TRANSACTION,
+        pageTitle: "Transactions",
+        breadcrumb: "Home > Transactions"
       }),
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -25,4 +25,4 @@ const Dashboard: React.FC = () => {
   return <div></div>
 }
 
-export default Dashboard
+export default Transactions

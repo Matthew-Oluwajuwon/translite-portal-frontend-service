@@ -3,7 +3,7 @@ import { Button, Form } from "antd"
 import CardHeader from "../components/CardHeader"
 import LabeledInput from "../components/LabelInput"
 import { Link } from "react-router-dom"
-import { ROUTE } from "../../../routes"
+import { ROUTE } from "../../../common/constants"
 
 const Login: React.FC = () => {
   return (

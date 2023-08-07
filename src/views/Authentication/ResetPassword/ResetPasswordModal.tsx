@@ -20,7 +20,7 @@ export const ResetPasswordResponseModal: React.FC = () => {
       openModal={state.showChangePasswordResponseModal}
     >
       <div className="my-10 mx-10">
-        <h1 className="text-[#272848] font-[PoppinsBold] text-xl font-bold text-center">
+        <h1 className="text-[#272848] text-xl font-bold text-center">
           Successful
         </h1>
         <p className="text-[#717E95] my-3 mx-auto text-center text-md w-full lg:w-[75%]">

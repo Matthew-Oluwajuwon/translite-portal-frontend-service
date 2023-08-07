@@ -5,11 +5,14 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import Auth from "./common/layout/Auth"
 import Login from "./views/Authentication/Login/Login"
 import SendMailForPasswordChange from "./views/Authentication/SendMailForPasswordChange/SendMailForPasswordChange"
-import { ROUTE } from "./routes"
 import ResetPassword from "./views/Authentication/ResetPassword/ResetPassword"
 import { PageNotFound } from "./page-not-found"
 import Dashboard from "./views/Dashboard/Dashboard"
 import PageLayout from "./common/layout/page-layout"
+import { ROUTE } from "./common/constants"
+import Profile from "./views/Profile/Profile"
+import Transactions from "./views/Transactions/Transactions"
+import Terminals from "./views/Terminals/Terminals"
 
 const App = () => {
   const router = createBrowserRouter([
@@ -29,6 +32,7 @@ const App = () => {
           element: <ResetPassword />,
         },
       ],
+      errorElement: <PageNotFound />,
     },
     {
       element: <PageLayout />,
@@ -36,9 +40,21 @@ const App = () => {
         {
           element: <Dashboard />,
           path: ROUTE.DASHBOARD,
-        }
+        },
+        {
+          element: <Profile />,
+          path: ROUTE.PROFILE,
+        },
+        {
+          element: <Transactions />,
+          path: ROUTE.TRANSACTION,
+        },
+        {
+          element: <Terminals />,
+          path: ROUTE.TERMINAL_MGT,
+        },
       ],
-      errorElement: <PageNotFound />
+      errorElement: <PageNotFound />,
     },
   ])
 

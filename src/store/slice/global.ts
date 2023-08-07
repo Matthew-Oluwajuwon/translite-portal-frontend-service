@@ -5,6 +5,7 @@ import { Global } from "../../model/application/payload"
 
 const initialState: State.Global = {
   menuCollapsed: false,
+  selectedKey: "1"
 }
 
 const GlobalSlice = createSlice({
@@ -19,9 +20,13 @@ const GlobalSlice = createSlice({
       }
       return state
     },
+    setAllGlobalKey: (state, action: PayloadAction<State.Global>) => {
+      state = action.payload as any;
+      return state;
+    }
   },
 })
 
-export const { setGlobalKey } = GlobalSlice.actions
+export const { setGlobalKey, setAllGlobalKey } = GlobalSlice.actions
 
 export const GlobalReducer = GlobalSlice.reducer

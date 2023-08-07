@@ -1,136 +1,91 @@
 /* eslint-disable prettier/prettier */
 
-import { NavLink, Outlet, useLocation } from "react-router-dom"
+import { Outlet } from "react-router-dom"
 import Logo from "../../assets/images/logo.svg"
-import Home from "../../assets/icons/Home.svg"
 import Drag from "../../assets/icons/drag.svg"
 import DragOut from "../../assets/icons/drag-out.svg"
-import type { MenuProps } from "antd"
 import { Menu } from "antd"
-import { ROUTE } from "../../routes"
-import Profile from "../../assets/icons/profile.svg"
-import Transaction from "../../assets/icons/transaction.svg"
-import Terminal from "../../assets/icons/Сalculator.svg"
-import Setting from "../../assets/icons/settings.svg"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { useCallback } from "react"
-import { setGlobalKey } from "../../store"
 import ShortLogo from "../../assets/icons/short-logo.svg"
+import { MenuItems } from "../components/menu-items"
+import useToggle from "../../custom-hooks/useToggle"
+import dropdown from "../../assets/icons/dropdown.svg"
+import useWindowResize from "../../custom-hooks/useWindowResize"
+// import menuIcon from "../../assets/icons/menu.svg"
 
 const PageLayout: React.FC = () => {
-  type MenuItem = Required<MenuProps>["items"][number]
   const dispatch = useAppDispatch()
   const state = useAppSelector((state) => {
     return state.global
   })
-  const location = useLocation()
 
-  function getItem(
-    label: React.ReactNode,
-    key: React.Key,
-    icon?: React.ReactNode,
-    children?: MenuItem[],
-    type?: "group",
-  ): MenuItem {
-    return {
-      key,
-      icon,
-      children,
-      label,
-      type,
-    } as MenuItem
-  }
+  const { toggleMenu } = useToggle(state, dispatch)
 
-  const items: MenuProps["items"] = [
-    getItem(
-      <NavLink state={{ selectedKey: "1" }} to={ROUTE.DASHBOARD}>
-        Dashboard
-      </NavLink>,
-      "1",
-      <img src={Home} alt="" />,
-    ),
-
-    getItem(
-      <NavLink state={{ selectedKey: "2" }} to={ROUTE.DASHBOARD}>
-        Profile
-      </NavLink>,
-      "2",
-      <img src={Profile} alt="" />,
-    ),
-    { type: "divider", className: "border-1 border border-[#c4c4c4]" },
-    getItem(
-      <NavLink state={{ selectedKey: "3" }} to={ROUTE.DASHBOARD}>
-        Transaction
-      </NavLink>,
-      "3",
-      <img src={Transaction} alt="" />,
-    ),
-    getItem(
-      <NavLink state={{ selectedKey: "4" }} to={ROUTE.DASHBOARD}>
-        Terminals Mgt.
-      </NavLink>,
-      "4",
-      <img src={Terminal} alt="" />,
-    ),
-    getItem("Configurations", "5", <img src={Setting} alt="" />, [
-      getItem(
-        <NavLink state={{ selectedKey: "01" }} to={ROUTE.DASHBOARD}>
-          Transaction routing
-        </NavLink>,
-        "01",
-      ),
-      getItem(
-        <NavLink state={{ selectedKey: "02" }} to={ROUTE.DASHBOARD}>
-          Charge configurations
-        </NavLink>,
-        "02",
-      ),
-    ]),
-  ]
-
-  const toggleMenu = useCallback(() => {
-    dispatch(
-      setGlobalKey({
-        key: "menuCollapsed",
-        value: !state.menuCollapsed,
-      }),
-    )
-  }, [dispatch, state.menuCollapsed])
+  const { windowWidth } = useWindowResize()
 
   return (
     <main className="min-h-[100svh] relative">
       <aside
         className={`bg-[#1C166A] ${
-          state.menuCollapsed ? "w-[8rem] py-7" : "w-[17rem]"
-        } h-screen px-[1rem] fixed left-0`}
+          state.menuCollapsed ? "w-[6rem] px-0" : "w-[6rem] lg:w-[17rem]"
+        } hidden md:block h-screen px-[1rem] fixed left-0`}
       >
         <div
-          className={`flex items-center justify-between ${
-            state.menuCollapsed && "relative mb-10"
+          className={`flex items-center relative top-7 mb-[6rem] px-5 justify-between ${
+            state.menuCollapsed && "top-5"
           }`}
         >
-          <img src={state.menuCollapsed ? ShortLogo : Logo} alt="" />
           <img
-            src={state.menuCollapsed ? DragOut : Drag}
+            src={state.menuCollapsed ? ShortLogo : Logo}
             alt=""
-            className={`hover:scale-110 hover:transition-all cursor-pointer ${
-              state.menuCollapsed && "absolute left-24"
-            }`}
-            onClick={toggleMenu}
+            className={state.menuCollapsed ? "mx-auto" : ""}
           />
+          {(windowWidth > 768 && windowWidth < 1024) || (
+            <img
+              src={state.menuCollapsed ? DragOut : Drag}
+              alt=""
+              className={`hover:scale-110 absolute hover:transition-all cursor-pointer ${
+                state.menuCollapsed ? "left-[4rem]" : "left-[11.5rem]"
+              }`}
+              onClick={toggleMenu}
+            />
+          )}
         </div>
         <div>
           <Menu
-            defaultSelectedKeys={[location.state.selectedKey]}
-            // defaultOpenKeys={["sub1"]}
-            className="bg-[#1C166A] text-[#ffffff]"
+            defaultSelectedKeys={[state.selectedKey]}
+            className={`bg-[#1C166A] font-[poppins-500] font-medium ${
+              state.menuCollapsed && "w-[4rem]"
+            }`}
             mode="inline"
-            items={items}
+            items={MenuItems}
             inlineCollapsed={state.menuCollapsed}
           />
         </div>
       </aside>
-      <section className="bg-[#F5F6FA] h-screen ml-[17rem]">
+      <section
+        className={`bg-[#F5F6FA] h-screen px-3 lg:px-10 ${
+          state.menuCollapsed
+            ? "ml-0 md:ml-[6rem]"
+            : "ml-0 md:ml-[6rem] lg:ml-[17rem]"
+        }`}
+      >
+        <header className="flex items-center justify-between py-5 bg-[#F5F6FA]">
+          <div className="grid gap-2">
+            <h1 className="text-[#272848] font-[poppins-600]">
+              {state.pageTitle}
+            </h1>
+            <p className="breadcrumb-before text-[#717E95] font-medium text-[0.8rem]">
+              {state.breadcrumb}
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <img src={dropdown} alt="" />
+            <span className="bg-[#79CDCE] w-[2.7rem] h-[2.7rem] text-[#ffffff] rounded-full flex items-center justify-center">
+              JA
+            </span>
+          </div>
+        </header>
         <Outlet />
       </section>
     </main>

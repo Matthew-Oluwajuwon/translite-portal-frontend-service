@@ -4,8 +4,8 @@ import { Outlet, useLocation } from "react-router-dom"
 import Logo from "../../assets/images/logo.svg"
 import { Card } from "antd"
 import Back from "../../assets/icons/Left.svg"
-import { ROUTE } from "../../routes"
 import { useLayoutEffect } from "react"
+import { ROUTE } from "../constants"
 
 const Auth: React.FC = () => {
   const { pathname } = useLocation()

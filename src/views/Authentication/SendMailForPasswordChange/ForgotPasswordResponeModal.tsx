@@ -20,7 +20,7 @@ export const ForgotPasswordResponseModal: React.FC = () => {
       openModal={state.showForgotPasswordResponseModal}
     >
       <div className="my-5 mx-10">
-        <h1 className="text-[#272848] font-[PoppinsBold] text-xl font-bold text-center">
+        <h1 className="text-[#272848] text-xl font-bold text-center">
           Please Check you Email
         </h1>
         <p className="text-[#717E95] my-3 text-center text-md">

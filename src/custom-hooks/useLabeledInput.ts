@@ -34,8 +34,8 @@ const useLabeledInput = (
         setAuthKey({
           key: "inputType",
           value:
-            type?.toLowerCase() === "password" &&
-            label?.toLowerCase().includes("password")
+           ( type?.toLowerCase() === "password" &&
+            label?.toLowerCase().includes("password"))
               ? "password"
               : "text",
         }),
@@ -46,8 +46,8 @@ const useLabeledInput = (
         setAuthKey({
           key: "inputType",
           value:
-            type?.toLowerCase() === "password" &&
-            label?.toLowerCase().includes("password")
+            (type?.toLowerCase() === "password" &&
+            label?.toLowerCase().includes("password"))
               ? "text"
               : "password",
         }),

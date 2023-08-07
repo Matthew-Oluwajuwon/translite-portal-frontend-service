@@ -22,3 +22,14 @@ body {
 .ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
   border-radius: 13px !important;
 }
+
+.breadcrumb-before::before {
+  display: inline-block;
+  content: "";
+  -webkit-border-radius: 0.375rem;
+  border-radius: 0.375rem;
+  height: 0.75rem;
+  width: 0.75rem;
+  margin-right: 0.5rem;
+  background-color: #6d71f9;
+}
