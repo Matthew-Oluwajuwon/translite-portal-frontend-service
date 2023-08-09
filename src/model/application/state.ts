@@ -26,5 +26,8 @@ export namespace State {
     selectedKey: string
     pageTitle?: string
     breadcrumb?: string
+    expand: boolean
+    record?: any
+    showLogoutModal: boolean
   }
 }

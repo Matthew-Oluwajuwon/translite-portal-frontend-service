@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import React from "react"
 import { PageTable } from "./table"
 
 interface Props {
@@ -23,7 +24,7 @@ export const TransactionTableComponent: React.FC<Props> = ({
   shouldExpand,
 }) => {
   return (
-    <div className="bg-white w-full rounded-lg overflow-auto my-5 shadow-md">
+    <div className="bg-white w-full rounded-lg my-5 table-shadow">
       <div className="flex justify-between items-center px-3 sm:px-10 py-5">
         <h1 className="text-sm md:text-xl text-[#272848] font-semibold">
           {tableName}

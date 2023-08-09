@@ -5,7 +5,9 @@ import { Global } from "../../model/application/payload"
 
 const initialState: State.Global = {
   menuCollapsed: false,
-  selectedKey: "1"
+  selectedKey: "1",
+  expand: false,
+  showLogoutModal: false
 }
 
 const GlobalSlice = createSlice({

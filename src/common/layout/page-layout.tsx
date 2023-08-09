@@ -64,13 +64,13 @@ const PageLayout: React.FC = () => {
         </div>
       </aside>
       <section
-        className={`bg-[#F5F6FA] h-screen px-3 lg:px-10 ${
+        className={`bg-[#F5F6FA] min-h-screen px-3 lg:px-10 ${
           state.menuCollapsed
             ? "ml-0 md:ml-[6rem]"
             : "ml-0 md:ml-[6rem] lg:ml-[17rem]"
         }`}
       >
-        <header className="flex items-center justify-between py-5 bg-[#F5F6FA]">
+        <header className="flex items-center z-50 backdrop-blur-sm bg-opacity-50 justify-between py-5 sticky top-0 bg-[#F5F6FA]">
           <div className="grid gap-2">
             <h1 className="text-[#272848] font-[poppins-600]">
               {state.pageTitle}
@@ -86,7 +86,10 @@ const PageLayout: React.FC = () => {
             </span>
           </div>
         </header>
-        <Outlet />
+        <section className="overflow-auto">
+          <Outlet />
+        </section>
+        <footer className="text-center text-[#BEBFC8] py-8">Translite from Tegritech<sup>TM</sup> © 2022</footer>
       </section>
     </main>
   )

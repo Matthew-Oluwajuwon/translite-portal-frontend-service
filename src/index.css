@@ -33,3 +33,29 @@ body {
   margin-right: 0.5rem;
   background-color: #6d71f9;
 }
+
+.t::before,
+.s::before,
+.f::before {
+  display: inline-block;
+  content: "";
+  -webkit-border-radius: 0.375rem;
+  border-radius: 0.375rem;
+  height: 0.75rem;
+  width: 0.75rem;
+  margin-right: 0.5rem;
+}
+.t::before {
+  background-color: #6d71f9;
+}
+
+.s::before {
+  background-color: #34aa44;
+}
+.f::before {
+  background-color: #ff291f;
+}
+
+.table-shadow {
+  box-shadow: 0px 10px 13px 0px rgba(17, 38, 146, 0.05);
+}
