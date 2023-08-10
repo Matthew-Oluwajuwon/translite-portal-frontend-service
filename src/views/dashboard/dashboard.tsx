@@ -39,6 +39,7 @@ const Dashboard: React.FC = () => {
       <Form.Item initialValue={dayjs("Aug 7", dateFormat)} className="my-10">
         <DatePicker
           format={customFormat}
+          defaultValue={dayjs("Aug 7", dateFormat)}
           className="py-3 border-none font-[poppins-500] font-semibold text-[#424D61]"
           prevIcon={<img src={calendar} alt="" />}
           suffixIcon={<img src={dropdown} alt="" />}

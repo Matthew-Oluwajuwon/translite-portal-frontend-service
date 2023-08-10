@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
 
-import { useLayoutEffect } from "react"
+import { useCallback, useLayoutEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { setAllGlobalKey } from "../../store"
 import { MENU_KEYS, MENU_NAMES } from "../../common/constants"
-import { Col, Form, Input, Row } from "antd"
+import { Button, Col, Form, Input, Row } from "antd"
 import { TransactionTableComponent } from "../../common/components/transaction-table"
 import { TableExpandModal } from "../../common/components/table-expand-modal"
 import Download from "../../assets/icons/download.svg"
@@ -14,6 +14,7 @@ import { ColumnProps } from "antd/es/table"
 import { data } from "./components/mock-data"
 import dayjs from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
+import TerminalCreateion from "./components/terminal-creation"
 
 const Terminals: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -76,20 +77,37 @@ const Terminals: React.FC = () => {
     },
   ]
 
+  const handleClick = useCallback(() => {
+    dispatch(
+      setAllGlobalKey({
+        ...state,
+        terminal: {
+          ...state.terminal,
+          showCreateModal: true,
+        },
+      }),
+    )
+  }, [dispatch, state])
+
   return (
     <div>
       <TableExpandModal
         isDownloadable={true}
         modalCardTitle="Transaction Details"
       />
+      <TerminalCreateion />
       <TransactionTableComponent
         shouldExpand={true}
         tableName="System Terminals"
         btn={
           <div className="flex gap-3 items-center">
-            <button className=" flex gap-3 items-center bg-[#6D71F9] text-white rounded-lg pr-2">
+            <Button
+              type="primary"
+              onClick={handleClick}
+              className="flex gap-3 py-6 items-center bg-[#6D71F9] text-white rounded-lg"
+            >
               <img src={Plus} alt="add" /> <span>Add System Terminal</span>
-            </button>
+            </Button>
             <button>
               <img src={Download} alt="download" className="rounded-md" />
             </button>

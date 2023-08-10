@@ -29,5 +29,17 @@ export namespace State {
     expand: boolean
     record?: any
     showLogoutModal: boolean
+    terminal: Terminals;
+    configuration: Configurations
+  }
+  
+  export interface Terminals {
+    showCreateModal: boolean;
+    isSingleCreation?: boolean;
+  }
+  
+  export interface Configurations {
+    processorSelection?: string;
+    cancelConfig?: boolean;
   }
 }

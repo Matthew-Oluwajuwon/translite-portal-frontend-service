@@ -54,6 +54,7 @@ const PageLayout: React.FC = () => {
         <div>
           <Menu
             defaultSelectedKeys={[state.selectedKey]}
+            selectedKeys={[state.selectedKey]}
             className={`bg-[#1C166A] font-[poppins-500] font-medium ${
               state.menuCollapsed && "w-[4rem]"
             }`}
