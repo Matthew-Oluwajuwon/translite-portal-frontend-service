@@ -17,4 +17,11 @@ export default defineConfig({
     setupFiles: "src/setupTests",
     mockReset: true,
   },
+  resolve: {
+    alias: {
+      "@views": "/src/views",
+      "@common": "/src/common",
+      // ...other aliases
+    },
+  },
 })
