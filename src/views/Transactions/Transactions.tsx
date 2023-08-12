@@ -11,10 +11,10 @@ import Download from "../../assets/icons/download.svg"
 import Search from "../../assets/icons/Search.svg"
 import Seperator from "../../assets/icons/seperator.svg"
 import { ColumnProps } from "antd/es/table"
-import { data } from "../Dashboard/components/mock-data"
 import dayjs from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
 import dropdown from "../../assets/icons/dropdown.svg"
+import { data } from "@views/dashboard/components/mock-data"
 
 const Transactions: React.FC = () => {
   const dispatch = useAppDispatch()
