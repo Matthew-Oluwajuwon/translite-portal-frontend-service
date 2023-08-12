@@ -40,5 +40,6 @@ export namespace PageProps {
     pageSize?: number
     onPagination?: () => void
     shouldExpand?: boolean
+    scrollX?: number
   }
 }

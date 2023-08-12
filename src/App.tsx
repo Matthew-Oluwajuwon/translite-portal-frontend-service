@@ -8,7 +8,7 @@ import SendMailForPasswordChange from "./views/Authentication/SendMailForPasswor
 import ResetPassword from "./views/Authentication/ResetPassword/ResetPassword"
 import { PageNotFound } from "./page-not-found"
 import Dashboard from "./views/Dashboard/Dashboard"
-import PageLayout from "./common/layout/page-layout"
+import PageLayout from "./common/layout/Page-layout"
 import { ROUTE } from "./common/constants"
 import Profile from "./views/Profile/Profile"
 import Transactions from "./views/Transactions/Transactions"

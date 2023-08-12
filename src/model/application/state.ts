@@ -20,7 +20,7 @@ export namespace State {
     showResetPasswordResponseModal: boolean
     showForgotPasswordResponseModal: boolean
   }
-  
+
   export interface Global {
     menuCollapsed: boolean
     selectedKey: string
@@ -28,18 +28,19 @@ export namespace State {
     breadcrumb?: string
     expand: boolean
     record?: any
-    showLogoutModal: boolean
-    terminal: Terminals;
-    configuration: Configurations
+    showLogoutModal?: boolean
+    terminal?: Terminals
+    configuration?: Configurations
+    openMenuDrawer: boolean
   }
-  
+
   export interface Terminals {
-    showCreateModal: boolean;
-    isSingleCreation?: boolean;
+    showCreateModal: boolean
+    isSingleCreation?: boolean
   }
-  
+
   export interface Configurations {
-    processorSelection?: string;
-    cancelConfig?: boolean;
+    processorSelection?: string
+    cancelConfig?: boolean
   }
 }

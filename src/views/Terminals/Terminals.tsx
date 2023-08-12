@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
 
-import { useCallback, useLayoutEffect } from "react"
+import { useLayoutEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { setAllGlobalKey } from "../../store"
-import { MENU_KEYS, MENU_NAMES } from "../../common/constants"
+import { BREADCRUMB, MENU_KEYS, MENU_NAMES } from "../../common/constants"
 import { Button, Col, Form, Input, Row } from "antd"
 import { TransactionTableComponent } from "../../common/components/transaction-table"
 import { TableExpandModal } from "../../common/components/table-expand-modal"
@@ -15,6 +15,7 @@ import { data } from "./components/mock-data"
 import dayjs from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
 import TerminalCreateion from "./components/terminal-creation"
+import useToggle from "../../custom-hooks/useToggle"
 
 const Terminals: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -27,8 +28,8 @@ const Terminals: React.FC = () => {
       setAllGlobalKey({
         ...state,
         selectedKey: MENU_KEYS.TERMINAL_MGT,
-        pageTitle: "Terminals",
-        breadcrumb: "Home > Terminal Management",
+        pageTitle: MENU_NAMES.TERMINAL_MGT,
+        breadcrumb: BREADCRUMB.TERMINAL_MGT,
       }),
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -77,17 +78,7 @@ const Terminals: React.FC = () => {
     },
   ]
 
-  const handleClick = useCallback(() => {
-    dispatch(
-      setAllGlobalKey({
-        ...state,
-        terminal: {
-          ...state.terminal,
-          showCreateModal: true,
-        },
-      }),
-    )
-  }, [dispatch, state])
+  const { toggleCreateModal } = useToggle()
 
   return (
     <div>
@@ -103,12 +94,13 @@ const Terminals: React.FC = () => {
           <div className="flex gap-3 items-center">
             <Button
               type="primary"
-              onClick={handleClick}
-              className="flex gap-3 py-6 items-center bg-[#6D71F9] text-white rounded-lg"
+              onClick={toggleCreateModal}
+              className="flex justify-between items-center text-[0.7rem] bg-[#6D71F9] sm:text-[1rem] gap-2 py-6 px-2 sm:px-0 -pr-10 sm:pr-3"
             >
-              <img src={Plus} alt="add" /> <span>Add System Terminal</span>
+              <img src={Plus} alt="add" className="ml-2 sm:ml-0" />{" "}
+              <div className="hidden md:block">Add System Terminal</div>
             </Button>
-            <button>
+            <button className="hover:shadow-md hover:scale-110 transition-all">
               <img src={Download} alt="download" className="rounded-md" />
             </button>
           </div>
@@ -137,6 +129,7 @@ const Terminals: React.FC = () => {
         loading={false}
         column={column}
         dataSource={data}
+        scrollX={500}
       />
     </div>
   )

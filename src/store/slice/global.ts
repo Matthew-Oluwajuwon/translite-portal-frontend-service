@@ -2,12 +2,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { State } from "../../model/application/state"
 import { Global } from "../../model/application/payload"
+import { MENU_KEYS } from "../../common/constants"
 
 const initialState: State.Global = {
   menuCollapsed: false,
-  selectedKey: "1",
+  selectedKey: MENU_KEYS.DASHBOARD,
   expand: false,
-  showLogoutModal: false
+  showLogoutModal: false,
+  openMenuDrawer: false
 }
 
 const GlobalSlice = createSlice({

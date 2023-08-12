@@ -1,12 +1,13 @@
 /* eslint-disable prettier/prettier */
 
-import { useCallback, useLayoutEffect } from "react"
+import { useLayoutEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { setAllGlobalKey, setGlobalKey } from "../../store"
-import { MENU_KEYS, MENU_NAMES } from "../../common/constants"
+import { setAllGlobalKey } from "../../store"
+import { BREADCRUMB, MENU_KEYS, MENU_NAMES } from "../../common/constants"
 import { Col, Form, Input, Row, Typography } from "antd"
 import Log from "../../assets/icons/Logout.svg"
 import { Logout } from "../../common/components/logout"
+import useToggle from "../../custom-hooks/useToggle"
 
 const Profile: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -19,32 +20,21 @@ const Profile: React.FC = () => {
       setAllGlobalKey({
         ...state,
         selectedKey: MENU_KEYS.PROFILE,
-        pageTitle: "Profile",
-        breadcrumb: "Home > Profile",
+        pageTitle: MENU_NAMES.PROFILE,
+        breadcrumb: BREADCRUMB.PROFILE,
       }),
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch])
 
-  const handleCloseLogoutModal = useCallback(
-    (value: boolean) => {
-      dispatch(
-        setGlobalKey({
-          key: "showLogoutModal",
-          value,
-        }),
-      )
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch],
-  )
+  const { toggleLogoutModal } = useToggle()
 
   return (
     <div>
       {state.showLogoutModal && (
         <Logout
           openModal={state.showLogoutModal}
-          onCancel={() => handleCloseLogoutModal(false)}
+          onCancel={toggleLogoutModal}
         />
       )}
       <div className="grid grid-rows-[10rem_1fr] gap-7">
@@ -65,8 +55,8 @@ const Profile: React.FC = () => {
           </div>
           <div className="hidden md:block">
             <button
-              onClick={() => handleCloseLogoutModal(true)}
-              className="flex items-center justify-center gap-1 py-3 px-3 rounded-md text-[#FF291F] bg-[#FFF0F4] cursor-pointer hover:scale-95 hover:transition-all text-[0.8rem]"
+              onClick={toggleLogoutModal}
+              className="flex items-center justify-center gap-1 py-3 px-3 rounded-md text-[#FF291F] bg-[#FFF0F4] cursor-pointer hover:shadow-md hover:scale-110 transition-all text-[0.8rem]"
             >
               <img src={Log} alt="logout" />
               Log Out

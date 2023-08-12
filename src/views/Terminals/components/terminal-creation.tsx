@@ -1,28 +1,26 @@
 /* eslint-disable prettier/prettier */
-import { Button, Form, Row, Col, Input, Upload } from "antd"
+import { Button, Form, Row, Col, Input, Upload, UploadProps } from "antd"
 import { PageModal } from "../../../common/components/modal"
-import { setGlobalKey } from "../../../store"
-import { useAppDispatch, useAppSelector } from "../../../store/hooks"
+import { useAppSelector } from "../../../store/hooks"
 import FileUpload from "../../../assets/images/upload.svg"
+import useToggle from "../../../custom-hooks/useToggle"
 
 const TerminalCreateion: React.FC = () => {
-  const dispatch = useAppDispatch()
   const state = useAppSelector((state) => {
     return state.global
   })
+  const props: UploadProps = {
+    fileList: [],
+  }
+
+  const { toggleCreateModal, toggleFormModalOption } = useToggle()
+
   return (
     <PageModal
       openModal={state.terminal?.showCreateModal}
       modalWith="35rem"
       modalFooter={false}
-      handleCancel={() =>
-        dispatch(
-          setGlobalKey({
-            key: "terminal",
-            value: { showCreateModal: !state.terminal?.showCreateModal },
-          }),
-        )
-      }
+      handleCancel={toggleCreateModal}
       centered={true}
     >
       <div className="mx-20">
@@ -37,14 +35,7 @@ const TerminalCreateion: React.FC = () => {
           className={
             !state.terminal?.isSingleCreation ? "bg-[#6D71F9] text-white" : ""
           }
-          onClick={() =>
-            dispatch(
-              setGlobalKey({
-                key: "terminal",
-                value: { showCreateModal: true, isSingleCreation: false },
-              }),
-            )
-          }
+          onClick={() => toggleFormModalOption(true, false)}
         >
           Single
         </Button>
@@ -53,14 +44,7 @@ const TerminalCreateion: React.FC = () => {
           className={
             state.terminal?.isSingleCreation ? "bg-[#6D71F9] text-white" : ""
           }
-          onClick={() =>
-            dispatch(
-              setGlobalKey({
-                key: "terminal",
-                value: { showCreateModal: true, isSingleCreation: true },
-              }),
-            )
-          }
+          onClick={() => toggleFormModalOption(true, true)}
         >
           Bulk Uploads
         </Button>
@@ -75,7 +59,14 @@ const TerminalCreateion: React.FC = () => {
           {!state.terminal?.isSingleCreation ? (
             <>
               <Col span={24}>
-                <Form.Item label={<h2 className="text-[#272848] font-semibold">Terminal Serial Number</h2>} name={""}>
+                <Form.Item
+                  label={
+                    <h2 className="text-[#272848] font-semibold">
+                      Terminal Serial Number
+                    </h2>
+                  }
+                  name={""}
+                >
                   <Input
                     placeholder="Enter Terminal serial number"
                     className="py-5 px-5"
@@ -87,7 +78,7 @@ const TerminalCreateion: React.FC = () => {
             <>
               <Col span={24} className="mt-5 mb-10">
                 <Form.Item label="Upload File" name={""}>
-                  <Upload>
+                  <Upload {...props}>
                     <img src={FileUpload} alt="file-upload" />
                   </Upload>
                 </Form.Item>
@@ -108,14 +99,7 @@ const TerminalCreateion: React.FC = () => {
           </Col>
           <Col span={24} className="my-1">
             <Button
-              onClick={() =>
-                dispatch(
-                  setGlobalKey({
-                    key: "terminal",
-                    value: { showCreateModal: false, isSingleCreation: false },
-                  }),
-                )
-              }
+              onClick={() => toggleFormModalOption(false, false)}
               type="text"
               className="flex items-center justify-center py-5 px-5 mx-auto"
             >

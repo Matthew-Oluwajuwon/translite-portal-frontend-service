@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Column, Pie } from "@ant-design/plots"
-import { Form, Select } from "antd"
+import { Select } from "antd"
 import { data } from "./data"
 import { PieConfig } from "@ant-design/charts"
 
@@ -90,11 +90,9 @@ export const Chart: React.FC = () => {
             <p className="t">Tansaction</p>
             <p className="s">Successful</p>
             <p className="f">Failed</p>
-            <Form.Item initialValue="Last 7 Days">
               <Select defaultValue="Last 7 Days" className="bg-[#F5F6FA] border-none font-bold" disabled>
                 <Select.Option value="last_7_days">Last 7 Days</Select.Option>
               </Select>
-            </Form.Item>
           </div>
         </div>
         <h1 className="text-[#272848] font-bold font-[poppins-600] text-3xl my-10">

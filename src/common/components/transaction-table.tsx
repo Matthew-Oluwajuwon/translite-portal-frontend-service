@@ -11,6 +11,7 @@ interface Props {
   loading?: boolean
   pageSize?: number
   shouldExpand?: boolean
+  scrollX?: number
 }
 
 export const TransactionTableComponent: React.FC<Props> = ({
@@ -22,6 +23,7 @@ export const TransactionTableComponent: React.FC<Props> = ({
   pageSize,
   tableName,
   shouldExpand,
+  scrollX
 }) => {
   return (
     <div className="bg-white w-full rounded-lg my-5 table-shadow">
@@ -32,13 +34,15 @@ export const TransactionTableComponent: React.FC<Props> = ({
         {btn}
       </div>
       {forms}
+        
       <PageTable
         column={column}
         loading={loading}
         dataSource={dataSource}
         pageSize={pageSize}
         shouldExpand={shouldExpand}
+        scrollX={scrollX}
       />
-    </div>
+      </div>
   )
 }

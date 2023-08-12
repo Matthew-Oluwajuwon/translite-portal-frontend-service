@@ -3,7 +3,7 @@
 import { useLayoutEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { setAllGlobalKey } from "../../store"
-import { MENU_KEYS, MENU_NAMES } from "../../common/constants"
+import { BREADCRUMB, MENU_KEYS, MENU_NAMES } from "../../common/constants"
 import { Col, DatePicker, Form, Input, Row, Select } from "antd"
 import { TransactionTableComponent } from "../../common/components/transaction-table"
 import { TableExpandModal } from "../../common/components/table-expand-modal"
@@ -27,8 +27,8 @@ const Transactions: React.FC = () => {
       setAllGlobalKey({
         ...state,
         selectedKey: MENU_KEYS.TRANSACTION,
-        pageTitle: "Transactions",
-        breadcrumb: "Home > Transactions",
+        pageTitle: MENU_NAMES.TRANSACTION,
+        breadcrumb: BREADCRUMB.TRANSACTION,
       }),
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -114,7 +114,7 @@ const Transactions: React.FC = () => {
         shouldExpand={true}
         tableName="Transaction History"
         btn={
-          <button>
+          <button className="hover:shadow-md hover:scale-110 transition-all">
             <img src={Download} alt="download" className="rounded-md" />
           </button>
         }
@@ -221,6 +221,7 @@ const Transactions: React.FC = () => {
         loading={false}
         column={column}
         dataSource={data}
+        scrollX={1000}
       />
     </div>
   )

@@ -12,13 +12,6 @@ import dropdown from "../../../assets/icons/dropdown.svg"
 export const TransactionTable: React.FC = () => {
   const column: ColumnProps<any>[] = [
     {
-      title: "SN",
-      dataIndex: "key",
-      ellipsis: true,
-      width: "60px",
-      key: "1",
-    },
-    {
       title: "RRN",
       dataIndex: "rrn",
       ellipsis: true,
@@ -121,6 +114,7 @@ export const TransactionTable: React.FC = () => {
         loading={false}
         pageSize={5}
         tableName="Recent Transaction"
+        scrollX={1000}
       />
     </div>
   )

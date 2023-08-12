@@ -32,3 +32,10 @@ export enum ROUTE {
   CHARGE_CONFIGURATION = "/charge-configurations",
   PAGE_NOT_FOUND = "*",
 }
+
+export enum BREADCRUMB {
+  DASHBOARD = "Home > Dashboard",
+  PROFILE = "Home > Profile",
+  TRANSACTION = "Home > Transactions",
+  TERMINAL_MGT = "Home > Terminal Management"
+}

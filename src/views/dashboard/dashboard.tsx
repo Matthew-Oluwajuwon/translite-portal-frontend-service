@@ -3,7 +3,7 @@
 import { useLayoutEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { setAllGlobalKey } from "../../store"
-import { MENU_KEYS, MENU_NAMES } from "../../common/constants"
+import { BREADCRUMB, MENU_KEYS, MENU_NAMES } from "../../common/constants"
 import { DatePicker, DatePickerProps, Form } from "antd"
 import dayjs from "dayjs"
 import calendar from "../../assets/icons/calendar.svg"
@@ -23,8 +23,8 @@ const Dashboard: React.FC = () => {
       setAllGlobalKey({
         ...state,
         selectedKey: MENU_KEYS.DASHBOARD,
-        pageTitle: "Dashbaord",
-        breadcrumb: "Home > Dashboard",
+        pageTitle: MENU_NAMES.DASHBOARD,
+        breadcrumb: BREADCRUMB.DASHBOARD,
       }),
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -33,10 +33,10 @@ const Dashboard: React.FC = () => {
   const dateFormat = "MMM D"
   const customFormat: DatePickerProps["format"] = (value) =>
     `Today ${value.format(dateFormat)}`
-
+ 
   return (
     <div>
-      <Form.Item initialValue={dayjs("Aug 7", dateFormat)} className="my-10">
+      <Form.Item initialValue={dayjs("Aug 7", dateFormat)} className="my-5">
         <DatePicker
           format={customFormat}
           defaultValue={dayjs("Aug 7", dateFormat)}
