@@ -28,8 +28,8 @@ export enum ROUTE {
   TRANSACTION = "/transaction",
   TERMINAL_MGT = "/terminals-Management",
   CONFIGURATIONS = "/configurations",
-  TRANSACTION_ROUTING = "/transaction-routing",
-  CHARGE_CONFIGURATION = "/charge-configurations",
+  TRANSACTION_ROUTING = "/configurations/transaction-routing",
+  CHARGE_CONFIGURATION = "/configurations/charge-configurations",
   PAGE_NOT_FOUND = "*",
 }
 
@@ -37,5 +37,18 @@ export enum BREADCRUMB {
   DASHBOARD = "Home > Dashboard",
   PROFILE = "Home > Profile",
   TRANSACTION = "Home > Transactions",
-  TERMINAL_MGT = "Home > Terminal Management"
+  TERMINAL_MGT = "Home > Terminal Management",
+  TRANSACTION_ROUTING = "Home > Transaction Routing",
+  CHARGE_CONFIGURATION = "Home > Charge Configurations"
+}
+
+export enum TRANSACTION_CONFIGURATION_TYPES {
+  DIRECT = "Direct",
+  AUTOMATIC = "Automatic",
+  CUSTOM = "Custom"
+}
+
+export enum TRANSACTION_PROCESSOR {
+  INTERWITCH = "Interwitch",
+  NIBSS = "NIBSS"
 }

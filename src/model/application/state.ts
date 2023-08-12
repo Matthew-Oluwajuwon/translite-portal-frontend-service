@@ -24,19 +24,21 @@ export namespace State {
   export interface Global {
     menuCollapsed: boolean
     selectedKey: string
+    openKey: string
     pageTitle?: string
     breadcrumb?: string
     expand: boolean
     record?: any
     showLogoutModal?: boolean
-    terminal?: Terminals
+    terminal: Terminals
     configuration?: Configurations
     openMenuDrawer: boolean
+    request?: any;
   }
 
   export interface Terminals {
     showCreateModal: boolean
-    isSingleCreation?: boolean
+    isSingleCreation: boolean
   }
 
   export interface Configurations {

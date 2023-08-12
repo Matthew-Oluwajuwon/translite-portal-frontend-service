@@ -9,7 +9,12 @@ const initialState: State.Global = {
   selectedKey: MENU_KEYS.DASHBOARD,
   expand: false,
   showLogoutModal: false,
-  openMenuDrawer: false
+  openMenuDrawer: false,
+  openKey: MENU_KEYS.CONFIGURATIONS,
+  terminal: {
+    isSingleCreation: false,
+    showCreateModal: false
+  }
 }
 
 const GlobalSlice = createSlice({

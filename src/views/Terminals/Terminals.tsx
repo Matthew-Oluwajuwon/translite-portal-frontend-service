@@ -4,7 +4,7 @@ import { useLayoutEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { setAllGlobalKey } from "../../store"
 import { BREADCRUMB, MENU_KEYS, MENU_NAMES } from "../../common/constants"
-import { Button, Col, Form, Input, Row } from "antd"
+import { Button, Col, Form, Input, List, Row } from "antd"
 import { TransactionTableComponent } from "../../common/components/transaction-table"
 import { TableExpandModal } from "../../common/components/table-expand-modal"
 import Download from "../../assets/icons/download.svg"
@@ -77,14 +77,63 @@ const Terminals: React.FC = () => {
       },
     },
   ]
+  const TerminalKeys = [
+    {
+      key: "Terminal Keys",
+      value: "tltx1436789658jdhklhffas.trxlite/tmn102",
+    },
+    {
+      key: "ISW Keys",
+      value: "ISW2ngx1436789658jdhklhffas.trxlite/tmn102",
+    },
+    {
+      key: "NIBSS Keys",
+      value: "NIBSS2ngx1436789658jdhklhffas.trxlite/tmn102",
+    },
+  ]
 
   const { toggleCreateModal } = useToggle()
 
   return (
     <div>
       <TableExpandModal
-        isDownloadable={true}
-        modalCardTitle="Transaction Details"
+        isDownloadable={false}
+        modalCardTitle="Terminal Details"
+        extraContent={
+          <div className="my-5">
+            <span className="flex justify-between items-center px-10">
+              <p className="text-[0.75rem]">Terminal Keys</p>
+              <p className="text-[#6D71F9] text-[0.75rem] cursor-pointer hover:scale-95">
+                Refresh Keys
+              </p>
+            </span>
+            <List
+              dataSource={TerminalKeys}
+              className="mx-2 sm:mx-10 bg-[#F9F9F9] p-2 my-5"
+              renderItem={(item) => (
+                <List.Item>
+                  <Row
+                    style={{ width: "100%" }}
+                    className="grid grid-cols-[6rem_8rem] lg:grid-cols-[12rem_1fr] "
+                  >
+                    <Col
+                      lg={10}
+                      className="text-[0.7rem] lg:text-[0.8rem] text-[#717E95]"
+                    >
+                      {item.key}:
+                    </Col>
+                    <Col
+                      lg={14}
+                      className="text-[0.7rem] lg:text-[0.8rem] text-[#272848] font-semibold"
+                    >
+                      {item.value}
+                    </Col>
+                  </Row>
+                </List.Item>
+              )}
+            />
+          </div>
+        }
       />
       <TerminalCreateion />
       <TransactionTableComponent

@@ -13,6 +13,9 @@ import { ROUTE } from "./common/constants"
 import Profile from "./views/Profile/Profile"
 import Transactions from "./views/Transactions/Transactions"
 import Terminals from "./views/Terminals/Terminals"
+import TransactionRouting from "./views/configurations/transaction-routing/TransactionRouting"
+import ChargeConfiguration from "./views/configurations/charge-configuration/ChargeConfiguration"
+import Configurations from "./views/configurations/Configurations"
 
 const App = () => {
   const router = createBrowserRouter([
@@ -52,6 +55,20 @@ const App = () => {
         {
           element: <Terminals />,
           path: ROUTE.TERMINAL_MGT,
+        },
+        {
+          path: ROUTE.CONFIGURATIONS,
+          element: <Configurations />,
+          children: [
+            {
+              path: ROUTE.TRANSACTION_ROUTING,
+              element: <TransactionRouting />,
+            },
+            {
+              path: ROUTE.CHARGE_CONFIGURATION,
+              element: <ChargeConfiguration />,
+            },
+          ],
         },
       ],
       errorElement: <PageNotFound />,

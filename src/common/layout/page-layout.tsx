@@ -53,6 +53,7 @@ const PageLayout: React.FC = () => {
           <Menu
             defaultSelectedKeys={[state.selectedKey]}
             selectedKeys={[state.selectedKey]}
+            openKeys={[state.openKey]}
             className={`bg-[#1C166A] font-[poppins-500] font-medium ${
               state.menuCollapsed && "w-[4rem]"
             }`}
@@ -114,6 +115,7 @@ const PageLayout: React.FC = () => {
                 <Menu
                   defaultSelectedKeys={[state.selectedKey]}
                   selectedKeys={[state.selectedKey]}
+                  openKeys={[state.openKey]}
                   className={`bg-[#1C166A] font-[poppins-500] font-medium ${
                     state.menuCollapsed && "w-[4rem]"
                   }`}
