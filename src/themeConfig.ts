@@ -12,19 +12,24 @@ export const getThemeConfig = (): ThemeConfig | undefined => {
         colorFillAlter: "#F5F6FA",
       },
       Menu: {
-        colorItemBgSelected: "#6D71F9",
-        colorItemTextSelected: "#ffffff",
-        colorItemText: "#94A0B4",
-        colorSubItemBg: "#6D71F9",
-        colorItemTextHover: "#ffffff",
+        itemSelectedBg: "#6D71F9",
+        itemSelectedColor: "#ffffff",
+        itemColor: "#94A0B4",
+        subMenuItemBg: "#f5f5f5",
+        itemHoverColor: "#ffffff",
         controlHeightLG: 55,
+        subMenuItemBorderRadius: 20,
+        lineWidth: 0
       },
-      Radio: {
-        colorPrimary: "#6D71F9",
+      DatePicker: {
+        colorBgContainer: "#ffffff",
+        colorText: "#424D61"
       },
       Select: {
-        controlHeight: 40,
-      },
+        colorBgContainerDisabled: "#F5F6FA",
+        colorBorder: "none",
+        colorTextDisabled: "#272848"
+      }
     },
   }
 }
