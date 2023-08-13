@@ -9,7 +9,7 @@ import { TransactionTableComponent } from "../../common/components/transaction-t
 import { TableExpandModal } from "../../common/components/table-expand-modal"
 import Download from "../../assets/icons/download.svg"
 import Search from "../../assets/icons/Search.svg"
-import Plus from "../../assets/icons/Plus.svg"
+import Plus from "../../assets/icons/plus.svg"
 import { ColumnProps } from "antd/es/table"
 import { data } from "./components/mock-data"
 import dayjs from "dayjs"
