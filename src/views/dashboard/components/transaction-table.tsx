@@ -3,11 +3,11 @@ import React from "react"
 import { Button, Col, Form, Row, Select } from "antd"
 import IconRight from "../../../assets/icons/icon-right.svg"
 import { ColumnProps } from "antd/es/table"
-import { data } from "./mock-data"
 import { useNavigate } from "react-router-dom"
 import { TransactionTableComponent } from "../../../common/components/transaction-table"
 import { ROUTE } from "../../../common/constants"
 import dropdown from "../../../assets/icons/dropdown.svg"
+import { data } from "./mock-data"
 
 export const TransactionTable: React.FC = () => {
   const column: ColumnProps<any>[] = [

@@ -8,9 +8,9 @@ import { DatePicker, DatePickerProps, Form } from "antd"
 import dayjs from "dayjs"
 import calendar from "../../assets/icons/calendar.svg"
 import dropdown from "../../assets/icons/dropdown.svg"
-import Statistics from "./components/statistics"
-import { Chart } from "./components/chart"
 import { TransactionTable } from "./components/transaction-table"
+import { Chart } from "./components/chart"
+import Statistics from "./components/statistics"
 
 const Dashboard: React.FC = () => {
   const dispatch = useAppDispatch()
