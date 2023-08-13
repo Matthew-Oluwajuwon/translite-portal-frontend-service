@@ -28,13 +28,18 @@ const AddNewRule: React.FC = () => {
       <p className="text-[#717E95] my-2 font-semibold">
         Add a new rule to routing configurations
       </p>
-      <Form layout="vertical" labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}>
+      <Form
+        layout="vertical"
+        labelCol={{ span: 24 }}
+        wrapperCol={{ span: 24 }}
+        className="font-semibold"
+      >
         <Row style={{ width: "100%" }}>
           <div className="w-full">
-            <Col span={24}>
+            <Col span={18}>
               <Form.Item
                 label={
-                  <h2 className="text-[#272848] font-semibold mt-5">
+                  <h2 className="text-[#272848] mt-5">
                     Enter Paste comma separated BIN or select all
                   </h2>
                 }
@@ -62,15 +67,19 @@ const AddNewRule: React.FC = () => {
                 </Form.Item>
               </Row>
             </Col>
-            <Row className="my-4">
+            <Col span={18} className="my-4">
               <Form.Item
                 label={<p>Please select a processor from below list.</p>}
               >
-                <Select className="border p-2 w-full">
+                <Select
+                  className="border rounded-lg p-2 w-full"
+                  defaultValue={"Interswitch"}
+                  bordered
+                >
                   <Select.Option value="Interswitch">Interswitch</Select.Option>
                 </Select>
               </Form.Item>
-            </Row>
+            </Col>
             <Col span={24}>
               <Button
                 type="primary"
