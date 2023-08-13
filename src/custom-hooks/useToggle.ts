@@ -65,12 +65,30 @@ const useToggle = () => {
     [dispatch],
   )
 
+  const toggleAddNewRuleModal = useCallback(() => {
+    // dispatch(
+    //   setAllGlobalKey({
+    //     ...state,
+    //     showAddNewRuleModal: !state.showAddNewRuleModal,
+    //   }),
+    // )
+    dispatch(
+      setAllGlobalKey({
+        ...state,
+        transactionRouting: {
+          ...state.transactionRouting,
+          showAddNewRuleModal: !state.transactionRouting?.showAddNewRuleModal,
+        },
+      }),
+    )
+  }, [dispatch, state])
   return {
     toggleMenu,
     toggleOpenMenuDrawer,
     toggleLogoutModal,
     toggleCreateModal,
     toggleFormModalOption,
+    toggleAddNewRuleModal,
   }
 }
 

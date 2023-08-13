@@ -13,8 +13,11 @@ const initialState: State.Global = {
   openKey: MENU_KEYS.CONFIGURATIONS,
   terminal: {
     isSingleCreation: false,
-    showCreateModal: false
-  }
+    showCreateModal: false,
+  },
+  transactionRouting: {
+    showAddNewRuleModal: false,
+  },
 }
 
 const GlobalSlice = createSlice({
@@ -30,9 +33,9 @@ const GlobalSlice = createSlice({
       return state
     },
     setAllGlobalKey: (state, action: PayloadAction<State.Global>) => {
-      state = action.payload as any;
-      return state;
-    }
+      state = action.payload as any
+      return state
+    },
   },
 })
 
