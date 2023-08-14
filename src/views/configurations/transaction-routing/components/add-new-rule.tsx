@@ -3,6 +3,7 @@ import { useAppSelector } from "../../../../store/hooks"
 import { PageModal } from "../../../../common/components/modal"
 import useToggle from "../../../../custom-hooks/useToggle"
 import { Button, Form, Row, Col, Input, Radio, Select } from "antd"
+import close from "../../../../assets/icons/Close.svg"
 
 const AddNewRule: React.FC = () => {
   const state = useAppSelector((state) => {
@@ -18,13 +19,22 @@ const AddNewRule: React.FC = () => {
       handleCancel={toggleAddNewRuleModal}
       centered={true}
     >
-      <span
-        onClick={toggleAddNewRuleModal}
-        className="float-right cursor-pointer text-3xl"
-      >
-        X
-      </span>
-      <h5 className="text-[#130F49] font-bold text-lg">Add New Rule</h5>
+      <div className="flex justify-end">
+        {/* <span
+          onClick={toggleAddNewRuleModal}
+          className="float-right cursor-pointer text-3xl"
+        >
+          X
+        </span> */}
+        <img
+          src={close}
+          alt="close modal"
+          className="cursor-pointer"
+          onClick={toggleAddNewRuleModal}
+        />
+      </div>
+
+      <h5 className="text-[#130F49] font-bold text-lg ">Add New Rule</h5>
       <p className="text-[#717E95] my-2 font-semibold">
         Add a new rule to routing configurations
       </p>
