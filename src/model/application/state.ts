@@ -19,6 +19,7 @@ export namespace State {
     showChangePasswordResponseModal: boolean
     showResetPasswordResponseModal: boolean
     showForgotPasswordResponseModal: boolean
+    postUrl: string
   }
 
   export interface Global {
