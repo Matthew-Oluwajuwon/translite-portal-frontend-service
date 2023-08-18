@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { FORM_METHODS } from "@common/constants"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import { State } from "model/application/state"
+import { State } from "../../model/application/state"
 
 const authApi = createApi({
   reducerPath: "authApi",
@@ -13,7 +12,7 @@ const authApi = createApi({
       query: (data: State.Authentication) => {
         return {
           url: data.postUrl,
-          method: FORM_METHODS.POST,
+          method: data.formMethod,
           body: data.request,
         }
       },

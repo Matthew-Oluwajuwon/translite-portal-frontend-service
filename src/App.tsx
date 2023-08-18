@@ -16,8 +16,18 @@ import Transactions from "@views/Transactions/Transactions"
 import Configurations from "@views/configurations/Configurations"
 import TransactionRouting from "@views/configurations/transaction-routing/TransactionRouting"
 import Auth from "@common/layout/Auth"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import { ProtectedRoutes } from "./protected-routes"
 
 const App = () => {
+  const isLoggedIn = () => {
+    if (localStorage.getItem("*****")) {
+      return true
+    }
+    return false
+  }
+
   const router = createBrowserRouter([
     {
       element: <Auth />,
@@ -38,7 +48,11 @@ const App = () => {
       errorElement: <PageNotFound />,
     },
     {
-      element: <PageLayout />,
+      element: (
+        <ProtectedRoutes isLoggedIn={isLoggedIn()}>
+          <PageLayout />
+        </ProtectedRoutes>
+      ),
       children: [
         {
           element: <Dashboard />,
@@ -78,6 +92,7 @@ const App = () => {
   return (
     <ConfigProvider theme={getThemeConfig()}>
       <RouterProvider router={router} />
+      <ToastContainer />
     </ConfigProvider>
   )
 }

@@ -27,7 +27,7 @@ const Profile: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch])
 
-  const { toggleLogoutModal } = useToggle()
+  const { toggleLogoutModal, handleLogout } = useToggle()
 
   return (
     <div>
@@ -35,6 +35,7 @@ const Profile: React.FC = () => {
         <Logout
           openModal={state.showLogoutModal}
           onCancel={toggleLogoutModal}
+          onClick={handleLogout}
         />
       )}
       <div className="grid grid-rows-[10rem_1fr] gap-7">
@@ -53,13 +54,13 @@ const Profile: React.FC = () => {
               </Typography.Paragraph>
             </div>
           </div>
-          <div className="hidden md:block">
+          <div>
             <button
               onClick={toggleLogoutModal}
               className="flex items-center justify-center gap-1 py-3 px-3 rounded-md text-[#FF291F] bg-[#FFF0F4] cursor-pointer hover:shadow-md hover:scale-110 transition-all text-[0.8rem]"
             >
               <img src={Log} alt="logout" />
-              Log Out
+              <p className="hidden md:block">Log Out</p>
             </button>
           </div>
         </div>

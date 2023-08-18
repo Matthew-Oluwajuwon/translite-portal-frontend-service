@@ -21,6 +21,8 @@ const initialState: State.Authentication = {
   showForgotPasswordResponseModal: false,
   inputType: "",
   showLogoutModal: false,
+  postUrl: "",
+  formMethod: "",
 }
 
 const AuthSlice = createSlice({
@@ -45,9 +47,13 @@ const AuthSlice = createSlice({
       }
       return state
     },
+    setAllAuthKey: (state, action: PayloadAction<State.Authentication>) => {
+      state = action.payload as any
+      return state
+    },
   },
 })
 
-export const { setAuthKey, setField } = AuthSlice.actions
+export const { setAuthKey, setField, setAllAuthKey } = AuthSlice.actions
 
 export const AuthReducer = AuthSlice.reducer

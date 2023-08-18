@@ -2,12 +2,17 @@
 import { useCallback } from "react"
 import { setAllGlobalKey, setGlobalKey } from "../store"
 import { useAppDispatch, useAppSelector } from "../store/hooks"
+import { useNavigate } from "react-router-dom"
+import { ROUTE } from "@common/constants"
 
 const useToggle = () => {
   const dispatch = useAppDispatch()
   const state = useAppSelector((state) => {
     return state.global
   })
+  
+  const navigate = useNavigate()
+  
   const toggleMenu = useCallback(() => {
     dispatch(
       setGlobalKey({
@@ -66,12 +71,6 @@ const useToggle = () => {
   )
 
   const toggleAddNewRuleModal = useCallback(() => {
-    // dispatch(
-    //   setAllGlobalKey({
-    //     ...state,
-    //     showAddNewRuleModal: !state.showAddNewRuleModal,
-    //   }),
-    // )
     dispatch(
       setAllGlobalKey({
         ...state,
@@ -82,6 +81,14 @@ const useToggle = () => {
       }),
     )
   }, [dispatch, state])
+  
+  const handleLogout = () => {
+    localStorage.clear()
+    return navigate(ROUTE.INDEX, {
+      replace: true
+    })
+  }
+  
   return {
     toggleMenu,
     toggleOpenMenuDrawer,
@@ -89,6 +96,7 @@ const useToggle = () => {
     toggleCreateModal,
     toggleFormModalOption,
     toggleAddNewRuleModal,
+    handleLogout
   }
 }
 
