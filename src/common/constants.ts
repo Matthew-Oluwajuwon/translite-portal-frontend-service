@@ -52,3 +52,8 @@ export enum TRANSACTION_PROCESSOR {
   INTERWITCH = "Interwitch",
   NIBSS = "NIBSS"
 }
+
+export enum FORM_METHODS {
+  POST = "POST",
+  GET = "GET"
+}

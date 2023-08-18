@@ -3,14 +3,16 @@ import {
   configureStore,
   ThunkAction,
   Action,
-  combineReducers
+  combineReducers,
 } from "@reduxjs/toolkit"
 import { AuthReducer, setAuthKey, setField } from "./slice/auth"
 import { GlobalReducer, setGlobalKey, setAllGlobalKey } from "./slice/global"
+import authApi from "./apis/auth.api"
 
 const reducer = combineReducers({
   auth: AuthReducer,
   global: GlobalReducer,
+  [authApi.reducerPath]: authApi.reducer,
 })
 
 export const store = configureStore({
@@ -19,7 +21,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({
       serializableCheck: false,
-    }).concat()
+    }).concat(authApi.middleware)
   },
 })
 
@@ -33,4 +35,3 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >
-
