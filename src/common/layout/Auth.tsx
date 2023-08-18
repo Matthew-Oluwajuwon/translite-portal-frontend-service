@@ -49,7 +49,8 @@ const Auth: React.FC = () => {
         replace: true,
       })
     }
-  }, [location.pathname, token, dispatch, navigate])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname, token, dispatch])
 
   return (
     <div className="min-h-[100svh] bg-[#4C469B] flex justify-center items-center flex-col lg:flex-row">
