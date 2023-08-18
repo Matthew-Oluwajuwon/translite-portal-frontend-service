@@ -22,6 +22,7 @@ import {
   Select,
   Input,
 } from "antd"
+import AddNewRule from "./components/add-new-rule"
 
 import BtnSettings from "../../../assets/icons/btn-settings.svg"
 import Info from "../../../assets/icons/info.svg"
@@ -29,6 +30,7 @@ import PlusIcon from "../../../assets/icons/plus.svg"
 import Search from "../../../assets/icons/Search.svg"
 import { ColumnProps } from "antd/es/table/Column"
 import more from "../../../assets/icons/more-action.svg"
+import useToggle from "../../../custom-hooks/useToggle"
 
 const TransactionRouting = () => {
   const dispatch = useAppDispatch()
@@ -145,9 +147,11 @@ const TransactionRouting = () => {
     },
     [dispatch],
   )
+  const { toggleAddNewRuleModal } = useToggle()
 
   return (
     <div>
+      <AddNewRule />
       <div
         className="bg-[#ffffff] pt-[2rem] my-10 rounded-md mb-10"
         style={{ boxShadow: "0px 10px 13px rgba(17, 38, 146, 0.05)" }}
@@ -363,7 +367,7 @@ const TransactionRouting = () => {
                 <Button
                   type="primary"
                   className="flex justify-between items-center gap-2 mt-3 py-6 px-0 pr-5 bg-[#6D71F9]"
-                  //   onClick={() => navigate(ROUTE.TRANSACTION)}
+                  onClick={toggleAddNewRuleModal}
                 >
                   <img src={PlusIcon} alt="icon-pluus" /> Add New Rule
                 </Button>

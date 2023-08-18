@@ -34,7 +34,8 @@ export namespace State {
     terminal: Terminals
     configuration?: Configurations
     openMenuDrawer: boolean
-    request?: any;
+    request?: any
+    transactionRouting?: TransactionRouting
   }
 
   export interface Terminals {
@@ -45,5 +46,8 @@ export namespace State {
   export interface Configurations {
     processorSelection?: string
     cancelConfig?: boolean
+  }
+  export interface TransactionRouting {
+    showAddNewRuleModal?: boolean
   }
 }

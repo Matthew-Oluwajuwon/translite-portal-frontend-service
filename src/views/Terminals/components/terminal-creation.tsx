@@ -26,12 +26,9 @@ const TerminalCreateion: React.FC = () => {
       },
     )
   }, [form, values])
-  
   const props: UploadProps = {
     fileList: [],
   }
-  
-
   const { toggleCreateModal, toggleFormModalOption } = useToggle()
   const { setFieldChange } = useSetRequest()
 
