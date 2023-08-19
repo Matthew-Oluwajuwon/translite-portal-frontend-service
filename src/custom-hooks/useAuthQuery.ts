@@ -4,7 +4,7 @@ import GrayChecker from "../assets/icons/gray-check.svg"
 import GreenCheck from "../assets/icons/green-check.svg"
 import RedCheck from "../assets/icons/red-check.svg"
 import { useAppDispatch, useAppSelector } from "../store/hooks"
-import { setAuthKey, setField } from "../store"
+import { setAllAuthKey, setAuthKey, setField } from "../store"
 import { ApiRequest } from "../model/client/request"
 
 export const useAuthQuery = () => {
@@ -41,6 +41,21 @@ export const useAuthQuery = () => {
       )
     },
     [dispatch],
+  )
+  
+  const setAuthRequestField = useCallback(
+    (key: any, value: any) => {
+      dispatch(
+        setAllAuthKey({
+          ...state,
+          request: {
+            ...state.request,
+            [key]: value,
+          },
+        }),
+      )
+    },
+    [dispatch, state],
   )
 
   const passwordValidator = () => {
@@ -121,5 +136,6 @@ export const useAuthQuery = () => {
     setResetInputField,
     passwordValidator,
     contentData,
+    setAuthRequestField
   }
 }

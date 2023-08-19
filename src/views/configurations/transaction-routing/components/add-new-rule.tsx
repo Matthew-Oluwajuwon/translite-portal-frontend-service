@@ -20,12 +20,6 @@ const AddNewRule: React.FC = () => {
       centered={true}
     >
       <div className="flex justify-end">
-        {/* <span
-          onClick={toggleAddNewRuleModal}
-          className="float-right cursor-pointer text-3xl"
-        >
-          X
-        </span> */}
         <img
           src={close}
           alt="close modal"
@@ -61,7 +55,7 @@ const AddNewRule: React.FC = () => {
                 <Radio value={"SelectAllBINs"}>Select all BINs</Radio>
               </Radio.Group>
             </Col>
-            <Col className="border rounded-lg p-2 mt-4">
+            <Col className="border rounded-lg p-5 mt-4">
               <Form.Item label={<p>Amount</p>}>
                 <Radio.Group className="flex items-center justify-center sm:justify-start ">
                   <Radio value={"global"}>Global</Radio>

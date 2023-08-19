@@ -5,9 +5,9 @@ import {
   Action,
   combineReducers,
 } from "@reduxjs/toolkit"
-import { AuthReducer, setAuthKey, setField } from "./slice/auth"
+import { AuthReducer, setAuthKey, setField, setAllAuthKey } from "./slice/auth"
 import { GlobalReducer, setGlobalKey, setAllGlobalKey } from "./slice/global"
-import authApi from "./apis/auth.api"
+import authApi, { useAuthMutation } from "./apis/auth.api"
 
 const reducer = combineReducers({
   auth: AuthReducer,
@@ -25,7 +25,8 @@ export const store = configureStore({
   },
 })
 
-export { setAuthKey, setField, setGlobalKey, setAllGlobalKey }
+export { setAuthKey, setField, setGlobalKey, setAllGlobalKey, setAllAuthKey }
+export { useAuthMutation }
 
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>
