@@ -36,7 +36,14 @@ export namespace State {
     configuration?: Configurations
     openMenuDrawer: boolean
     request?: any
+    response?: any
+    searchResponse?: any
     transactionRouting?: TransactionRouting
+    postUrl?: string
+    getUrl?: string
+    updateUrl?: string
+    selectUrl?: string
+    deleteUrl?: string
   }
 
   export interface Terminals {

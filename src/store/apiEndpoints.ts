@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 export const apiEndpoints = {
   auth: {
-    login: "authenticate"
+    login: "authenticate",
+    getAdminUser: "adminUser"
   },
 }

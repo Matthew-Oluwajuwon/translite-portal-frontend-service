@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
 import { useCallback, useEffect } from "react"
-import { useAuthMutation } from "../store/index"
+import { useLoginMutation } from "../store/index"
 import Notify from "@common/components/notification"
 import { ApiResponse } from "model/client/response"
 import { useNavigate } from "react-router-dom"
 import { ROUTE } from "@common/constants"
 
 const useAuthApi = () => {
-  const [authApi, { data, isLoading }] = useAuthMutation()
+  const [authApi, { data, isLoading }] = useLoginMutation()
   const navigate = useNavigate()
 
   const handleAuthResponse = useCallback(() => {

@@ -15,10 +15,7 @@ const Auth: React.FC = () => {
   const state = useAppSelector((state) => {
     return state.auth
   })
-  // retreive token from cookies
-  const token = localStorage.getItem("*****")
-  const navigate = useNavigate()
-
+  
   const setChildrenData = useCallback(
     (formMethod: "POST" | "GET", postUrl: string): void => {
       // dispatch the formMethod and the postUrl for form submission when the page mouths
@@ -32,9 +29,14 @@ const Auth: React.FC = () => {
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [dispatch],
-  )
-
-  useLayoutEffect(() => {
+    )
+    
+    const navigate = useNavigate()
+    const token = localStorage.getItem("*****")
+    
+    
+    useLayoutEffect(() => {
+    // retreive token from cookies
     document.title =
       location.pathname === ROUTE.INDEX
         ? "SIGN IN | Translite"
@@ -50,7 +52,7 @@ const Auth: React.FC = () => {
       })
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname, token, dispatch])
+  }, [location.pathname, token, dispatch, state])
 
   return (
     <div className="min-h-[100svh] bg-[#4C469B] flex justify-center items-center flex-col lg:flex-row">

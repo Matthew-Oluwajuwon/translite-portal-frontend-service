@@ -19,6 +19,7 @@ import Auth from "@common/layout/Auth"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { ProtectedRoutes } from "./protected-routes"
+import { ErrorPage } from "./error-page"
 
 const App = () => {
   const isLoggedIn = () => {
@@ -45,7 +46,7 @@ const App = () => {
           element: <ResetPassword />,
         },
       ],
-      errorElement: <PageNotFound />,
+      errorElement: <ErrorPage />,
     },
     {
       element: (
@@ -85,7 +86,7 @@ const App = () => {
           ],
         },
       ],
-      errorElement: <PageNotFound />,
+      errorElement: <ErrorPage />,
     },
   ])
 
