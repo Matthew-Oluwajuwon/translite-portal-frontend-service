@@ -26,7 +26,7 @@ const PageLayout: React.FC = () => {
 
   const { toggleMenu, toggleOpenMenuDrawer } = useToggle()
   const { windowWidth } = useWindowResize()
-  const { data, isLoading } = useFetchData()
+  const { isLoading } = useFetchData()
 
   useLayoutEffect(() => {
     dispatch(
