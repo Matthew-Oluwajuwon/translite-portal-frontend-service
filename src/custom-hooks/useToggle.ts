@@ -10,9 +10,9 @@ const useToggle = () => {
   const state = useAppSelector((state) => {
     return state.global
   })
-  
+
   const navigate = useNavigate()
-  
+
   const toggleMenu = useCallback(() => {
     dispatch(
       setGlobalKey({
@@ -24,11 +24,27 @@ const useToggle = () => {
 
   const toggleOpenMenuDrawer = useCallback(() => {
     dispatch(
+      setAllGlobalKey({
+        ...state,
+        showLogoutModal: false,
+        terminal: {
+          ...state.terminal,
+          isSingleCreation: false,
+          showCreateModal: false,
+        },
+        transactionRouting: {
+          ...state.transactionRouting,
+          showAddNewRuleModal: false,
+        },
+      }),
+    )
+    dispatch(
       setGlobalKey({
         key: "openMenuDrawer",
         value: !state.openMenuDrawer,
       }),
     )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, state.openMenuDrawer])
 
   const toggleLogoutModal = useCallback(
@@ -81,14 +97,14 @@ const useToggle = () => {
       }),
     )
   }, [dispatch, state])
-  
+
   const handleLogout = () => {
     localStorage.clear()
     return navigate(ROUTE.INDEX, {
-      replace: true
+      replace: true,
     })
   }
-  
+
   return {
     toggleMenu,
     toggleOpenMenuDrawer,
@@ -96,7 +112,7 @@ const useToggle = () => {
     toggleCreateModal,
     toggleFormModalOption,
     toggleAddNewRuleModal,
-    handleLogout
+    handleLogout,
   }
 }
 

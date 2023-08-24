@@ -49,9 +49,9 @@ const App = () => {
     },
     {
       element: (
-        <ProtectedRoutes isLoggedIn={isLoggedIn()}>
+        // <ProtectedRoutes isLoggedIn={isLoggedIn()}>
           <PageLayout />
-        </ProtectedRoutes>
+        // </ProtectedRoutes>
       ),
       children: [
         {

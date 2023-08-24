@@ -15,7 +15,7 @@ const Auth: React.FC = () => {
   const state = useAppSelector((state) => {
     return state.auth
   })
-  
+
   const setChildrenData = useCallback(
     (formMethod: "POST" | "GET", postUrl: string): void => {
       // dispatch the formMethod and the postUrl for form submission when the page mouths
@@ -29,13 +29,12 @@ const Auth: React.FC = () => {
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [dispatch],
-    )
-    
-    const navigate = useNavigate()
-    const token = localStorage.getItem("*****")
-    
-    
-    useLayoutEffect(() => {
+  )
+
+  const navigate = useNavigate()
+  const token = localStorage.getItem("*****")
+
+  useLayoutEffect(() => {
     // retreive token from cookies
     document.title =
       location.pathname === ROUTE.INDEX
@@ -51,8 +50,8 @@ const Auth: React.FC = () => {
         replace: true,
       })
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname, token, dispatch, state])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname, token, dispatch])
 
   return (
     <div className="min-h-[100svh] bg-[#4C469B] flex justify-center items-center flex-col lg:flex-row">
