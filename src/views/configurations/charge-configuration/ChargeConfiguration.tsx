@@ -81,7 +81,7 @@ const ChargeConfiguration = () => {
               Please enter flat amount to charge per transaction (₦)
             </p>
             <Form.Item className="">
-              <Input addonBefore="N" placeholder="Flat fee" className="" />
+              <Input addonBefore="N" placeholder="Flat fee" className="py-5" />
             </Form.Item>
             <div className="flex gap-2">
               <Button type="primary" className="bg-[#6D71F9]">
@@ -105,7 +105,7 @@ const ChargeConfiguration = () => {
               Please enter percentage to charge per transaction (%)
             </p>
             <Form.Item className="">
-              <Input addonBefore="%" placeholder="Percentage" className="" />
+              <Input addonBefore="%" placeholder="Percentage" />
             </Form.Item>
             <div className="flex gap-2">
               <Button type="primary" className="bg-[#6D71F9]">
