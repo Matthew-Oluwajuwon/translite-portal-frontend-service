@@ -52,7 +52,7 @@ const Auth: React.FC = () => {
       })
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname, token, dispatch])
+  }, [location.pathname, token, dispatch, state])
 
   return (
     <div className="min-h-[100svh] bg-[#4C469B] flex justify-center items-center flex-col lg:flex-row">
