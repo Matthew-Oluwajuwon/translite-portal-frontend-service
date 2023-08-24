@@ -4,7 +4,7 @@ import { Button } from "antd"
 import { setGlobalKey } from "../../store"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { Outlet, useLocation, useNavigate } from "react-router-dom"
-import { useLayoutEffect } from "react"
+import { useEffect } from "react"
 import { ROUTE } from "../../common/constants"
 
 const Configurations = () => {
@@ -15,7 +15,7 @@ const Configurations = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate()
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     dispatch(
       setGlobalKey({
         key: "terminal",

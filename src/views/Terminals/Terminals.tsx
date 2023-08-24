@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 
-import { useLayoutEffect } from "react"
+import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { setAllGlobalKey } from "../../store"
 import { BREADCRUMB, MENU_KEYS, MENU_NAMES } from "../../common/constants"
@@ -22,7 +22,7 @@ const Terminals: React.FC = () => {
   const state = useAppSelector((state) => {
     return state.global
   })
-  useLayoutEffect(() => {
+  useEffect(() => {
     document.title = MENU_NAMES.TERMINAL_MGT + " | Translite"
     dispatch(
       setAllGlobalKey({

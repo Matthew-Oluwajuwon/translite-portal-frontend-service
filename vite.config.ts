@@ -24,7 +24,7 @@ export default defineConfig({
       "@common": "/src/common",
       "@model": "/src/model",
       "@custom-hooks": "/src/custom-hooks",
-      "@store": "/src/store"
+      "@store": "/src/store",
       // ...other aliases
     },
   },

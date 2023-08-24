@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 
-import { useCallback, useLayoutEffect } from "react"
+import { useCallback, useEffect } from "react"
 import {
   BREADCRUMB,
   MENU_KEYS,
@@ -37,7 +37,7 @@ const TransactionRouting = () => {
   const state = useAppSelector((state) => {
     return state.global
   })
-  useLayoutEffect(() => {
+  useEffect(() => {
     document.title = MENU_NAMES.TRANSACTION_ROUTING + " | Translite"
     dispatch(
       setAllGlobalKey({

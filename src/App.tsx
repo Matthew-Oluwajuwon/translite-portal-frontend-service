@@ -2,7 +2,6 @@
 import { ConfigProvider } from "antd"
 import { getThemeConfig } from "./themeConfig"
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
-import { PageNotFound } from "./page-not-found"
 import { ROUTE } from "./common/constants"
 import Dashboard from "@views/dashboard/dashboard"
 import PageLayout from "@common/layout/page-layout"
@@ -18,6 +17,7 @@ import TransactionRouting from "@views/configurations/transaction-routing/Transa
 import Auth from "@common/layout/Auth"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import { ErrorPage } from "./error-page"
 import { ProtectedRoutes } from "./protected-routes"
 
 const App = () => {
@@ -45,7 +45,7 @@ const App = () => {
           element: <ResetPassword />,
         },
       ],
-      errorElement: <PageNotFound />,
+      errorElement: <ErrorPage />,
     },
     {
       element: (
@@ -85,7 +85,7 @@ const App = () => {
           ],
         },
       ],
-      errorElement: <PageNotFound />,
+      errorElement: <ErrorPage />,
     },
   ])
 

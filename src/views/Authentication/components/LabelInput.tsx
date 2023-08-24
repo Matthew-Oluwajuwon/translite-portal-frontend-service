@@ -52,14 +52,14 @@ const LabeledInput: React.FC<LabelInputProps> = ({
         className={`text-[#717E95] absolute z-40 ${
           state.isFocused
             ? "text-[0.5rem] mb-2 font-medium top-1"
-            : "text-base top-3"
+            : "text-base top-2"
         }`}
       >
         {label}
       </label>
       <div
         className={`absolute ${
-          state.isFocused ? "bottom-3" : "bottom-1"
+          state.isFocused ? "bottom-0" : "bottom-1"
         } w-full pl-2 left-0`}
       >
         {type?.toLowerCase().includes("password") ? (

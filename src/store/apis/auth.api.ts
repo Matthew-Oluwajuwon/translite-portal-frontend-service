@@ -2,13 +2,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { State } from "../../model/application/state"
 
-const authApi = createApi({
-  reducerPath: "authApi",
+const loginApi = createApi({
+  reducerPath: "loginApi",
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_APP_API_BASE_URL,
   }),
   endpoints: (builder) => ({
-    auth: builder.mutation({
+    login: builder.mutation({
       query: (data: State.Authentication) => {
         return {
           url: data.postUrl,
@@ -20,5 +20,5 @@ const authApi = createApi({
   }),
 })
 
-export const { useAuthMutation } = authApi
-export default authApi
+export const { useLoginMutation } = loginApi
+export default loginApi

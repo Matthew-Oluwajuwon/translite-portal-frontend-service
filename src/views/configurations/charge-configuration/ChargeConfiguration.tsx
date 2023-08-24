@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 
-import { useLayoutEffect } from "react"
+import { useEffect } from "react"
 import { MENU_NAMES, MENU_KEYS, BREADCRUMB } from "../../../common/constants"
 import { setAllGlobalKey } from "../../../store"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
@@ -10,7 +10,7 @@ const ChargeConfiguration = () => {
     const state = useAppSelector((state) => {
       return state.global
     })
-    useLayoutEffect(() => {
+    useEffect(() => {
       document.title = MENU_NAMES.CHARGE_CONFIGURATION + " | Translite"
       dispatch(
         setAllGlobalKey({
