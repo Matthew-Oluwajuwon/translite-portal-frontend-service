@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { Outlet } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 import Logo from "../../assets/images/logo.svg"
 import Drag from "../../assets/icons/drag.svg"
 import DragOut from "../../assets/icons/drag-out.svg"
@@ -16,6 +16,7 @@ import menuIcon from "../../assets/icons/menu.svg"
 import { useEffect } from "react"
 import { setAllGlobalKey } from "../../store"
 import { apiEndpoints } from "../../store/apiEndpoints"
+import { ROUTE } from "@common/constants"
 
 const PageLayout: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -25,8 +26,13 @@ const PageLayout: React.FC = () => {
 
   const { toggleMenu, toggleOpenMenuDrawer } = useToggle()
   const { windowWidth } = useWindowResize()
+  const navigate = useNavigate()
 
   useEffect(() => {
+    if (!localStorage.getItem("*****")) {
+     return navigate(ROUTE.INDEX, {replace: true})
+    }
+
     dispatch(
       setAllGlobalKey({
         ...state,
