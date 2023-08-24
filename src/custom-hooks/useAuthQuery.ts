@@ -55,6 +55,7 @@ export const useAuthQuery = () => {
         }),
       )
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [dispatch, state],
   )
 

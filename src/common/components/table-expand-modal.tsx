@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Col, Divider, List, Row } from "antd"
 import React, { useCallback, useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
@@ -36,7 +37,7 @@ export const TableExpandModal: React.FC<Props> = ({
       })
     }
     return data
-  }, [state])
+  }, [])
 
   const convertCamelCaseToTitle = (title: any) => {
     const result = title.replaceAll(/([A-Z])/g, " $1").replaceAll("_", " ")

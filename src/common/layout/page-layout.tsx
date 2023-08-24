@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom"
 import Logo from "../../assets/images/logo.svg"
 import Drag from "../../assets/icons/drag.svg"
 import DragOut from "../../assets/icons/drag-out.svg"
-import { Drawer, Menu, Spin } from "antd"
+import { Drawer, Menu } from "antd"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import ShortLogo from "../../assets/icons/short-logo.svg"
 import { MenuItems } from "../components/menu-items"
@@ -13,7 +13,6 @@ import useToggle from "../../custom-hooks/useToggle"
 import dropdown from "../../assets/icons/dropdown.svg"
 import useWindowResize from "../../custom-hooks/useWindowResize"
 import menuIcon from "../../assets/icons/menu.svg"
-import useFetchData from "../../custom-hooks/useFetchData"
 import { useLayoutEffect } from "react"
 import { setAllGlobalKey } from "../../store"
 import { apiEndpoints } from "../../store/apiEndpoints"
@@ -26,7 +25,6 @@ const PageLayout: React.FC = () => {
 
   const { toggleMenu, toggleOpenMenuDrawer } = useToggle()
   const { windowWidth } = useWindowResize()
-  const { isLoading } = useFetchData()
 
   useLayoutEffect(() => {
     dispatch(
@@ -38,7 +36,7 @@ const PageLayout: React.FC = () => {
   }, [dispatch])
 
   return (
-    <Spin spinning={isLoading}>
+    // <Spin spinning={isLoading}>
       <main className="min-h-[100svh] relative">
         <aside
           className={`bg-[#1C166A] ${
@@ -76,6 +74,19 @@ const PageLayout: React.FC = () => {
               mode="inline"
               items={MenuItems}
               inlineCollapsed={state.menuCollapsed}
+              onClick={() => dispatch(setAllGlobalKey({
+                ...state,
+                showLogoutModal: false,
+                terminal: {
+                  ...state.terminal,
+                  isSingleCreation: false,
+                  showCreateModal: false
+                },
+                transactionRouting: {
+                  ...state.transactionRouting,
+                  showAddNewRuleModal: false
+                }
+              }))}
             />
           </div>
         </aside>
@@ -161,7 +172,7 @@ const PageLayout: React.FC = () => {
           </footer>
         </section>
       </main>
-    </Spin>
+    // </Spin>
   )
 }
 

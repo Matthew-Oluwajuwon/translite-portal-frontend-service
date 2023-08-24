@@ -52,7 +52,7 @@ const Auth: React.FC = () => {
       })
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname, token, dispatch, state])
+  }, [location.pathname, token, dispatch])
 
   return (
     <div className="min-h-[100svh] bg-[#4C469B] flex justify-center items-center flex-col lg:flex-row">
@@ -62,7 +62,7 @@ const Auth: React.FC = () => {
         className="lg:absolute lg:top-10 lg:left-10 mb-5 lg:mb-0"
       />
       <Card
-        className={`bg-white min-h-[85svh] w-[93%] max-w-[45rem] rounded-2xl shadow-xl relative lg:px-14 py-10`}
+        className={`bg-white min-h-[85svh] w-[93%] max-w-[40rem] rounded-2xl shadow-xl relative lg:px-14 py-10`}
       >
         {location.pathname !== ROUTE.INDEX && (
           <img
