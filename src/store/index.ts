@@ -12,6 +12,7 @@ import apiController, {
   useSendDataMutation,
   useGetDataQuery,
 } from "./apis/apiController"
+import { setupListeners } from "@reduxjs/toolkit/dist/query/react"
 
 const reducer = combineReducers({
   auth: AuthReducer,
@@ -30,8 +31,15 @@ export const store = configureStore({
   },
 })
 
+// enable listener behavior for the store
+setupListeners(store.dispatch)
+
 export { setAuthKey, setField, setGlobalKey, setAllGlobalKey, setAllAuthKey }
-export { useLoginMutation, useSendDataMutation, useGetDataQuery }
+export {
+  useLoginMutation,
+  useSendDataMutation,
+  useGetDataQuery,
+}
 
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>

@@ -6,4 +6,11 @@ export namespace ApiResponse {
     failureReason?: string
     data: any
   }
+  
+  export class UserInfo {
+      id?: number;
+      email?: string;
+      firstName?: string;
+      lastName?: string;
+  }
 }

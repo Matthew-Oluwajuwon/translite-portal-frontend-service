@@ -15,8 +15,8 @@ import useWindowResize from "../../custom-hooks/useWindowResize"
 import menuIcon from "../../assets/icons/menu.svg"
 import { useEffect } from "react"
 import { setAllGlobalKey } from "../../store"
-import { apiEndpoints } from "../../store/apiEndpoints"
 import { ROUTE } from "@common/constants"
+import useUserInfo from "../../custom-hooks/useUserInfo"
 
 const PageLayout: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -27,22 +27,15 @@ const PageLayout: React.FC = () => {
   const { toggleMenu, toggleOpenMenuDrawer } = useToggle()
   const { windowWidth } = useWindowResize()
   const navigate = useNavigate()
-
+  const [ userInfo ] = useUserInfo()
+    
   useEffect(() => {
-    if (!localStorage.getItem("*****")) {
+    if (!localStorage.getItem("***")) {
      return navigate(ROUTE.INDEX, {replace: true})
     }
-
-    dispatch(
-      setAllGlobalKey({
-        ...state,
-        getUrl: apiEndpoints.auth.getAdminUser,
-      }),
-    )
   }, [dispatch])
 
   return (
-    // <Spin spinning={isLoading}>
     <main className="min-h-[100svh] relative">
       <aside
         className={`bg-[#1C166A] ${
@@ -170,7 +163,7 @@ const PageLayout: React.FC = () => {
               className="cursor-pointer hover:scale-110 transition-all"
             />
             <span className="bg-[#79CDCE] w-[2.7rem] h-[2.7rem] text-[#ffffff] rounded-full flex items-center justify-center">
-              JA
+              {userInfo.firstName?.toUpperCase().charAt(0)}{userInfo.lastName?.toUpperCase().charAt(0)}
             </span>
           </div>
         </header>
@@ -182,7 +175,6 @@ const PageLayout: React.FC = () => {
         </footer>
       </section>
     </main>
-    // </Spin>
   )
 }
 

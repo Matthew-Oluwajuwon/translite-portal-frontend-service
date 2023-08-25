@@ -14,7 +14,7 @@ const Login: React.FC = () => {
   const state = useAppSelector((state) => {
     return state.auth
   })
-  const { authApi, isLoading } = useAuthApi()
+  const { isLoading, handleLogin } = useAuthApi()
   const { setAuthRequestField } = useAuthQuery()
   const setChildrenData: any = useOutletContext()
 
@@ -32,7 +32,7 @@ const Login: React.FC = () => {
         layout="vertical"
         wrapperCol={{ span: 24 }}
         labelCol={{ span: 24 }}
-        onFinish={() => authApi(state)}
+        onFinish={handleLogin}
         fields={[
           {
             name: "username",

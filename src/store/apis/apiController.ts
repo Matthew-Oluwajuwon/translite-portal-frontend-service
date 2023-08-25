@@ -23,7 +23,7 @@ const apiController = createApi({
     getData: builder.query({
       query: (data) => {
         return {
-            url: data && data.getUrl
+          url: data && data.getUrl,
         }
       },
       providesTags: ["GetData"],
@@ -43,5 +43,8 @@ const apiController = createApi({
   }),
 })
 
-export const { useSendDataMutation, useGetDataQuery } = apiController
+export const {
+  useSendDataMutation,
+  useGetDataQuery,
+} = apiController
 export default apiController

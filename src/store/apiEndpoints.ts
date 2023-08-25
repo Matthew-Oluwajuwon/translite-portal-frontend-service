@@ -2,6 +2,6 @@
 export const apiEndpoints = {
   auth: {
     login: "authenticate",
-    getAdminUser: "adminUser"
+    getAdminUser: "adminUser/info"
   },
 }

@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { ApiResponse } from "model/client/response"
 import { ApiRequest } from "../client/request"
 
 export namespace State {
@@ -21,6 +22,7 @@ export namespace State {
     showForgotPasswordResponseModal: boolean
     postUrl: string
     formMethod: string
+    userInfo?: ApiResponse.UserInfo
   }
 
   export interface Global {

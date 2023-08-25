@@ -32,7 +32,7 @@ const Auth: React.FC = () => {
   )
 
   const navigate = useNavigate()
-  const token = localStorage.getItem("*****")
+  const info = localStorage.getItem("***")
 
   useLayoutEffect(() => {
     // retreive token from cookies
@@ -45,13 +45,13 @@ const Auth: React.FC = () => {
             .replaceAll("-", " ") + " | Translite"
 
     // check if use is logged in
-    if (token && token.length > 30) {
+    if (info && info.length > 30) {
       navigate(ROUTE.DASHBOARD, {
         replace: true,
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname, token, dispatch])
+  }, [location.pathname, info, dispatch])
 
   return (
     <div className="min-h-[100svh] bg-[#4C469B] flex justify-center items-center flex-col lg:flex-row">
