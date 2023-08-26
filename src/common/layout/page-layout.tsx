@@ -170,7 +170,7 @@ const PageLayout: React.FC = () => {
         <section className="overflow-auto">
           <Outlet />
         </section>
-        <footer className="text-center text-[#BEBFC8] py-5">
+        <footer className="text-center text-[#BEBFC8] py-5 fixed right-[50%] left-[50%] w-max bottom-2">
           Translite from Tegritech<sup>TM</sup> © 2022
         </footer>
       </section>

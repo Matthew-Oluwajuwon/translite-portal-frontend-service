@@ -2,7 +2,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { State } from "../../model/application/state"
 import { Global } from "../../model/application/payload"
-import { BREADCRUMB, MENU_KEYS, MENU_NAMES } from "../../common/constants"
+import {
+  BREADCRUMB,
+  CHARGE_CONFIGURATION_TYPES,
+  MENU_KEYS,
+  MENU_NAMES,
+} from "../../common/constants"
 
 const initialState: State.Global = {
   menuCollapsed: false,
@@ -19,6 +24,9 @@ const initialState: State.Global = {
   },
   transactionRouting: {
     showAddNewRuleModal: false,
+  },
+  configuration: {
+    processorSelection: CHARGE_CONFIGURATION_TYPES.FLAT,
   },
 }
 

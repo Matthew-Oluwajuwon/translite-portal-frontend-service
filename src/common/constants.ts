@@ -39,21 +39,25 @@ export enum BREADCRUMB {
   TRANSACTION = "Home > Transactions",
   TERMINAL_MGT = "Home > Terminal Management",
   TRANSACTION_ROUTING = "Home > Transaction Routing",
-  CHARGE_CONFIGURATION = "Home > Charge Configurations"
+  CHARGE_CONFIGURATION = "Home > Charge Configurations",
 }
 
 export enum TRANSACTION_CONFIGURATION_TYPES {
   DIRECT = "Direct",
   AUTOMATIC = "Automatic",
-  CUSTOM = "Custom"
+  CUSTOM = "Custom",
+}
+export enum CHARGE_CONFIGURATION_TYPES {
+  FLAT = "Flat",
+  PERCENTAGE = "Percentage",
 }
 
 export enum TRANSACTION_PROCESSOR {
   INTERWITCH = "Interwitch",
-  NIBSS = "NIBSS"
+  NIBSS = "NIBSS",
 }
 
 export enum FORM_METHODS {
   POST = "POST",
-  GET = "GET"
+  GET = "GET",
 }
