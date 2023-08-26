@@ -84,10 +84,16 @@ const ChargeConfiguration = () => {
               <Input addonBefore="N" placeholder="Flat fee" className="py-5" />
             </Form.Item>
             <div className="flex gap-2">
-              <Button type="primary" className="bg-[#6D71F9]">
+              <Button
+                type="primary"
+                className="flex items-center justify-center py-5 px-10 bg-[#6D71F9]"
+              >
                 Submit
               </Button>
-              <Button type="primary" className="bg-[#2728480D] text-[#272848]">
+              <Button
+                type="text"
+                className="flex items-center bg-[#2728480D] text-[#272848] font-semibold justify-center py-5 px-10"
+              >
                 Cancel
               </Button>
             </div>
@@ -108,10 +114,16 @@ const ChargeConfiguration = () => {
               <Input addonBefore="%" placeholder="Percentage" />
             </Form.Item>
             <div className="flex gap-2">
-              <Button type="primary" className="bg-[#6D71F9]">
+              <Button
+                type="primary"
+                className="flex items-center justify-center py-5 px-10 bg-[#6D71F9]"
+              >
                 Submit
               </Button>
-              <Button type="primary" className="bg-[#2728480D] text-[#272848]">
+              <Button
+                type="text"
+                className="flex items-center bg-[#2728480D] text-[#272848] font-semibold justify-center py-5 px-10"
+              >
                 Cancel
               </Button>
             </div>

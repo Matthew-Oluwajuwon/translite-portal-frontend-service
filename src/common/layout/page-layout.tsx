@@ -27,8 +27,8 @@ const PageLayout: React.FC = () => {
   const { toggleMenu, toggleOpenMenuDrawer } = useToggle()
   const { windowWidth } = useWindowResize()
   const navigate = useNavigate()
-  const [ userInfo ] = useUserInfo()
-    
+  const [userInfo] = useUserInfo()
+
   useEffect(() => {
     if (!localStorage.getItem("***")) {
      return navigate(ROUTE.INDEX, {replace: true})
@@ -163,14 +163,15 @@ const PageLayout: React.FC = () => {
               className="cursor-pointer hover:scale-110 transition-all"
             />
             <span className="bg-[#79CDCE] w-[2.7rem] h-[2.7rem] text-[#ffffff] rounded-full flex items-center justify-center">
-              {userInfo.firstName?.toUpperCase().charAt(0)}{userInfo.lastName?.toUpperCase().charAt(0)}
+              {userInfo.firstName?.toUpperCase().charAt(0)}
+              {userInfo.lastName?.toUpperCase().charAt(0)}
             </span>
           </div>
         </header>
         <section className="overflow-auto">
           <Outlet />
         </section>
-        <footer className="text-center text-[#BEBFC8] py-5 fixed right-[50%] left-[50%] w-max bottom-2">
+        <footer className="text-center text-[#BEBFC8] py-5 absolute right-[50%] left-[50%] w-max bottom-0 mt-8">
           Translite from Tegritech<sup>TM</sup> © 2022
         </footer>
       </section>
