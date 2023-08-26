@@ -31,7 +31,7 @@ const PageLayout: React.FC = () => {
     
   useEffect(() => {
     if (!localStorage.getItem("***")) {
-     return navigate(ROUTE.INDEX, {replace: true})
+      return navigate(ROUTE.INDEX, { replace: true })
     }
   }, [dispatch])
 
