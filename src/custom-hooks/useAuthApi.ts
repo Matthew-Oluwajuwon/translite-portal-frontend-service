@@ -8,6 +8,7 @@ import { ROUTE } from "@common/constants"
 import { apiEndpoints } from "../store/apiEndpoints"
 import { useCallback } from "react"
 import useToken from "./useToken"
+import { Encryption } from "@common/utils/encryption"
 
 const useAuthApi = () => {
   const state = useAppSelector((state) => {
@@ -38,7 +39,7 @@ const useAuthApi = () => {
         })
       } else {
         Notify("success", "Successful")
-        localStorage.setItem("***", JSON.stringify(data.data))
+        localStorage.setItem("***", Encryption.encrypt(JSON.stringify(data.data)))
         navigate(ROUTE.DASHBOARD, {
           replace: true,
         })
@@ -60,14 +61,15 @@ const useAuthApi = () => {
             try {
               getAdminInfo()
             } catch (error) {
-              Notify("error", response?.failureReason)
+              Notify("error", response.data?.failureReason)
             }
           } else {
-            Notify("error", response?.failureReason)
+            Notify("error", response.data?.failureReason)
           }
         }
       }
     } catch (error) {
+      Notify("error", error)
       console.log(error)
     }
   }, [authApi, getAdminInfo, state])

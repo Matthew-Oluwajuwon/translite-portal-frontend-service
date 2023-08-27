@@ -1,32 +1,24 @@
 /* eslint-disable prettier/prettier */
 
-import { useEffect } from "react"
-import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { setAllGlobalKey } from "../../store"
+import { useAppSelector } from "../../store/hooks"
 import { BREADCRUMB, MENU_KEYS, MENU_NAMES } from "../../common/constants"
 import { Col, Form, Input, Row, Typography } from "antd"
 import Log from "../../assets/icons/Logout.svg"
 import { Logout } from "../../common/components/logout"
 import useToggle from "../../custom-hooks/useToggle"
 import useUserInfo from "../../custom-hooks/useUserInfo"
+import usePageInfo from "../../custom-hooks/usePageInfo"
 
 const Profile: React.FC = () => {
-  const dispatch = useAppDispatch()
   const state = useAppSelector((state) => {
     return state.global
   })
-  useEffect(() => {
-    document.title = MENU_NAMES.PROFILE + " | Translite"
-    dispatch(
-      setAllGlobalKey({
-        ...state,
-        selectedKey: MENU_KEYS.PROFILE,
-        pageTitle: MENU_NAMES.PROFILE,
-        breadcrumb: BREADCRUMB.PROFILE,
-      }),
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch])
+  
+  usePageInfo(
+    MENU_NAMES.PROFILE,
+    MENU_KEYS.PROFILE,
+    BREADCRUMB.PROFILE,
+  )
 
   const { toggleLogoutModal, handleLogout } = useToggle()
   const [userInfo] = useUserInfo()

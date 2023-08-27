@@ -6,7 +6,7 @@ import Logo from "../../assets/images/logo.svg"
 import Drag from "../../assets/icons/drag.svg"
 import DragOut from "../../assets/icons/drag-out.svg"
 import { Drawer, Menu } from "antd"
-import { useAppDispatch, useAppSelector } from "../../store/hooks"
+import { useAppSelector } from "../../store/hooks"
 import ShortLogo from "../../assets/icons/short-logo.svg"
 import { MenuItems } from "../components/menu-items"
 import useToggle from "../../custom-hooks/useToggle"
@@ -14,17 +14,15 @@ import dropdown from "../../assets/icons/dropdown.svg"
 import useWindowResize from "../../custom-hooks/useWindowResize"
 import menuIcon from "../../assets/icons/menu.svg"
 import { useEffect } from "react"
-import { setAllGlobalKey } from "../../store"
 import { ROUTE } from "@common/constants"
 import useUserInfo from "../../custom-hooks/useUserInfo"
 
 const PageLayout: React.FC = () => {
-  const dispatch = useAppDispatch()
   const state = useAppSelector((state) => {
     return state.global
   })
 
-  const { toggleMenu, toggleOpenMenuDrawer } = useToggle()
+  const { toggleMenu, toggleOpenMenuDrawer, closeAllOpenModal } = useToggle()
   const { windowWidth } = useWindowResize()
   const navigate = useNavigate()
   const [userInfo] = useUserInfo()
@@ -33,10 +31,10 @@ const PageLayout: React.FC = () => {
     if (!localStorage.getItem("***")) {
      return navigate(ROUTE.INDEX, {replace: true})
     }
-  }, [dispatch])
+  }, [])
 
   return (
-    <main className="min-h-[100svh] relative">
+    <main className="min-h-[100svh] relative flex flex-col">
       <aside
         className={`bg-[#1C166A] ${
           state.menuCollapsed ? "w-[6rem] px-0" : "w-[6rem] lg:w-[15.5rem]"
@@ -73,28 +71,13 @@ const PageLayout: React.FC = () => {
             mode="inline"
             items={MenuItems}
             inlineCollapsed={state.menuCollapsed}
-            onClick={() =>
-              dispatch(
-                setAllGlobalKey({
-                  ...state,
-                  showLogoutModal: false,
-                  terminal: {
-                    ...state.terminal,
-                    isSingleCreation: false,
-                    showCreateModal: false,
-                  },
-                  transactionRouting: {
-                    ...state.transactionRouting,
-                    showAddNewRuleModal: false,
-                  },
-                }),
-              )
+            onClick={() => closeAllOpenModal(state)
             }
           />
         </div>
       </aside>
       <section
-        className={`bg-[#F5F6FA] min-h-screen px-3 lg:px-10 ${
+        className={`bg-[#F5F6FA] min-h-screen px-3 lg:px-10 relative ${
           state.menuCollapsed
             ? "ml-0 md:ml-[6rem]"
             : "ml-0 md:ml-[6rem] lg:ml-[15.5rem]"
@@ -143,14 +126,14 @@ const PageLayout: React.FC = () => {
               </div>
               <div>
                 <Menu
-                  defaultSelectedKeys={[state.selectedKey]}
-                  selectedKeys={[state.selectedKey]}
-                  className={`bg-[#1C166A] font-[poppins-500] font-medium ${
-                    state.menuCollapsed && "w-[4rem]"
-                  }`}
-                  mode="inline"
-                  items={MenuItems}
-                  inlineCollapsed={state.menuCollapsed}
+                   defaultSelectedKeys={[state.selectedKey]}
+                   selectedKeys={[state.selectedKey]}
+                   className={`bg-[#1C166A] font-[poppins-500] font-medium ${
+                     state.menuCollapsed && "w-[4rem]"
+                   }`}
+                   mode="inline"
+                   items={MenuItems}
+                   inlineCollapsed={state.menuCollapsed}
                   onClick={toggleOpenMenuDrawer}
                 />
               </div>
@@ -168,10 +151,10 @@ const PageLayout: React.FC = () => {
             </span>
           </div>
         </header>
-        <section className="overflow-auto">
+        <section className="overflow-auto flex-grow">
           <Outlet />
         </section>
-        <footer className="text-center text-[#BEBFC8] py-5 absolute right-[50%] left-[50%] w-max bottom-0 mt-8">
+        <footer className="text-center text-[#BEBFC8] py-5">
           Translite from Tegritech<sup>TM</sup> © 2022
         </footer>
       </section>

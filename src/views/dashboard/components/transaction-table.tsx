@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-import React from "react"
 import { Button, Col, Form, Row, Select } from "antd"
 import IconRight from "../../../assets/icons/icon-right.svg"
 import { ColumnProps } from "antd/es/table"
@@ -7,9 +6,10 @@ import { useNavigate } from "react-router-dom"
 import { TransactionTableComponent } from "../../../common/components/transaction-table"
 import { ROUTE } from "../../../common/constants"
 import dropdown from "../../../assets/icons/dropdown.svg"
-import { data } from "./mock-data"
 
-export const TransactionTable: React.FC = () => {
+export const TransactionTable = ({ data, isLoading }: { data: any, isLoading: boolean }) => {
+  const navigate = useNavigate()
+
   const column: ColumnProps<any>[] = [
     {
       title: "RRN",
@@ -70,8 +70,6 @@ export const TransactionTable: React.FC = () => {
     },
   ]
 
-  const navigate = useNavigate()
-
   return (
     <div>
       <TransactionTableComponent
@@ -87,7 +85,11 @@ export const TransactionTable: React.FC = () => {
         }
         shouldExpand={false}
         column={column}
-        dataSource={data}
+        dataSource={
+          Array.isArray(data?.data?.transactionDTOS)
+            ? data?.data?.transactionDTOS
+            : []
+        }
         forms={
           <Form
             layout="vertical"
@@ -97,7 +99,15 @@ export const TransactionTable: React.FC = () => {
           >
             <Row style={{ width: "100%" }}>
               <Col xs={24} lg={3}>
-                <Form.Item initialValue="All" label={<h1 className="font-[poppins-500] font-semibold text-[#0E0E30CC]">Select Processor</h1>} name={"processor"}>
+                <Form.Item
+                  initialValue="All"
+                  label={
+                    <h1 className="font-[poppins-500] font-semibold text-[#0E0E30CC]">
+                      Select Processor
+                    </h1>
+                  }
+                  name={"processor"}
+                >
                   <Select
                     className="border border-[#DEDFEC] rounded-md h-11 flex items-center"
                     suffixIcon={<img src={dropdown} alt="" />}
@@ -111,7 +121,7 @@ export const TransactionTable: React.FC = () => {
             </Row>
           </Form>
         }
-        loading={false}
+        loading={isLoading}
         pageSize={5}
         tableName="Recent Transaction"
         scrollX={1000}

@@ -18,6 +18,7 @@ import Auth from "@common/layout/Auth"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { ErrorPage } from "./error-page"
+import { IsLoggedIn } from "./isLoggedIn"
 
 const App = () => {
   const router = createBrowserRouter([
@@ -26,11 +27,19 @@ const App = () => {
       children: [
         {
           path: ROUTE.INDEX,
-          element: <Login />,
+          element: (
+            <IsLoggedIn>
+              <Login />
+            </IsLoggedIn>
+          ),
         },
         {
           path: ROUTE.SEND_MAIL_FOR_PASSWORD_CHANGE,
-          element: <SendMailForPasswordChange />,
+          element: (
+            <IsLoggedIn>
+              <SendMailForPasswordChange />
+            </IsLoggedIn>
+          ),
         },
         {
           path: ROUTE.RESET_PASSWORD,
@@ -40,9 +49,7 @@ const App = () => {
       errorElement: <ErrorPage />,
     },
     {
-      element: (
-          <PageLayout />
-      ),
+      element: <PageLayout />,
       children: [
         {
           element: <Dashboard />,

@@ -1,34 +1,29 @@
 /* eslint-disable prettier/prettier */
 
-import { useCallback, useEffect } from "react"
+import { useCallback } from "react"
 import {
   MENU_NAMES,
   MENU_KEYS,
   BREADCRUMB,
   CHARGE_CONFIGURATION_TYPES,
 } from "../../../common/constants"
-import { setAllGlobalKey, setGlobalKey } from "../../../store"
+import { setGlobalKey } from "../../../store"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import { Button, Divider, Form, Input, Radio } from "antd"
+import usePageInfo from "../../../custom-hooks/usePageInfo"
 
 const ChargeConfiguration = () => {
   const dispatch = useAppDispatch()
   const state = useAppSelector((state) => {
     return state.global
   })
-  useEffect(() => {
-    document.title = MENU_NAMES.CHARGE_CONFIGURATION + " | Translite"
-    dispatch(
-      setAllGlobalKey({
-        ...state,
-        selectedKey: MENU_KEYS.CHARGE_CONFIGURATION,
-        pageTitle: MENU_NAMES.CHARGE_CONFIGURATION,
-        breadcrumb: BREADCRUMB.CHARGE_CONFIGURATION,
-        openKey: MENU_KEYS.CONFIGURATIONS,
-      }),
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch])
+  
+  usePageInfo(
+    MENU_NAMES.CHARGE_CONFIGURATION,
+    MENU_KEYS.CHARGE_CONFIGURATION,
+    BREADCRUMB.CHARGE_CONFIGURATION,
+  )
+  
   const handleChange = useCallback(
     (processorSelection: string) => {
       dispatch(

@@ -36,7 +36,7 @@ const Login: React.FC = () => {
         fields={[
           {
             name: "username",
-            value: state.request?.email,
+            value: state.request?.username,
           },
           {
             name: "password",
@@ -45,20 +45,36 @@ const Login: React.FC = () => {
         ]}
         className="grid gap-7 mt-20"
       >
-        <LabeledInput
-          label={"Enter email or user name"}
-          type={"text"}
-          htmlFor={"email or username"}
-          value={state.request?.email}
-          onChange={(e) => setAuthRequestField("username", e.target.value)}
-        />
-        <LabeledInput
-          label={"Password"}
-          type={"password"}
-          htmlFor={"password"}
-          value={state.request?.password}
-          onChange={(e) => setAuthRequestField("password", e.target.value)}
-        />
+        <Form.Item
+          name="username"
+          rules={[
+            { required: true, message: "Email Address or username is required" },
+            {
+              type: "email",
+              message: "Email Address or username is invalid",
+            },
+          ]}
+        >
+          <LabeledInput
+            label={"Enter email or username"}
+            type={"text"}
+            htmlFor={"email or username"}
+            value={state.request?.username}
+            onChange={(e) => setAuthRequestField("username", e.target.value)}
+          />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          rules={[{ required: true, message: "Password is required" }]}
+        >
+          <LabeledInput
+            label={"Password"}
+            type={"password"}
+            htmlFor={"password"}
+            value={state.request?.password}
+            onChange={(e) => setAuthRequestField("password", e.target.value)}
+          />
+        </Form.Item>
         <div className="flex items-center justify-between mt-5">
           <Link
             to={ROUTE.SEND_MAIL_FOR_PASSWORD_CHANGE}

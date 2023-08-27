@@ -8,7 +8,6 @@ const initialState: State.Authentication = {
   hasValue: false,
   isFocused: false,
   isRevealPassword: false,
-  request: new ApiRequest.Auth(),
   showPassword: false,
   isPasswordLength: false,
   isUpperCase: false,
@@ -43,7 +42,7 @@ const AuthSlice = createSlice({
         request: {
           ...state.request,
           [action.payload.key]: action.payload.value,
-        },
+        } as ApiRequest.Auth,
       }
       return state
     },

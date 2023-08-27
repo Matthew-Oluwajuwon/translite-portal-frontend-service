@@ -4,4 +4,8 @@ export const apiEndpoints = {
     login: "authenticate",
     getAdminUser: "adminUser/info"
   },
+  transaction: {
+    dashboardDay: "transactions/dashboard/",
+    getTransactions: "transactions"
+  }
 }

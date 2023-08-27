@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 
-import { useCallback, useEffect } from "react"
+import { useCallback } from "react"
 import {
   BREADCRUMB,
   MENU_KEYS,
@@ -8,7 +8,7 @@ import {
   TRANSACTION_CONFIGURATION_TYPES,
   TRANSACTION_PROCESSOR,
 } from "../../../common/constants"
-import { setAllGlobalKey, setGlobalKey } from "../../../store"
+import { setGlobalKey } from "../../../store"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import { TransactionTableComponent } from "../../../common/components/transaction-table"
 import {
@@ -31,25 +31,20 @@ import Search from "../../../assets/icons/Search.svg"
 import { ColumnProps } from "antd/es/table/Column"
 import more from "../../../assets/icons/more-action.svg"
 import useToggle from "../../../custom-hooks/useToggle"
+import usePageInfo from "../../../custom-hooks/usePageInfo"
 
 const TransactionRouting = () => {
   const dispatch = useAppDispatch()
   const state = useAppSelector((state) => {
     return state.global
   })
-  useEffect(() => {
-    document.title = MENU_NAMES.TRANSACTION_ROUTING + " | Translite"
-    dispatch(
-      setAllGlobalKey({
-        ...state,
-        selectedKey: MENU_KEYS.TRANSACTION_ROUTING,
-        pageTitle: MENU_NAMES.TRANSACTION_ROUTING,
-        breadcrumb: BREADCRUMB.TRANSACTION_ROUTING,
-        openKey: MENU_KEYS.CONFIGURATIONS,
-      }),
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch])
+
+  usePageInfo(
+    MENU_NAMES.TRANSACTION_ROUTING,
+    MENU_KEYS.TRANSACTION_ROUTING,
+    BREADCRUMB.TRANSACTION_ROUTING,
+  )
+  
   const column: ColumnProps<any>[] = [
     {
       title: "BIN",

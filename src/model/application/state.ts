@@ -8,7 +8,7 @@ export namespace State {
     hasValue: boolean
     inputType: string
     isRevealPassword: boolean
-    request: ApiRequest.Auth
+    request?: ApiRequest.Auth
     showLogoutModal: boolean
     showPassword: boolean
     isPasswordLength: boolean
@@ -46,6 +46,9 @@ export namespace State {
     updateUrl?: string
     selectUrl?: string
     deleteUrl?: string
+    formMethod?: string;
+    page?: number;
+    action?: "CREATE" | "UPDATE" | "DELETE" | "READ"
   }
 
   export interface Terminals {

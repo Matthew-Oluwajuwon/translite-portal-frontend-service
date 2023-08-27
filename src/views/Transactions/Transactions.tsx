@@ -1,8 +1,5 @@
 /* eslint-disable prettier/prettier */
 
-import { useEffect } from "react"
-import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { setAllGlobalKey } from "../../store"
 import { BREADCRUMB, MENU_KEYS, MENU_NAMES } from "../../common/constants"
 import { Col, DatePicker, Form, Input, Row, Select } from "antd"
 import { TransactionTableComponent } from "../../common/components/transaction-table"
@@ -15,24 +12,15 @@ import dayjs from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
 import dropdown from "../../assets/icons/dropdown.svg"
 import { data } from "@views/dashboard/components/mock-data"
+import usePageInfo from "../../custom-hooks/usePageInfo"
 
 const Transactions: React.FC = () => {
-  const dispatch = useAppDispatch()
-  const state = useAppSelector((state) => {
-    return state.global
-  })
-  useEffect(() => {
-    document.title = MENU_NAMES.TRANSACTION + " | Translite"
-    dispatch(
-      setAllGlobalKey({
-        ...state,
-        selectedKey: MENU_KEYS.TRANSACTION,
-        pageTitle: MENU_NAMES.TRANSACTION,
-        breadcrumb: BREADCRUMB.TRANSACTION,
-      }),
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch])
+
+  usePageInfo(
+    MENU_NAMES.TRANSACTION,
+    MENU_KEYS.TRANSACTION,
+    BREADCRUMB.TRANSACTION,
+  )
 
   dayjs.extend(customParseFormat)
 

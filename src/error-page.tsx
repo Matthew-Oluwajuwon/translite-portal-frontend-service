@@ -8,7 +8,7 @@ import NotFound from "./assets/images/not-found.svg"
 export const ErrorPage: React.FC = () => {
   const navigate = useNavigate()
   return (
-    <div className="h-screen bg-[#4C469B] relative">
+    <div className="min-h-[100svh] bg-[#4C469B] relative">
       <div className="pl-10 pt-10">
         <img src={Logo} alt="logo" />
       </div>

@@ -8,7 +8,7 @@ const useToken = () => {
     ) {
       return localStorage.getItem("*****")
     }
-    return false
+    return Promise.reject(new Error("No token in the storage"))
   }
 
   return { userToken }

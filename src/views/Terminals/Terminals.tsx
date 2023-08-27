@@ -1,8 +1,5 @@
 /* eslint-disable prettier/prettier */
 
-import { useEffect } from "react"
-import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { setAllGlobalKey } from "../../store"
 import { BREADCRUMB, MENU_KEYS, MENU_NAMES } from "../../common/constants"
 import { Button, Col, Form, Input, List, Row } from "antd"
 import { TransactionTableComponent } from "../../common/components/transaction-table"
@@ -16,24 +13,15 @@ import dayjs from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
 import TerminalCreateion from "./components/terminal-creation"
 import useToggle from "../../custom-hooks/useToggle"
+import usePageInfo from "../../custom-hooks/usePageInfo"
 
 const Terminals: React.FC = () => {
-  const dispatch = useAppDispatch()
-  const state = useAppSelector((state) => {
-    return state.global
-  })
-  useEffect(() => {
-    document.title = MENU_NAMES.TERMINAL_MGT + " | Translite"
-    dispatch(
-      setAllGlobalKey({
-        ...state,
-        selectedKey: MENU_KEYS.TERMINAL_MGT,
-        pageTitle: MENU_NAMES.TERMINAL_MGT,
-        breadcrumb: BREADCRUMB.TERMINAL_MGT,
-      }),
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch])
+  
+  usePageInfo(
+    MENU_NAMES.TERMINAL_MGT,
+    MENU_KEYS.TERMINAL_MGT,
+    BREADCRUMB.TERMINAL_MGT,
+  )
 
   dayjs.extend(customParseFormat)
   const column: ColumnProps<any>[] = [

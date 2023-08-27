@@ -26,10 +26,10 @@ export const store = configureStore({
   devTools: import.meta.env.PROD === false,
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({
-      serializableCheck: false,
+      // serializableCheck: false,
     }).concat(loginApi.middleware, apiController.middleware)
   },
-})
+}) 
 
 // enable listener behavior for the store
 setupListeners(store.dispatch)
