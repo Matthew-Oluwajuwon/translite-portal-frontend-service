@@ -41,5 +41,11 @@ export namespace PageProps {
     onPagination?: () => void
     shouldExpand?: boolean
     scrollX?: number
+    isNotPaginated?: boolean
+  }
+  
+  export class SelectOptionValues {
+    key?: any;
+    value?: any;
   }
 }

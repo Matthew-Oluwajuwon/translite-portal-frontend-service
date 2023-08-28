@@ -12,6 +12,7 @@ interface Props {
   pageSize?: number
   shouldExpand?: boolean
   scrollX?: number
+  isNotPaginated?: boolean
 }
 
 export const TransactionTableComponent: React.FC<Props> = ({
@@ -23,7 +24,8 @@ export const TransactionTableComponent: React.FC<Props> = ({
   pageSize,
   tableName,
   shouldExpand,
-  scrollX
+  scrollX,
+  isNotPaginated
 }) => {
   return (
     <div className="bg-white w-full rounded-lg my-5 table-shadow">
@@ -42,6 +44,7 @@ export const TransactionTableComponent: React.FC<Props> = ({
         pageSize={pageSize}
         shouldExpand={shouldExpand}
         scrollX={scrollX}
+        isNotPaginated={isNotPaginated}
       />
       </div>
   )

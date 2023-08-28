@@ -34,21 +34,24 @@ export namespace State {
     expand: boolean
     record?: any
     showLogoutModal?: boolean
-    terminal: Terminals
-    configuration?: Configurations
     openMenuDrawer: boolean
     request?: any
-    response?: any
     searchResponse?: any
-    transactionRouting?: TransactionRouting
     postUrl?: string
     getUrl?: string
     updateUrl?: string
-    selectUrl?: string
+    selectUrl: string
     deleteUrl?: string
     formMethod?: string;
     page?: number;
     action?: "CREATE" | "UPDATE" | "DELETE" | "READ"
+    labelInput?: string
+    configuration?: Configurations
+    transactionRouting?: TransactionRouting
+    terminal: Terminals
+    transaction?: Transaction
+    response?: any
+    originalResponse?: any
   }
 
   export interface Terminals {
@@ -62,5 +65,9 @@ export namespace State {
   }
   export interface TransactionRouting {
     showAddNewRuleModal?: boolean
+  }
+  
+  export interface Transaction {
+    response: Array<ApiResponse.Transaction>
   }
 }

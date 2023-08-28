@@ -9,9 +9,9 @@ import useAmountFormat from "../../../custom-hooks/useAmountFormat"
 
 const Statistics = ({ data, isLoading }: { data: any; isLoading: boolean }) => {
   const state: ApiResponse.SelectedDayPerformance =
-    data?.data?.selectedDayPerformance
+    data?.selectedDayPerformance
   const { numberWithCommas } = useAmountFormat();
-    
+
   const items = [
     {
       cardTitle: (

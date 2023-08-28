@@ -24,8 +24,34 @@ const useSetRequest = () => {
     [dispatch, state],
   )
 
+  const setFormRequest = useCallback(
+    (
+      value: any,
+      key: keyof any,
+      options: any = [],
+      key2: string | undefined = undefined,
+      removeValuekey?: string | undefined,
+    ) => {
+      dispatch(
+        setAllGlobalKey({
+          ...state,
+          request: {
+            ...state?.request,
+            [key]: value,
+            [key2?.length ? (key2 as string) : (undefined as any)]:
+              options.filter((x: any) => x.value === value)[0]?.key,
+
+            [removeValuekey as string]: undefined,
+          },
+        }),
+      )
+    },
+    [dispatch, state],
+  )
+
   return {
     setFieldChange,
+    setFormRequest,
   }
 }
 

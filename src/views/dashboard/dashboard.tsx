@@ -9,22 +9,30 @@ import { TransactionTable } from "./components/transaction-table"
 import { Chart } from "./components/chart"
 import Statistics from "./components/statistics"
 import usePageInfo from "../../custom-hooks/usePageInfo"
-import useGetDashboardData from "../../custom-hooks/useGetDashboardData"
+import { useGetDataQuery } from "../../store"
+import { useAppSelector } from "../../store/hooks"
+import { apiEndpoints } from "../../store/apiEndpoints"
+import useSetRequest from "../../custom-hooks/useSetRequest"
 
 const Dashboard: React.FC = () => {
-
+  const state = useAppSelector(state => {
+    return state.global
+  })
   usePageInfo(MENU_NAMES.DASHBOARD, MENU_KEYS.DASHBOARD, BREADCRUMB.DASHBOARD)
-  const {
-    handleDateChange,
-    data: sendDataResponse,
-    isLoading: sendDataLoading,
-    getDataLoading,
-    getDataResponse,
-  } = useGetDashboardData()
 
   const dateFormat = "MMM DD"
   const customFormat: DatePickerProps["format"] = (value) =>
     `Today ${value.format(dateFormat)}`
+    
+    const { setFieldChange } = useSetRequest()
+
+    
+    const {data, isLoading} = useGetDataQuery({
+      ...state,
+      getUrl: apiEndpoints.transaction.dashboardDay + (state.request?.day
+        ? dayjs(state.request?.day).format("YYYY-MM-DD")
+        : dayjs().format("YYYY-MM-DD"))
+    })
     
     return (
       <div>
@@ -35,13 +43,13 @@ const Dashboard: React.FC = () => {
             className="py-3 border-none font-[poppins-500] font-semibold text-[#424D61]"
             prevIcon={<img src={calendar} alt="" />}
             suffixIcon={<img src={dropdown} alt="" />}
-            onChange={(e) => handleDateChange(e)}
+            onChange={(e) => setFieldChange("day", e)}
             picker="date"
           />
         </Form.Item>
-        <Statistics data={getDataResponse} isLoading={getDataLoading} />
-        <Chart data={getDataResponse} isLoading={getDataLoading} />
-        <TransactionTable data={sendDataResponse} isLoading={sendDataLoading} />
+        <Statistics data={data} isLoading={isLoading} />
+        <Chart data={data} isLoading={isLoading} />
+        <TransactionTable  />
       </div>
     )
 }

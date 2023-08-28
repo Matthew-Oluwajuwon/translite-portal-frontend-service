@@ -8,17 +8,19 @@ import {
 import { AuthReducer, setAuthKey, setField, setAllAuthKey } from "./slice/auth"
 import { GlobalReducer, setGlobalKey, setAllGlobalKey } from "./slice/global"
 import loginApi, { useLoginMutation } from "./apis/auth.api"
-import apiController, {
-  useSendDataMutation,
-  useGetDataQuery,
-} from "./apis/apiController"
 import { setupListeners } from "@reduxjs/toolkit/dist/query/react"
+import globalApi, {
+  useGetDataQuery,
+  useGetDataByPostMethodMutation,
+  usePostDataMutation,
+  useLazyGetDataQuery
+} from "./apis/global.api"
 
 const reducer = combineReducers({
   auth: AuthReducer,
   global: GlobalReducer,
   [loginApi.reducerPath]: loginApi.reducer,
-  [apiController.reducerPath]: apiController.reducer,
+  [globalApi.reducerPath]: globalApi.reducer,
 })
 
 export const store = configureStore({
@@ -27,9 +29,9 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({
       // serializableCheck: false,
-    }).concat(loginApi.middleware, apiController.middleware)
+    }).concat(loginApi.middleware, globalApi.middleware)
   },
-}) 
+})
 
 // enable listener behavior for the store
 setupListeners(store.dispatch)
@@ -37,8 +39,10 @@ setupListeners(store.dispatch)
 export { setAuthKey, setField, setGlobalKey, setAllGlobalKey, setAllAuthKey }
 export {
   useLoginMutation,
-  useSendDataMutation,
   useGetDataQuery,
+  useGetDataByPostMethodMutation,
+  usePostDataMutation,
+  useLazyGetDataQuery
 }
 
 export type AppDispatch = typeof store.dispatch
