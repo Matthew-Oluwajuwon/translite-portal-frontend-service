@@ -6,4 +6,15 @@ export namespace ApiRequest {
     newPassword: string = "";
     username: string = "";
   }
+  
+  export class SearchTransaction {
+    size?: number
+    page?: number
+    rrn?: string
+    status?: string
+    toDate?: string
+    fromDate?: string
+    terminalId?: string
+    processedBy?: string
+  }
 }

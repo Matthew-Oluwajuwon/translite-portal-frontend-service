@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { ROUTE } from "@common/constants"
+import { FORM_METHODS, ROUTE } from "@common/constants"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 const userToken = () => {
@@ -30,8 +30,8 @@ export const baseQuery = fetchBaseQuery({
   },
 })
 
-const apiController = createApi({
-  reducerPath: "apiController",
+const globalApi = createApi({
+  reducerPath: "globalApi",
   tagTypes: ["GetData"],
   baseQuery: baseQueryWithReauth(baseQuery),
   endpoints: (builder) => ({
@@ -41,29 +41,46 @@ const apiController = createApi({
           url: data.getUrl,
         }
       },
-      providesTags: ["GetData"],
+      transformResponse: (response: { data: any }, meta, arg) => response.data,
+      transformErrorResponse: (
+        response: { status: string | number },
+        meta,
+        arg,
+      ) => response.status,
+      providesTags: (result, error, id) => [{ type: "GetData", id }],
     }),
-    sendData: builder.mutation({
+    getDataByPostMethod: builder.mutation({
       query: (data: any) => {
         return {
           url: data.postUrl,
-          method: data.formMethod,
-          body:
-            data?.action === "READ"
-              ? {
-                  size: 100,
-                  page: data.page,
-                }
-              : data.request,
+          method: FORM_METHODS.POST,
+          body: {
+            ...data.request,
+            page: data.page,
+            size: 100,
+          },
         }
       },
       invalidatesTags: (result, error, arg) => [
         { type: "GetData", id: arg.id },
       ],
     }),
+    postData: builder.mutation({
+      query: (data) => {
+        return {
+          url: data.postUrl,
+          method: FORM_METHODS.POST,
+          body: data.request,
+        }
+      },
+    }),
   }),
 })
 
-export const { useSendDataMutation, useGetDataQuery } =
-  apiController
-export default apiController
+export const {
+  useGetDataQuery,
+  useGetDataByPostMethodMutation,
+  usePostDataMutation,
+  useLazyGetDataQuery
+} = globalApi
+export default globalApi

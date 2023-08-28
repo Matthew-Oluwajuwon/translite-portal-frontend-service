@@ -6,6 +6,11 @@ export const apiEndpoints = {
   },
   transaction: {
     dashboardDay: "transactions/dashboard/",
-    getTransactions: "transactions"
+    getTransactions: "transactions",
+    getTransactionsByProcessorName: "transactions/byProcessor/",
+    searchTransaction: "transactions/search"
+  },
+  processor: {
+    getProcessors: "processor"
   }
 }

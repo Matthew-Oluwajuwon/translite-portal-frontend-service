@@ -13,7 +13,8 @@ export const PageTable: React.FC<PageProps.TableData> = ({
   pageSize,
   total,
   shouldExpand,
-  scrollX
+  scrollX,
+  isNotPaginated
 }) => {
   const dispatch = useAppDispatch()
   const state = useAppSelector((state) => state.global)
@@ -32,11 +33,12 @@ export const PageTable: React.FC<PageProps.TableData> = ({
         columns={column}
         dataSource={dataSource}
         pagination={{
-          position: ["bottomRight"],
+          position: ['bottomRight'],
           onChange: onPagination,
           showSizeChanger: false,
           total: total,
           pageSize: pageSize,
+          hideOnSinglePage: isNotPaginated
         }}
         scroll={{ x: scrollX }}
         className="cursor-pointer"

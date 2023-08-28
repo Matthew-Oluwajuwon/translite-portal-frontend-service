@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { State } from "../../model/application/state"
 
 const loginApi = createApi({
-  reducerPath: "loginApi",
+  reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_APP_API_BASE_URL,
   }),

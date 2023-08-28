@@ -11,11 +11,19 @@ import { ColumnProps } from "antd/es/table"
 import dayjs from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
 import dropdown from "../../assets/icons/dropdown.svg"
-import { data } from "@views/dashboard/components/mock-data"
 import usePageInfo from "../../custom-hooks/usePageInfo"
+import { ApiResponse } from "../../model/client/response"
+import { useEffect } from "react"
+import { useGetDataByPostMethodMutation, useGetDataQuery } from "../../store"
+import { apiEndpoints } from "../../store/apiEndpoints"
+import { useAppSelector } from "../../store/hooks"
+import useAmountFormat from "../../custom-hooks/useAmountFormat"
+import { useFilter } from "../../custom-hooks/useFilter"
 
 const Transactions: React.FC = () => {
-
+const state = useAppSelector(state => {
+  return state.global
+})
   usePageInfo(
     MENU_NAMES.TRANSACTION,
     MENU_KEYS.TRANSACTION,
@@ -23,15 +31,10 @@ const Transactions: React.FC = () => {
   )
 
   dayjs.extend(customParseFormat)
+  const { numberWithCommas } = useAmountFormat()
+
 
   const column: ColumnProps<any>[] = [
-    {
-      title: "SN",
-      dataIndex: "key",
-      ellipsis: true,
-      width: "60px",
-      key: "1",
-    },
     {
       title: "RRN",
       dataIndex: "rrn",
@@ -42,13 +45,22 @@ const Transactions: React.FC = () => {
       title: "AMOUNT",
       dataIndex: "amount",
       ellipsis: true,
+      render: (_: any, record: ApiResponse.Transaction) => {
+        return <p>₦{numberWithCommas(record.amount)}</p>
+      },
       key: "3",
     },
     {
       title: "PROCESSOR",
-      dataIndex: "processor",
+      dataIndex: "processedBy",
       ellipsis: true,
       key: "4",
+    },
+    {
+      title: "PAN",
+      dataIndex: "pan",
+      ellipsis: true,
+      key: "40",
     },
     {
       title: "TERMINAL ID | PLAN",
@@ -65,14 +77,17 @@ const Transactions: React.FC = () => {
     },
     {
       title: "DATE | TIME",
-      dataIndex: "dateTime",
+      dataIndex: "",
       key: "6",
       ellipsis: true,
-      render(_: any, record: any) {
+      render(_: any, record: ApiResponse.Transaction) {
         return (
-          <span className="grid place-content-center text-center">
-            {record.dateTime}
-          </span>
+          <div className="grid place-content-center text-center">
+            <p>{record.createdDate?.split("T")[0].replaceAll("-", "/")}</p>
+            <p>
+              {record.createdDate?.split("T")[1].split("+")[0].split(".")[0]}
+            </p>
+          </div>
         )
       },
     },
@@ -81,16 +96,46 @@ const Transactions: React.FC = () => {
       dataIndex: "status",
       key: "7",
       ellipsis: true,
-      render(_: any, record: any) {
+      render(_: any, record: ApiResponse.Transaction) {
         return (
-          <span className="grid place-content-center text-center">
-            {record.status}
+          <span className="grid place-content-center">
+            <span className={record.responseCode === "00" ? "s" : "f"}>
+              {record.responseCode === "00" ? "Success" : "Failed"}
+              <p className="text-center">{record.responseCode}</p>
+            </span>
           </span>
         )
       },
     },
   ]
   const dateFormat = "YYYY-MM-DD"
+  
+  const [getDataByPostMethod, result] = useGetDataByPostMethodMutation()
+  const { onChangeSearch } = useFilter();
+
+  const processors = useGetDataQuery({
+    ...state,
+    getUrl: apiEndpoints.processor.getProcessors,
+  })
+
+  useEffect(() => {
+    getDataByPostMethod({
+      ...state,
+      postUrl: apiEndpoints.transaction.getTransactions,
+      page: 1,
+    })
+  }, [getDataByPostMethod, state])
+
+  const dataSource =
+    result.data &&
+    (result.data?.data?.transactionDTOS?.map(
+      (item: ApiResponse.Transaction, index: number) => {
+        return {
+          ...item,
+          key: index + 1,
+        }
+      },
+    ) as Array<ApiResponse.Transaction>)
 
   return (
     <div>
@@ -121,6 +166,7 @@ const Transactions: React.FC = () => {
                     placeholder="Search by.."
                     prefix={<img src={Search} alt="search" />}
                     className="h-12"
+                    onChange={(e) => onChangeSearch(e.target.value)}
                   />
                 </Form.Item>
               </Col>
@@ -137,10 +183,27 @@ const Transactions: React.FC = () => {
                   <Select
                     className="border border-[#DEDFEC] rounded-md h-12 flex items-center"
                     suffixIcon={<img src={dropdown} alt="" />}
+                    onChange={(e) =>
+                      getDataByPostMethod({
+                        ...state,
+                        postUrl:
+                          e === "all"
+                            ? apiEndpoints.transaction.getTransactions
+                            : apiEndpoints.transaction
+                                .getTransactionsByProcessorName + e,
+                        page: 1,
+                      })
+                    }
                   >
                     <Select.Option value="all">All</Select.Option>
-                    <Select.Option value="isw">ISW</Select.Option>
-                    <Select.Option value="nibss">NIBSS</Select.Option>
+                    {processors.data &&
+                      processors.data?.processorDTOS?.map(
+                        (item: ApiResponse.Processor, index: number) => (
+                          <Select.Option key={index} value={item.name}>
+                            {item.name}
+                          </Select.Option>
+                        ),
+                      )}
                   </Select>
                 </Form.Item>
               </Col>
@@ -174,8 +237,8 @@ const Transactions: React.FC = () => {
                   }
                   name={"date"}
                   initialValue={[
-                    dayjs("2022-09-03", dateFormat),
-                    dayjs("2023-11-22", dateFormat),
+                    dayjs(dayjs().format(dateFormat), dateFormat),
+                    dayjs(dayjs().subtract(30, 'day').format(dateFormat), dateFormat),
                   ]}
                 >
                   <DatePicker.RangePicker
@@ -188,6 +251,15 @@ const Transactions: React.FC = () => {
                         className="w-[4rem]"
                       />
                     }
+                    onChange={(e, dateString) => getDataByPostMethod({
+                      ...state,
+                      postUrl: apiEndpoints.transaction.searchTransaction,
+                      page: 1,
+                      request: {
+                        fromDate: dateString[0],
+                        toDate: dateString[1],
+                      }
+                    })}
                     cellRender={(current) => {
                       const style: React.CSSProperties = {}
                       if (current.date() === 1) {
@@ -206,9 +278,9 @@ const Transactions: React.FC = () => {
             </Row>
           </Form>
         }
-        loading={false}
+        loading={result.isLoading || processors.isLoading}
         column={column}
-        dataSource={data}
+        dataSource={dataSource}
         scrollX={1000}
       />
     </div>

@@ -18,3 +18,11 @@ export class Global {
     this.value = value
   }
 }
+export class Payload {
+  key: string
+  value?: any
+  constructor(key: string, value: any) {
+    this.key = key
+    this.value = value
+  }
+}
