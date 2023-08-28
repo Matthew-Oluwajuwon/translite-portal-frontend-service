@@ -3,15 +3,20 @@ import CryptoJS from "crypto-js";
 
 export class Encryption {
   static encrypt(value: any): string {
-    return CryptoJS.AES.encrypt(
+    const encrypted = CryptoJS.AES.encrypt(
       JSON.stringify(value),
       "CentralVAS1234!"
-    ).toString();
+    );
+    return encrypted.toString();
   }
 
   static decrypt(value: string): string {
-    return CryptoJS.AES.decrypt(value, "CentralVAS1234!").toString(
-      CryptoJS.enc.Utf8
-    );
+    try {
+      const decryptedBytes = CryptoJS.AES.decrypt(value, "CentralVAS1234!");
+      return decryptedBytes.toString(CryptoJS.enc.Utf8);
+    } catch (error) {
+      console.error("Decryption failed:", error);
+      return "";
+    }
   }
 }

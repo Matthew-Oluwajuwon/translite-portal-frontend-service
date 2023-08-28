@@ -5,7 +5,7 @@ import { useLayoutEffect, useState } from "react"
 import { Encryption } from "@common/utils/encryption"
 
 const useUserInfo = () => {
-  const [userInfo, setUserInfo] = useState(new ApiResponse.UserInfo())
+  const [userInfo, setUserInfo] = useState<ApiResponse.UserInfo>(new ApiResponse.UserInfo())
   useLayoutEffect(() => {
     if (localStorage.getItem("***")) {
       const loginResponse: ApiResponse.UserInfo = JSON.parse(JSON.parse(
