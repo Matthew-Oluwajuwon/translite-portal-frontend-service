@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-import React from "react"
 import { PageTable } from "./table"
 
 interface Props {
@@ -13,6 +12,8 @@ interface Props {
   shouldExpand?: boolean
   scrollX?: number
   isNotPaginated?: boolean
+  total?: number
+  url?: string
 }
 
 export const TransactionTableComponent: React.FC<Props> = ({
@@ -25,8 +26,11 @@ export const TransactionTableComponent: React.FC<Props> = ({
   tableName,
   shouldExpand,
   scrollX,
-  isNotPaginated
+  isNotPaginated,
+  total,
+  url
 }) => {
+  
   return (
     <div className="bg-white w-full rounded-lg my-5 table-shadow">
       <div className="flex justify-between items-center px-3 sm:px-10 py-5">
@@ -45,6 +49,7 @@ export const TransactionTableComponent: React.FC<Props> = ({
         shouldExpand={shouldExpand}
         scrollX={scrollX}
         isNotPaginated={isNotPaginated}
+        total={total}
       />
       </div>
   )

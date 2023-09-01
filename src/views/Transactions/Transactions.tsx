@@ -282,6 +282,7 @@ const state = useAppSelector(state => {
         column={column}
         dataSource={dataSource}
         scrollX={1000}
+        total={result.data?.data?.totalCount}
       />
     </div>
   )
