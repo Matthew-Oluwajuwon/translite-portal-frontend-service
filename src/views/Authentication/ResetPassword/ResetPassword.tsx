@@ -3,11 +3,14 @@ import { Button, Form, Popover } from "antd"
 import CardHeader from "../components/CardHeader"
 import LabeledInput from "../components/LabelInput"
 import { useAuthQuery } from "../../../custom-hooks/useAuthQuery"
-import { useAppSelector, useAppDispatch } from "../../../store/hooks"
-import { setAuthKey } from "../../../store"
+import { useAppDispatch, useAppSelector } from "../../../store/hooks"
+import { setAuthKey, useResetPasswordMutation } from "../../../store"
 import { VerificationCode } from "../components/verification-code"
 import { ForgotPasswordResponseModal } from "../SendMailForPasswordChange/ForgotPasswordResponeModal"
 import { ResetPasswordResponseModal } from "./ResetPasswordModal"
+import { apiEndpoints } from "../../../store/apiEndpoints"
+import { useEffect } from "react"
+import Notify from "@common/components/notification"
 
 const ResetPassword: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -15,6 +18,7 @@ const ResetPassword: React.FC = () => {
     return state.auth
   })
   const { contentData, passwordValidator, setResetInputField } = useAuthQuery()
+  const [resetPassword, resetPasswordResult] = useResetPasswordMutation()
 
   const content = (
     <div className="grid gap-3">
@@ -27,11 +31,32 @@ const ResetPassword: React.FC = () => {
     </div>
   )
 
+  useEffect(() => {
+    if (resetPasswordResult.data?.responseCode === "00") {
+      Notify("success", resetPasswordResult.data?.status)
+      dispatch(
+        setAuthKey({
+          key: "showChangePasswordResponseModal",
+          value: true,
+        }),
+      )
+    } else {
+      Notify(
+        "error",
+        resetPasswordResult.data?.failureReason
+          ?.toLowerCase()
+          .includes("invalid token")
+          ? "Unable to reset password, kindly login to try again"
+          : resetPasswordResult.data?.failureReason,
+      )
+    }
+  }, [dispatch, resetPasswordResult.data])
+
   return (
     <div className="sm:ml-20 lg:ml-7">
       <VerificationCode />
       <ForgotPasswordResponseModal />
-      <ResetPasswordResponseModal />
+      {state.showChangePasswordResponseModal && <ResetPasswordResponseModal />}
       <CardHeader
         cardDescription="Please reset your admin password to continue, this will only happen the first time you login!"
         cardTitle={
@@ -42,6 +67,13 @@ const ResetPassword: React.FC = () => {
         }
       />
       <Form
+        onFinish={() =>
+          resetPassword({
+            ...state,
+            postUrl: apiEndpoints.auth?.resetPassword,
+            token: localStorage.getItem("*****") as string,
+          })
+        }
         fields={[
           {
             name: "newPassword",
@@ -114,11 +146,8 @@ const ResetPassword: React.FC = () => {
           <Button
             type="primary"
             className="flex items-center justify-center p-5 px-7 bg-[#6D71F9] font-semibold"
-            onClick={() =>
-              dispatch(
-                setAuthKey({ key: "showVerficationCodeModal", value: true }),
-              )
-            }
+            htmlType="submit"
+            loading={resetPasswordResult.isLoading}
           >
             Reset my Password
           </Button>

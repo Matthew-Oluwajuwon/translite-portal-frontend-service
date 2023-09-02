@@ -14,18 +14,23 @@ export const PageTable: React.FC<PageProps.TableData> = ({
   total,
   shouldExpand,
   scrollX,
-  isNotPaginated
+  isNotPaginated,
 }) => {
   const dispatch = useAppDispatch()
-  const state = useAppSelector((state) => state.global)
+  const state = useAppSelector((state) => {
+    return state.global
+  })
   const onRowSelect = (_rowIndex: number, record: any) => {
-    dispatch(
+    if (shouldExpand) {
+      dispatch(
         setAllGlobalKey({
-        ...state,
-        expand: shouldExpand ? true : false,
-        record,
-      }),
-    )
+          ...state,
+          expand: true,
+          record,
+        }),
+      )
+      
+    }
   }
   return (
     <Spin spinning={loading}>
@@ -33,12 +38,12 @@ export const PageTable: React.FC<PageProps.TableData> = ({
         columns={column}
         dataSource={dataSource}
         pagination={{
-          position: ['bottomRight'],
+          position: ["bottomRight"],
           onChange: onPagination,
           showSizeChanger: false,
           total: total,
           pageSize: pageSize,
-          hideOnSinglePage: isNotPaginated
+          hideOnSinglePage: isNotPaginated,
         }}
         scroll={{ x: scrollX }}
         className="cursor-pointer"

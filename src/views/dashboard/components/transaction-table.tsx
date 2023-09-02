@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Col, Form, Row, Select } from "antd"
 import IconRight from "../../../assets/icons/icon-right.svg"
 import { ColumnProps } from "antd/es/table"
@@ -7,11 +8,11 @@ import { TransactionTableComponent } from "../../../common/components/transactio
 import { ROUTE } from "../../../common/constants"
 import dropdown from "../../../assets/icons/dropdown.svg"
 import { ApiResponse } from "../../../model/client/response"
-import { useGetDataByPostMethodMutation, useGetDataQuery } from "../../../store"
-import { useEffect } from "react"
-import { useAppSelector } from "../../../store/hooks"
-import { apiEndpoints } from "../../../store/apiEndpoints"
 import useAmountFormat from "../../../custom-hooks/useAmountFormat"
+import useApiMethods from "../../../custom-hooks/useApiMethods"
+import { useEffect } from "react"
+import { apiEndpoints } from "../../../store/apiEndpoints"
+import { useAppSelector } from "../../../store/hooks"
 
 export const TransactionTable = () => {
   const state = useAppSelector((state) => {
@@ -89,30 +90,39 @@ export const TransactionTable = () => {
     },
   ]
 
-  const [getDataByPostMethod, result] = useGetDataByPostMethodMutation()
-  const processors = useGetDataQuery({
-    ...state,
-    getUrl: apiEndpoints.processor.getProcessors,
-  })
+  const { handleApiMethodController, result, data } = useApiMethods()
 
   useEffect(() => {
-    getDataByPostMethod({
-      ...state,
-      postUrl: apiEndpoints.transaction.getTransactions,
-      page: 1,
-    })
-  }, [getDataByPostMethod, state])
+    handleApiMethodController(
+      state,
+      apiEndpoints.transaction.getTransactions,
+      "GET_BY_POST_METHOD",
+      {},
+      1,
+    )
+
+  }, [handleApiMethodController])
+  
+  // useEffect(() => {
+  // handleApiMethodController(
+  //   state,
+  //   apiEndpoints.processor.getProcessors,
+  //   "READ",
+  // )
+    
+  // }, [handleApiMethodController, state])
+  
 
   const dataSource =
     result.data &&
-    (result.data?.data?.transactionDTOS?.slice(0, 5)?.map(
-      (item: ApiResponse.Transaction, index: number) => {
+    (result.data?.data?.transactionDTOS
+      ?.slice(0, 5)
+      ?.map((item: ApiResponse.Transaction, index: number) => {
         return {
           ...item,
           key: index + 1,
         }
-      },
-    ) as Array<ApiResponse.Transaction>)
+      }) as Array<ApiResponse.Transaction>)
 
   return (
     <div>
@@ -152,34 +162,20 @@ export const TransactionTable = () => {
                   <Select
                     className="border border-[#DEDFEC] rounded-md h-11 flex items-center"
                     suffixIcon={<img src={dropdown} alt="" />}
-                    onChange={(e) =>
-                      getDataByPostMethod({
-                        ...state,
-                        postUrl:
-                          e === "all"
-                            ? apiEndpoints.transaction.getTransactions
-                            : apiEndpoints.transaction
-                                .getTransactionsByProcessorName + e,
-                        page: 1,
-                      })
-                    }
                   >
                     <Select.Option value="all">All</Select.Option>
-                    {processors.data &&
-                      processors.data?.processorDTOS?.map(
-                        (item: ApiResponse.Processor, index: number) => (
-                          <Select.Option key={index} value={item.name}>
-                            {item.name}
-                          </Select.Option>
-                        ),
-                      )}
+                    {data.data?.data?.processorDTOS?.map((item: ApiResponse.Processor, index: number) => (
+                      <Select.Option key={index} value={item.name}>
+                        {item.name}
+                      </Select.Option>
+                    ))}
                   </Select>
                 </Form.Item>
               </Col>
             </Row>
           </Form>
         }
-        loading={result.isLoading || processors.isLoading}
+        loading={false}
         pageSize={5}
         tableName="Recent Transaction"
         scrollX={1000}

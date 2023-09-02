@@ -6,7 +6,7 @@ import { ApiResponse } from "../model/client/response"
 import { useNavigate } from "react-router-dom"
 import { ROUTE } from "@common/constants"
 import { apiEndpoints } from "../store/apiEndpoints"
-import { useCallback } from "react"
+import { useCallback, useState } from "react"
 import useToken from "./useToken"
 import { Encryption } from "@common/utils/encryption"
 
@@ -15,12 +15,14 @@ const useAuthApi = () => {
     return state.auth
   })
   const [authApi, { isLoading }] = useLoginMutation()
+  const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate()
 
   const { userToken } = useToken()
 
   const getAdminInfo = useCallback(async () => {
+    setLoading(true)
     try {
       const response = await fetch(
         import.meta.env.VITE_APP_API_BASE_URL + apiEndpoints.auth.getAdminUser,
@@ -33,16 +35,24 @@ const useAuthApi = () => {
       const data = await response.json()
 
       if (response.status === 401) {
-        Notify("error", data.failureReason)
-        navigate(ROUTE.INDEX, {
-          replace: true,
-        })
       } else {
-        Notify("success", "Successful")
-        localStorage.setItem("***", Encryption.encrypt(JSON.stringify(data.data)))
-        navigate(ROUTE.DASHBOARD, {
-          replace: true,
-        })
+        if (data.responseCode !== "00") {
+          Notify("error", data.failureReason)
+          setLoading(false)
+        } 
+         if (data.responseCode === "97") {
+         return navigate(ROUTE.RESET_PASSWORD)
+        } else {
+          navigate(ROUTE.INDEX, {
+            replace: true,
+          })
+          Notify("success", "Successful")
+          localStorage.setItem("***", Encryption.encrypt(JSON.stringify(data.data)))
+          setLoading(false)
+          navigate(ROUTE.DASHBOARD, {
+            replace: true,
+          })
+        }
       }
     } catch (error) {
       console.log("error", error)
@@ -75,7 +85,7 @@ const useAuthApi = () => {
   }, [authApi, getAdminInfo, state])
 
   return {
-    isLoading,
+    isLoading: isLoading || loading,
     handleLogin,
   }
 }

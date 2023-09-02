@@ -14,23 +14,34 @@ export namespace ApiResponse {
     lastName?: string
   }
 
-  export class Statistics {
-    selectedDayPerformance?: SelectedDayPerformance
+  export class Dashboard {
+    dayReport?: DayReport
+    sevenDaysReport?: SevenDaysReport[]
   }
-
-  export class SelectedDayPerformance {
-    totalTransaction?: number
-    failedTransaction?: number
-    successfulTransaction?: number
+  
+  export class DayReport {
+    totalValue?: number
+    failedValue?: number
+    successValue?: number
     totalCount?: number
     failedCount?: number
     successCount?: number
-    processorPerformanceMap?: ProcessorPerformanceMap
+    successPercentage?: string
+    processorSuccessPercentage?: ProcessorSuccessPercentage[]
   }
-
-  export class ProcessorPerformanceMap {}
-
-  export class ProcessorPerformanceMap2 {}
+  
+  export class ProcessorSuccessPercentage {
+    name?: string
+    value?: string
+  }
+  
+  export class SevenDaysReport {
+    day?: string
+    type?: string
+    value?: number
+    count?: number
+  }
+  
   
   export class Transaction {
     id?: number

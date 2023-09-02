@@ -2,7 +2,8 @@
 export const apiEndpoints = {
   auth: {
     login: "authenticate",
-    getAdminUser: "adminUser/info"
+    getAdminUser: "adminUser/info",
+    resetPassword: "adminUser/resetAdminPassword?token="
   },
   transaction: {
     dashboardDay: "transactions/dashboard/",

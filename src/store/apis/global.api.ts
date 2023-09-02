@@ -6,6 +6,8 @@ const userToken = () => {
   if (localStorage.getItem("*****") && localStorage.getItem("*****")?.length) {
     return localStorage.getItem("*****")
   }
+  localStorage.clear()
+  window.location.href = ROUTE.INDEX
   return Promise.reject(new Error("No token in the storage"))
 }
 export const baseUrl = import.meta.env.VITE_APP_API_BASE_URL
@@ -30,40 +32,40 @@ export const baseQuery = fetchBaseQuery({
   },
 })
 
-const globalApi = createApi({
+export const globalApi = createApi({
   reducerPath: "globalApi",
-  tagTypes: ["GetData"],
   baseQuery: baseQueryWithReauth(baseQuery),
+  tagTypes: ["GetData"],
   endpoints: (builder) => ({
     getData: builder.query({
       query: (data) => {
         return {
-          url: data.getUrl,
-        }
+          url: `${data.getUrl}`,
+        };
       },
-      transformResponse: (response: { data: any }, meta, arg) => response.data,
-      transformErrorResponse: (
-        response: { status: string | number },
-        meta,
-        arg,
-      ) => response.status,
-      providesTags: (result, error, id) => [{ type: "GetData", id }],
+      providesTags: ['GetData'],
     }),
-    getDataByPostMethod: builder.mutation({
-      query: (data: any) => {
+    getUserInfo: builder.mutation({
+      query: (data) => {
         return {
           url: data.postUrl,
+          method: FORM_METHODS.POST,
+        };
+      },
+    }),
+    getDataByPostMethodSecured: builder.mutation({
+      query: (data) => {
+
+        return {
+          url: data.getPostUrl,
           method: FORM_METHODS.POST,
           body: {
             ...data.request,
             page: data.page,
-            size: 100,
+            size: 10,
           },
-        }
+        };
       },
-      invalidatesTags: (result, error, arg) => [
-        { type: "GetData", id: arg.id },
-      ],
     }),
     postData: builder.mutation({
       query: (data) => {
@@ -71,16 +73,45 @@ const globalApi = createApi({
           url: data.postUrl,
           method: FORM_METHODS.POST,
           body: data.request,
-        }
+        };
       },
+      invalidatesTags: (_result, _error, arg) => [
+        { type: "GetData", id: arg.id },
+      ],
+    }),
+    updateData: builder.mutation({
+      query: (data) => {
+        return {
+          url: data.updateUrl,
+          method: FORM_METHODS.POST,
+          body: data.request,
+        };
+      },
+      invalidatesTags: (_result, _error, arg) => [
+        { type: "GetData", id: arg.id },
+      ],
+    }),
+    deleteData: builder.mutation({
+      query: (data) => {
+        return {
+          url: data.deleteUrl,
+          method: FORM_METHODS.POST,
+          body: data.request,
+        };
+      },
+      invalidatesTags: (_result, _error, arg) => [
+        { type: "GetData", id: arg.id },
+      ],
     }),
   }),
-})
+});
 
 export const {
-  useGetDataQuery,
-  useGetDataByPostMethodMutation,
+  useGetUserInfoMutation,
+  useGetDataByPostMethodSecuredMutation,
   usePostDataMutation,
+  useUpdateDataMutation,
+  useDeleteDataMutation,
+  useGetDataQuery,
   useLazyGetDataQuery
-} = globalApi
-export default globalApi
+} = globalApi;
