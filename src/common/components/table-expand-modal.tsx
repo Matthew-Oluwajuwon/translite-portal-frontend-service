@@ -1,11 +1,12 @@
 /* eslint-disable prettier/prettier */
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Col, Divider, List, Row } from "antd"
 import React, { useCallback, useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { PageModal } from "./modal"
 import Download from "../../assets/icons/white-download.svg"
 import { setAllGlobalKey } from "../../store"
+import useAmountFormat from "../../custom-hooks/useAmountFormat"
+import dayjs from "dayjs"
 
 interface Props {
   modalCardTitle: string
@@ -37,7 +38,7 @@ export const TableExpandModal: React.FC<Props> = ({
       })
     }
     return data
-  }, [])
+  }, [state?.record])
 
   const convertCamelCaseToTitle = (title: any) => {
     const result = title.replaceAll(/([A-Z])/g, " $1").replaceAll("_", " ")
@@ -47,6 +48,8 @@ export const TableExpandModal: React.FC<Props> = ({
   useEffect(() => {
     GetData()
   }, [GetData])
+  
+  const { numberWithCommas } = useAmountFormat()
 
   return (
     <PageModal
@@ -78,7 +81,7 @@ export const TableExpandModal: React.FC<Props> = ({
             ? GetData().filter(
                 (x) =>
                   x.value !== null &&
-                  // !x.key?.toLowerCase().includes("id") &&
+                  x.key?.toLowerCase() !== "id" &&
                   x.key !== "key" &&
                   x.value !== false &&
                   x.value !== true,
@@ -101,10 +104,10 @@ export const TableExpandModal: React.FC<Props> = ({
               <Col className="text-[0.7rem] lg:text-[0.8rem] text-[#272848] font-semibold">
                 {item.key?.toLowerCase() === "amount" ? (
                   <span className="font-bold text-[#272848] text-[1rem] lg:text-xl">
-                    {item.value}
+                    ₦{numberWithCommas(item.value)}
                   </span>
                 ) : (
-                  item.value
+                  item.key?.toLowerCase().includes("date") ? dayjs(item.value).toString() : item.value
                 )}
               </Col>
             </Row>

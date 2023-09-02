@@ -1,18 +1,18 @@
 /* eslint-disable prettier/prettier */
 import { Column, Pie } from "@ant-design/plots"
 import { Select, Spin } from "antd"
-import { data } from "./data"
-import { PieConfig } from "@ant-design/charts"
+import { ColumnConfig, PieConfig } from "@ant-design/charts"
 
 export const Chart = ({
-  data: apiData,
+  data,
   isLoading,
 }: {
   data: any
   isLoading: boolean
 }) => {
+
   const config = {
-    data,
+    data: Array.isArray(data) ? data : [],
     xField: "day",
     yField: "value",
     seriesField: "type",
@@ -25,21 +25,20 @@ export const Chart = ({
       radius: [20, 20, 20, 20],
       // lineWidth: 1,
       // fillOpacity: 0.5,
-      // shadowColor: 'black',
       // shadowBlur: 10,
       // shadowOffsetX: 5,
       // shadowOffsetY: 5,
-      // cursor: 'pointer'
+      // cursor: 'pointer',
     },
-  } as any
+  } as ColumnConfig
 
   const pieData = [
     {
-      type: "ISW",
+      name: "ISW",
       value: 108100,
     },
     {
-      type: "NIBSS",
+      name: "NIBSS",
       value: 40100,
     },
   ]
@@ -48,7 +47,7 @@ export const Chart = ({
     appendPadding: 10,
     data: pieData,
     angleField: "value",
-    colorField: "type",
+    colorField: "name",
     radius: 1,
     innerRadius: 0.6,
     legend: {
@@ -99,7 +98,7 @@ export const Chart = ({
                 Transaction Summary
               </h1>
               <div className="justify-between items-center gap-2 hidden xl:flex">
-                <p className="t">Tansaction</p>
+                <p className="t">Total</p>
                 <p className="s">Successful</p>
                 <p className="f">Failed</p>
                 <Select

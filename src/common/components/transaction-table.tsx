@@ -1,5 +1,8 @@
 /* eslint-disable prettier/prettier */
+import { setGlobalKey } from "../../store"
+import { useAppDispatch } from "../../store/hooks"
 import { PageTable } from "./table"
+import { useCallback } from "react"
 
 interface Props {
   column?: any[]
@@ -28,8 +31,19 @@ export const TransactionTableComponent: React.FC<Props> = ({
   scrollX,
   isNotPaginated,
   total,
-  url
 }) => {
+  const dispatch = useAppDispatch()
+  
+  const onPaginate = useCallback(
+    (pageNumber: number) => {
+      dispatch(setGlobalKey({
+        key: "page",
+        value: pageNumber
+      }))
+    },
+    [dispatch],
+  )
+  
   
   return (
     <div className="bg-white w-full rounded-lg my-5 table-shadow">
@@ -50,6 +64,7 @@ export const TransactionTableComponent: React.FC<Props> = ({
         scrollX={scrollX}
         isNotPaginated={isNotPaginated}
         total={total}
+        onPagination={onPaginate}
       />
       </div>
   )

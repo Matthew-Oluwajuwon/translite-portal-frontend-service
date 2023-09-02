@@ -7,13 +7,17 @@ import {
 } from "@reduxjs/toolkit"
 import { AuthReducer, setAuthKey, setField, setAllAuthKey } from "./slice/auth"
 import { GlobalReducer, setGlobalKey, setAllGlobalKey } from "./slice/global"
-import loginApi, { useLoginMutation } from "./apis/auth.api"
+import loginApi, { useLoginMutation, useResetPasswordMutation } from "./apis/auth.api"
 import { setupListeners } from "@reduxjs/toolkit/dist/query/react"
-import globalApi, {
-  useGetDataQuery,
-  useGetDataByPostMethodMutation,
+import {
+  useGetUserInfoMutation,
+  useGetDataByPostMethodSecuredMutation,
+  useUpdateDataMutation,
+  useDeleteDataMutation,
   usePostDataMutation,
-  useLazyGetDataQuery
+  useGetDataQuery,
+  useLazyGetDataQuery,
+  globalApi,
 } from "./apis/global.api"
 
 const reducer = combineReducers({
@@ -28,7 +32,7 @@ export const store = configureStore({
   devTools: import.meta.env.PROD === false,
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({
-      // serializableCheck: false,
+      serializableCheck: false,
     }).concat(loginApi.middleware, globalApi.middleware)
   },
 })
@@ -40,9 +44,13 @@ export { setAuthKey, setField, setGlobalKey, setAllGlobalKey, setAllAuthKey }
 export {
   useLoginMutation,
   useGetDataQuery,
-  useGetDataByPostMethodMutation,
+  useGetUserInfoMutation,
+  useGetDataByPostMethodSecuredMutation,
+  useUpdateDataMutation,
+  useDeleteDataMutation,
   usePostDataMutation,
-  useLazyGetDataQuery
+  useLazyGetDataQuery,
+  useResetPasswordMutation
 }
 
 export type AppDispatch = typeof store.dispatch

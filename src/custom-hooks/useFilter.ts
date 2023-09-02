@@ -1,37 +1,37 @@
 /* eslint-disable prettier/prettier */
-import SearchDatatable from "@common/utils/searchDatatable";
-import { useCallback } from "react";
-import { setAllGlobalKey } from "../store";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-export const useFilter = (
- 
-) => {
-  const dispatch = useAppDispatch();
+import { useAppSelector } from "../store/hooks";
+
+const useFilter = (array: any[]) => {
   const state = useAppSelector((state) => {
     return state.global;
   });
-  
-  const onChangeSearch = useCallback(
-    async (value: string) => {
-      let originalData = state.originalResponse as any;
-      let data = await SearchDatatable.Search(
-        originalData ?? [],
-        value,
-      );
-      const dataSource = data?.map((x: any, index: any) => ({
-        ...x,
-        key: index + 1,
-      }));
-      dispatch(
-        setAllGlobalKey({
-          ...state,
-          response: dataSource,
-        })
-      );
-    },
-    [dispatch, state]
-  );
+  let dataSource = array;
 
-  return { onChangeSearch };
+  if (state.searchTerm) {
+    dataSource = dataSource?.filter((x: any) => {
+      let include = false;
+      Object.values(x).forEach(function (element2: any) {
+        if (element2 !== null && element2) {
+          const lowerCaseElement = element2.toString().toLowerCase();
+          if (lowerCaseElement.includes(state.searchTerm?.toLowerCase())) {
+            include = true;
+          }
+        }
+      });
+      return include;
+    });
+  }
+
+  dataSource = dataSource?.map((item: any, index: number) => {
+    return {
+      ...item,
+      key: index + 1,
+    };
+  });
+
+  return { dataSource };
 };
+
+export default useFilter;

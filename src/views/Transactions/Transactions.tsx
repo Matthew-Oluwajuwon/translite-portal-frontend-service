@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable react-hooks/exhaustive-deps */
 
 import { BREADCRUMB, MENU_KEYS, MENU_NAMES } from "../../common/constants"
 import { Col, DatePicker, Form, Input, Row, Select } from "antd"
@@ -13,17 +14,19 @@ import customParseFormat from "dayjs/plugin/customParseFormat"
 import dropdown from "../../assets/icons/dropdown.svg"
 import usePageInfo from "../../custom-hooks/usePageInfo"
 import { ApiResponse } from "../../model/client/response"
-import { useEffect } from "react"
-import { useGetDataByPostMethodMutation, useGetDataQuery } from "../../store"
-import { apiEndpoints } from "../../store/apiEndpoints"
-import { useAppSelector } from "../../store/hooks"
 import useAmountFormat from "../../custom-hooks/useAmountFormat"
-import { useFilter } from "../../custom-hooks/useFilter"
+import useApiMethods from "../../custom-hooks/useApiMethods"
+import { useEffect } from "react"
+import { useAppDispatch, useAppSelector } from "../../store/hooks"
+import { apiEndpoints } from "../../store/apiEndpoints"
+import useFilter from "../../custom-hooks/useFilter"
+import { setGlobalKey } from "../../store"
 
 const Transactions: React.FC = () => {
-const state = useAppSelector(state => {
-  return state.global
-})
+  const dispatch = useAppDispatch()
+  const state = useAppSelector((state) => {
+    return state.global
+  })
   usePageInfo(
     MENU_NAMES.TRANSACTION,
     MENU_KEYS.TRANSACTION,
@@ -32,7 +35,6 @@ const state = useAppSelector(state => {
 
   dayjs.extend(customParseFormat)
   const { numberWithCommas } = useAmountFormat()
-
 
   const column: ColumnProps<any>[] = [
     {
@@ -109,33 +111,20 @@ const state = useAppSelector(state => {
     },
   ]
   const dateFormat = "YYYY-MM-DD"
-  
-  const [getDataByPostMethod, result] = useGetDataByPostMethodMutation()
-  const { onChangeSearch } = useFilter();
 
-  const processors = useGetDataQuery({
-    ...state,
-    getUrl: apiEndpoints.processor.getProcessors,
-  })
+  const { handleApiMethodController, result } = useApiMethods()
 
   useEffect(() => {
-    getDataByPostMethod({
-      ...state,
-      postUrl: apiEndpoints.transaction.getTransactions,
-      page: 1,
-    })
-  }, [getDataByPostMethod, state])
+    handleApiMethodController(
+      state,
+      apiEndpoints.transaction.getTransactions,
+      "GET_BY_POST_METHOD",
+      {},
+      state.page,
+    )
+  }, [state.request])
 
-  const dataSource =
-    result.data &&
-    (result.data?.data?.transactionDTOS?.map(
-      (item: ApiResponse.Transaction, index: number) => {
-        return {
-          ...item,
-          key: index + 1,
-        }
-      },
-    ) as Array<ApiResponse.Transaction>)
+  const {dataSource} = useFilter(result.data?.data?.transactionDTOS)
 
   return (
     <div>
@@ -166,7 +155,10 @@ const state = useAppSelector(state => {
                     placeholder="Search by.."
                     prefix={<img src={Search} alt="search" />}
                     className="h-12"
-                    onChange={(e) => onChangeSearch(e.target.value)}
+                    onChange={(e) => dispatch(setGlobalKey({
+                      key: "searchTerm",
+                      value: e.target.value
+                    }))}
                   />
                 </Form.Item>
               </Col>
@@ -183,27 +175,8 @@ const state = useAppSelector(state => {
                   <Select
                     className="border border-[#DEDFEC] rounded-md h-12 flex items-center"
                     suffixIcon={<img src={dropdown} alt="" />}
-                    onChange={(e) =>
-                      getDataByPostMethod({
-                        ...state,
-                        postUrl:
-                          e === "all"
-                            ? apiEndpoints.transaction.getTransactions
-                            : apiEndpoints.transaction
-                                .getTransactionsByProcessorName + e,
-                        page: 1,
-                      })
-                    }
                   >
                     <Select.Option value="all">All</Select.Option>
-                    {processors.data &&
-                      processors.data?.processorDTOS?.map(
-                        (item: ApiResponse.Processor, index: number) => (
-                          <Select.Option key={index} value={item.name}>
-                            {item.name}
-                          </Select.Option>
-                        ),
-                      )}
                   </Select>
                 </Form.Item>
               </Col>
@@ -238,7 +211,10 @@ const state = useAppSelector(state => {
                   name={"date"}
                   initialValue={[
                     dayjs(dayjs().format(dateFormat), dateFormat),
-                    dayjs(dayjs().subtract(30, 'day').format(dateFormat), dateFormat),
+                    dayjs(
+                      dayjs().subtract(30, "day").format(dateFormat),
+                      dateFormat,
+                    ),
                   ]}
                 >
                   <DatePicker.RangePicker
@@ -251,15 +227,6 @@ const state = useAppSelector(state => {
                         className="w-[4rem]"
                       />
                     }
-                    onChange={(e, dateString) => getDataByPostMethod({
-                      ...state,
-                      postUrl: apiEndpoints.transaction.searchTransaction,
-                      page: 1,
-                      request: {
-                        fromDate: dateString[0],
-                        toDate: dateString[1],
-                      }
-                    })}
                     cellRender={(current) => {
                       const style: React.CSSProperties = {}
                       if (current.date() === 1) {
@@ -278,7 +245,7 @@ const state = useAppSelector(state => {
             </Row>
           </Form>
         }
-        loading={result.isLoading || processors.isLoading}
+        loading={result.isLoading}
         column={column}
         dataSource={dataSource}
         scrollX={1000}

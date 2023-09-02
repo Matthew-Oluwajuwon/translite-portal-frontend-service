@@ -28,7 +28,8 @@ const initialState: State.Global = {
   configuration: {
     processorSelection: CHARGE_CONFIGURATION_TYPES.FLAT,
   },
-  selectUrl: ""
+  selectUrl: "",
+  page: 2,
 }
 
 const GlobalSlice = createSlice({

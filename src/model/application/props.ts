@@ -38,7 +38,7 @@ export namespace PageProps {
     loading?: boolean
     total?: number
     pageSize?: number
-    onPagination?: () => any
+    onPagination?: (e: number) => void
     shouldExpand?: boolean
     scrollX?: number
     isNotPaginated?: boolean

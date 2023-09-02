@@ -23,6 +23,7 @@ export namespace State {
     postUrl: string
     formMethod: string
     userInfo?: ApiResponse.UserInfo
+    token?: string
   }
 
   export interface Global {
@@ -44,7 +45,7 @@ export namespace State {
     deleteUrl?: string
     formMethod?: string;
     page?: number;
-    action?: "CREATE" | "UPDATE" | "DELETE" | "READ"
+    action?: "CREATE" | "UPDATE" | "DELETE" | "READ" | "GET_BY_POST_METHOD"
     labelInput?: string
     configuration?: Configurations
     transactionRouting?: TransactionRouting
@@ -52,6 +53,8 @@ export namespace State {
     transaction?: Transaction
     response?: any
     originalResponse?: any
+    showFormModal?: boolean
+    searchTerm?: string
   }
 
   export interface Terminals {

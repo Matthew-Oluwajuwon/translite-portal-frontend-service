@@ -3,16 +3,23 @@ import { useCallback } from "react"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import { SuccessModal } from "../../../common/components/SuccessModal"
 import { setAuthKey } from "../../../store"
+import { useNavigate } from "react-router-dom"
+import { ROUTE } from "@common/constants"
 
 export const ResetPasswordResponseModal: React.FC = () => {
   const dispatch = useAppDispatch()
   const state = useAppSelector((state) => state.auth)
+  
+  const navigate = useNavigate()
 
   const handleClick = useCallback(() => {
     dispatch(
       setAuthKey({ key: "showResetPasswordResponseModal", value: true }),
     )
-  }, [dispatch])
+    navigate(ROUTE.INDEX, {
+      replace: true
+    })
+  }, [dispatch, navigate])
 
   return (
     <SuccessModal

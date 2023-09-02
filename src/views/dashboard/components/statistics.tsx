@@ -8,43 +8,53 @@ import { ApiResponse } from "../../../model/client/response"
 import useAmountFormat from "../../../custom-hooks/useAmountFormat"
 
 const Statistics = ({ data, isLoading }: { data: any; isLoading: boolean }) => {
-  const state: ApiResponse.SelectedDayPerformance =
-    data?.selectedDayPerformance
-  const { numberWithCommas } = useAmountFormat();
+  const state: ApiResponse.DayReport = data
+  const { numberWithCommas } = useAmountFormat()
 
   const items = [
     {
       cardTitle: (
         <span className="font-bold text-xl text-[#272848]">
-          +53%{" "}
+          +
+          {parseFloat(
+            state?.successPercentage?.includes("NaN")
+              ? 0.0
+              : (state?.successPercentage as any),
+          )}
+          %{" "}
           <span className="font-medium text-[35%] 2xl:text-[0.65rem]">
             since last week
           </span>
-        </span>
-      ),
-      cardCount: (
-        <span className="font-medium text-[65%] 2xl:text-[0.85rem]">
-          Transaction Growth Rate
+          <br />
+          <span className="font-medium text-[65%] 2xl:text-[0.85rem]">
+            Transaction Growth Rate
+          </span>
         </span>
       ),
       icon: (
-        <Progress type="circle" size={"small"} status="active" percent={53} />
+        <Progress
+          type="circle"
+          size={"small"}
+          strokeColor="#34AA44"
+          strokeWidth={9}
+          percent={parseFloat(state?.successPercentage as any)}
+        />
       ),
     },
     {
-      cardAmount: numberWithCommas(state?.totalTransaction?.toFixed(2)),
+      cardAmount: `₦${numberWithCommas(state?.totalValue?.toFixed(2))}`,
       cardCount: state?.totalCount,
       cardTitle: "Total Transactions",
       icon: <img src={TranCount} alt="tran-count" />,
     },
     {
-      cardAmount: numberWithCommas(state?.successfulTransaction?.toFixed(2)),
+      cardAmount: `₦${numberWithCommas(state?.successValue?.toFixed(2))}`,
       cardCount: state?.successCount,
       cardTitle: "Successful Transactions",
       icon: <img src={SuccessCount} alt="success-count" />,
     },
     {
-      cardAmount: numberWithCommas(state?.failedTransaction?.toFixed(2)),
+      cardAmount: `₦${numberWithCommas(state?.failedValue?.toFixed(2))}`,
       cardCount: state?.failedCount,
       cardTitle: "Failed Transactions",
       icon: <img src={FailedCount} alt="failed-count" />,
@@ -64,7 +74,7 @@ const Statistics = ({ data, isLoading }: { data: any; isLoading: boolean }) => {
             </div>
           ) : (
             <div className="flex items-center justify-between gap-2">
-              <span className="basis-[40%]">{item.icon}</span>
+              <span className="basis-[30%]">{item.icon}</span>
               <div className="w-full grid gap-3">
                 <p className="font-bold text-xl">{item.cardAmount}</p>
                 {/* <p className="font-bold text-lg -my-3">{item.cardCount}</p> */}
