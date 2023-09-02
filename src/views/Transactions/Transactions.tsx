@@ -122,7 +122,7 @@ const Transactions: React.FC = () => {
       {},
       state.page,
     )
-  }, [state.request])
+  }, [state.page])
 
   const {dataSource} = useFilter(result.data?.data?.transactionDTOS)
 
