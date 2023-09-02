@@ -80,7 +80,7 @@ const useToggle = () => {
       )
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dispatch],
+    [dispatch, state.showLogoutModal],
   )
 
   const toggleCreateModal = useCallback(() => {

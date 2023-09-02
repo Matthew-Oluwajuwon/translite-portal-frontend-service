@@ -122,9 +122,9 @@ const Transactions: React.FC = () => {
       {},
       state.page,
     )
-  }, [state.page])
+  }, [state.request])
 
-  const {dataSource} = useFilter(result.data?.data?.transactionDTOS)
+  const { dataSource } = useFilter(result.data?.data?.transactionDTOS)
 
   return (
     <div>
@@ -155,10 +155,14 @@ const Transactions: React.FC = () => {
                     placeholder="Search by.."
                     prefix={<img src={Search} alt="search" />}
                     className="h-12"
-                    onChange={(e) => dispatch(setGlobalKey({
-                      key: "searchTerm",
-                      value: e.target.value
-                    }))}
+                    onChange={(e) =>
+                      dispatch(
+                        setGlobalKey({
+                          key: "searchTerm",
+                          value: e.target.value,
+                        }),
+                      )
+                    }
                   />
                 </Form.Item>
               </Col>
@@ -176,7 +180,9 @@ const Transactions: React.FC = () => {
                     className="border border-[#DEDFEC] rounded-md h-12 flex items-center"
                     suffixIcon={<img src={dropdown} alt="" />}
                   >
-                    <Select.Option value="all">All</Select.Option>
+                    {/* <Select.Option value="all">All</Select.Option> */}
+                    <Select.Option value="isw">Interswitch</Select.Option>
+                    <Select.Option value="nibss">NIBSS</Select.Option>
                   </Select>
                 </Form.Item>
               </Col>
