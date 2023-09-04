@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { FORM_METHODS, ROUTE } from "@common/constants"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
+import { State } from "../../model/application/state"
 
 const userToken = () => {
   if (localStorage.getItem("*****") && localStorage.getItem("*****")?.length) {
@@ -52,6 +53,15 @@ export const globalApi = createApi({
           method: FORM_METHODS.POST,
         };
       },
+    }),
+    resetPassword: builder.mutation({
+      query: (data: State.Authentication) => {
+        return {
+          url: `${data.postUrl}`,
+          method: FORM_METHODS.POST,
+          body: data.request
+        }
+      }
     }),
     getDataByPostMethodSecured: builder.mutation({
       query: (data) => {
@@ -113,5 +123,6 @@ export const {
   useUpdateDataMutation,
   useDeleteDataMutation,
   useGetDataQuery,
-  useLazyGetDataQuery
+  useLazyGetDataQuery,
+  useResetPasswordMutation
 } = globalApi;
