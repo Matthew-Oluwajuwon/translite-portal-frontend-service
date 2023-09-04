@@ -11,7 +11,6 @@ import { ResetPasswordResponseModal } from "./ResetPasswordModal"
 import { apiEndpoints } from "../../../store/apiEndpoints"
 import { useEffect } from "react"
 import Notify from "@common/components/notification"
-import { useLocation } from "react-router-dom"
 
 const ResetPassword: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -20,7 +19,6 @@ const ResetPassword: React.FC = () => {
   })
   const { contentData, passwordValidator, setResetInputField } = useAuthQuery()
   const [resetPassword, resetPasswordResult] = useResetPasswordMutation()
-  const location = useLocation()
 
   const content = (
     <div className="grid gap-3">
@@ -74,7 +72,7 @@ const ResetPassword: React.FC = () => {
             ...state,
             postUrl: apiEndpoints.auth?.resetPassword,
             request: {
-              oldPassword: location.state?.oldPassword,
+              oldPassword: state.request?.oldPassword,
               password: state.request?.password,
               confirmPassword: state.request?.confirmPassword
             }
@@ -86,12 +84,31 @@ const ResetPassword: React.FC = () => {
             value: state.request?.confirmPassword,
           },
           {
+            name: "oldPassword",
+            value: state.request?.oldPassword,
+          },
+          {
             name: "password",
             value: state.request?.password,
           },
         ]}
         className="grid gap-7 mt-20"
       >
+        <Form.Item
+          name={"oldPassword"}
+          required
+          rules={[
+            { required: true, message: "Please enter old password" },
+          ]}
+        >
+          <LabeledInput
+            label={"Old Password"}
+            type={"oldPassword"}
+            htmlFor={"oldPassword"}
+            value={state.request?.oldPassword}
+            onChange={(e) => setResetInputField(e.target.value, "oldPassword")}
+          />
+        </Form.Item>
         <div>
           <Popover content={content} trigger="focus" placement="top">
             <div>
