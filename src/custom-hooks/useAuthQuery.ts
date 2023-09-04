@@ -79,9 +79,9 @@ export const useAuthQuery = () => {
     {
       text: "Minimum number of characters: 8",
       img:
-        state.request?.newPassword === ""
+        state.request?.password === ""
           ? GrayChecker
-          : state.request?.newPassword === undefined
+          : state.request?.password === undefined
           ? GrayChecker
           : state.isPasswordLength
           ? GreenCheck
@@ -90,9 +90,9 @@ export const useAuthQuery = () => {
     {
       text: "Contains a capital letter",
       img:
-        state.request?.newPassword === ""
+        state.request?.password === ""
           ? GrayChecker
-          : state.request?.newPassword === undefined
+          : state.request?.password === undefined
           ? GrayChecker
           : state.isUpperCase
           ? GreenCheck
@@ -101,9 +101,9 @@ export const useAuthQuery = () => {
     {
       text: "Contains a lowercase letter",
       img:
-        state.request?.newPassword === ""
+        state.request?.password === ""
           ? GrayChecker
-          : state.request?.newPassword === undefined
+          : state.request?.password === undefined
           ? GrayChecker
           : state.isLowerCase
           ? GreenCheck
@@ -112,9 +112,9 @@ export const useAuthQuery = () => {
     {
       text: "Contains a number",
       img:
-        state.request?.newPassword === ""
+        state.request?.password === ""
           ? GrayChecker
-          : state.request?.newPassword === undefined
+          : state.request?.password === undefined
           ? GrayChecker
           : state.hasNumber
           ? GreenCheck
@@ -123,9 +123,9 @@ export const useAuthQuery = () => {
     {
       text: "Includes a special character",
       img:
-        state.request?.newPassword === ""
+        state.request?.password === ""
           ? GrayChecker
-          : state.request?.newPassword === undefined
+          : state.request?.password === undefined
           ? GrayChecker
           : state.isSpecialChar
           ? GreenCheck
