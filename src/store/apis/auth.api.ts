@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { State } from "../../model/application/state"
-import { FORM_METHODS } from "@common/constants"
 
 const loginApi = createApi({
   reducerPath: "authApi",
@@ -18,16 +17,8 @@ const loginApi = createApi({
         }
       },
     }),
-    resetPassword: builder.mutation({
-      query: (data: State.Authentication) => {
-        return {
-          url: `${data.postUrl}${data.token}&password=${data.request?.password}`,
-          method: FORM_METHODS.POST
-        }
-      }
-    })
   }),
 })
 
-export const { useLoginMutation, useResetPasswordMutation } = loginApi
+export const { useLoginMutation } = loginApi
 export default loginApi

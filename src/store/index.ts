@@ -7,7 +7,7 @@ import {
 } from "@reduxjs/toolkit"
 import { AuthReducer, setAuthKey, setField, setAllAuthKey } from "./slice/auth"
 import { GlobalReducer, setGlobalKey, setAllGlobalKey } from "./slice/global"
-import loginApi, { useLoginMutation, useResetPasswordMutation } from "./apis/auth.api"
+import loginApi, { useLoginMutation } from "./apis/auth.api"
 import { setupListeners } from "@reduxjs/toolkit/dist/query/react"
 import {
   useGetUserInfoMutation,
@@ -18,6 +18,7 @@ import {
   useGetDataQuery,
   useLazyGetDataQuery,
   globalApi,
+  useResetPasswordMutation
 } from "./apis/global.api"
 
 const reducer = combineReducers({
