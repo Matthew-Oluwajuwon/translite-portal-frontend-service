@@ -1,16 +1,18 @@
 /* eslint-disable prettier/prettier */
-import { Column, Pie } from "@ant-design/plots"
+import { Column } from "@ant-design/plots"
 import { Select, Spin } from "antd"
-import { ColumnConfig, PieConfig } from "@ant-design/charts"
+import { Bar, BarConfig, ColumnConfig } from "@ant-design/charts"
 import { ApiResponse } from "../../../model/client/response"
 import useAmountFormat from "../../../custom-hooks/useAmountFormat"
 
 export const Chart = ({
   data,
   isLoading,
+  barChartData
 }: {
   data: Array<ApiResponse.SevenDaysReport>
-  isLoading: boolean
+  isLoading: boolean,
+  barChartData: Array<ApiResponse.ProcessorSuccessPercentage>
 }) => {
   const totalAmount = data
     ?.filter((x) => {
@@ -26,6 +28,89 @@ export const Chart = ({
   const reversedData = Array.isArray(data)
     ? data?.slice(0, 18).reverse().concat(data?.slice(18, 21))
     : []
+    
+    const dat = [
+      {
+        name: "NIBSS",
+        value: 40,
+        type: "Successful"
+      },
+      {
+        name: "NIBSS",
+        value: 10,
+        type: "Failed"
+      },
+      {
+        name: "ISW",
+        value: 10,
+        type: "Successful"
+      },
+      {
+        name: "ISW",
+        value: 40,
+        type: "Failed"
+      },
+      {
+        name: "NIBS",
+        value: 40,
+        type: "Successful"
+      },
+      {
+        name: "NIBS",
+        value: 10,
+        type: "Failed"
+      },
+      {
+        name: "IS",
+        value: 10,
+        type: "Successful"
+      },
+      {
+        name: "IS",
+        value: 40,
+        type: "Failed"
+      },
+      {
+        name: "NIB",
+        value: 40,
+        type: "Successful"
+      },
+      {
+        name: "NIB",
+        value: 10,
+        type: "Failed"
+      },
+      {
+        name: "I",
+        value: 10,
+        type: "Successful"
+      },
+      {
+        name: "I",
+        value: 40,
+        type: "Failed"
+      },
+      {
+        name: "NIBSS",
+        value: 40,
+        type: "Successful"
+      },
+      {
+        name: "NIBSS",
+        value: 10,
+        type: "Failed"
+      },
+      {
+        name: "ISW",
+        value: 10,
+        type: "Successful"
+      },
+      {
+        name: "ISW",
+        value: 40,
+        type: "Failed"
+      },
+    ]
 
   const config = {
     data: reversedData,
@@ -47,61 +132,34 @@ export const Chart = ({
       // cursor: 'pointer',
     },
   } as ColumnConfig
-
-  const pieData = [
-    {
-      name: "ISW",
-      value: 108100,
-    },
-    {
-      name: "NIBSS",
-      value: 40100,
-    },
-  ]
+  
 
   const configs = {
-    appendPadding: 10,
-    data: pieData,
-    angleField: "value",
-    colorField: "name",
-    radius: 1,
-    innerRadius: 0.6,
-    legend: {
-      layout: "horizontal",
-      position: "bottom",
-    },
+    data: dat,
+    isStack: true,
+    xField: 'value',
+    yField: 'name',
+    seriesField: 'type',
+    barWidthRatio: 0.5,
     label: {
-      type: "",
-      offset: "-50%",
-      content: "{value}",
-      style: {
-        textAlign: "center",
-        fontSize: 14,
-      },
-    },
-    statistic: {
-      title: false,
-      content: {
-        style: {
-          whiteSpace: "pre-wrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
+
+      position: 'middle',
+      layout: [
+        {
+          type: 'interval-adjust-position',
+        }, 
+        {
+          type: 'interval-hide-overlap',
         },
-        content: false,
-      },
+        {
+          type: 'adjust-color',
+        },
+      ],
     },
-    interactions: [
-      {
-        type: "element-selected",
-      },
-      {
-        type: "element-active",
-      },
-    ],
-  } as unknown as PieConfig
+  } as BarConfig
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[1fr_20rem] gap-6 overflow-auto">
+    <div className="grid grid-cols-1 lg:grid-cols-[1fr_30rem] gap-6 overflow-auto">
       <div className="bg-white rounded-lg px-10 py-5 overflow-auto">
         {isLoading ? (
           <div className="h-80 grid place-content-center">
@@ -147,7 +205,7 @@ export const Chart = ({
             <h1 className="text-[#424D61] font-semibold text-center mt-5">
               Performance Transaction Processor
             </h1>
-            <Pie {...configs} color={["#6D71F9", "#FACE2B"]} />
+            <Bar {...configs} color={["#4FC62B", "#FF291F"]} />
           </>
         )}
       </div>
