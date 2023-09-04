@@ -69,6 +69,7 @@ const Dashboard: React.FC = () => {
       <Chart
         data={data.data?.data?.sevenDaysReport}
         isLoading={data.isLoading || data.isFetching}
+        barChartData={data.data?.data?.dayReport?.processorSuccessPercentage}
       />
       <TransactionTable />
     </div>
