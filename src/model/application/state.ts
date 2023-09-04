@@ -55,6 +55,8 @@ export namespace State {
     originalResponse?: any
     showFormModal?: boolean
     searchTerm?: string
+    processor?: Array<ApiResponse.Processor>
+    selectField?: string
   }
 
   export interface Terminals {

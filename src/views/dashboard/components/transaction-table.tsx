@@ -12,9 +12,12 @@ import useAmountFormat from "../../../custom-hooks/useAmountFormat"
 import useApiMethods from "../../../custom-hooks/useApiMethods"
 import { useEffect } from "react"
 import { apiEndpoints } from "../../../store/apiEndpoints"
-import { useAppSelector } from "../../../store/hooks"
+import { useAppDispatch, useAppSelector } from "../../../store/hooks"
+import { setGlobalKey } from "../../../store"
+import useFieldApiData from "../../../custom-hooks/useFieldApiData"
 
 export const TransactionTable = () => {
+  const dispatch = useAppDispatch()
   const state = useAppSelector((state) => {
     return state.global
   })
@@ -89,8 +92,10 @@ export const TransactionTable = () => {
       },
     },
   ]
+  
+  const { apiDataLoading } = useFieldApiData()
 
-  const { handleApiMethodController, result, data } = useApiMethods()
+  const { handleApiMethodController, result } = useApiMethods()
 
   useEffect(() => {
     handleApiMethodController(
@@ -98,20 +103,11 @@ export const TransactionTable = () => {
       apiEndpoints.transaction.getTransactions,
       "GET_BY_POST_METHOD",
       {},
-      1,
+      state.page,
     )
 
   }, [handleApiMethodController])
-  
-  // useEffect(() => {
-  // handleApiMethodController(
-  //   state,
-  //   apiEndpoints.processor.getProcessors,
-  //   "READ",
-  // )
     
-  // }, [handleApiMethodController, state])
-  
 
   const dataSource =
     result.data &&
@@ -162,9 +158,21 @@ export const TransactionTable = () => {
                   <Select
                     className="border border-[#DEDFEC] rounded-md h-11 flex items-center"
                     suffixIcon={<img src={dropdown} alt="" />}
+                    onFocus={() => dispatch(setGlobalKey({
+                      key: "selectField",
+                      value: "Processor"
+                    }))}
+                    loading={apiDataLoading}
+                    onChange={(e) => handleApiMethodController(
+                      state,
+                      apiEndpoints.transaction.getTransactionsByProcessorName + e,
+                      "GET_BY_POST_METHOD",
+                      {},
+                      state.page,
+                    )}
                   >
                     <Select.Option value="all">All</Select.Option>
-                    {data.data?.data?.processorDTOS?.map((item: ApiResponse.Processor, index: number) => (
+                    {state.processor?.map((item: ApiResponse.Processor, index: number) => (
                       <Select.Option key={index} value={item.name}>
                         {item.name}
                       </Select.Option>
@@ -175,7 +183,7 @@ export const TransactionTable = () => {
             </Row>
           </Form>
         }
-        loading={false}
+        loading={result.isLoading}
         pageSize={5}
         tableName="Recent Transaction"
         scrollX={1000}

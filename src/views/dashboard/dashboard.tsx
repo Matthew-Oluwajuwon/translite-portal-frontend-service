@@ -46,8 +46,8 @@ const Dashboard: React.FC = () => {
           : dayjs().format("YYYY-MM-DD")),
       "READ",
     )
-  }, [handleApiMethodController])
-
+  }, [handleApiMethodController, state.request?.day])
+  
   return (
     <div>
       <Form.Item className="my-5">
@@ -64,11 +64,11 @@ const Dashboard: React.FC = () => {
       </Form.Item>
       <Statistics
         data={data.data?.data?.dayReport}
-        isLoading={data.isLoading}
+        isLoading={data.isLoading || data.isFetching}
       />
       <Chart
         data={data.data?.data?.sevenDaysReport}
-        isLoading={data.isLoading}
+        isLoading={data.isLoading || data.isFetching}
       />
       <TransactionTable />
     </div>
