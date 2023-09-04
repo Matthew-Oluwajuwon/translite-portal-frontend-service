@@ -41,7 +41,11 @@ const useAuthApi = () => {
           setLoading(false)
         } 
          if (data.responseCode === "97") {
-         return navigate(ROUTE.RESET_PASSWORD)
+         return navigate(ROUTE.RESET_PASSWORD, {
+          state: {
+            oldPassword: state.request?.password
+          }
+         })
         } else {
           navigate(ROUTE.INDEX, {
             replace: true,
@@ -57,7 +61,7 @@ const useAuthApi = () => {
     } catch (error) {
       console.log("error", error)
     }
-  }, [navigate, userToken])
+  }, [navigate, state.request?.password, userToken])
 
   const handleLogin = useCallback(async () => {
     try {

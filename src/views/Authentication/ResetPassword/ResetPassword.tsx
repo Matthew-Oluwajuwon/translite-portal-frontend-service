@@ -11,6 +11,7 @@ import { ResetPasswordResponseModal } from "./ResetPasswordModal"
 import { apiEndpoints } from "../../../store/apiEndpoints"
 import { useEffect } from "react"
 import Notify from "@common/components/notification"
+import { useLocation } from "react-router-dom"
 
 const ResetPassword: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -19,6 +20,7 @@ const ResetPassword: React.FC = () => {
   })
   const { contentData, passwordValidator, setResetInputField } = useAuthQuery()
   const [resetPassword, resetPasswordResult] = useResetPasswordMutation()
+  const location = useLocation()
 
   const content = (
     <div className="grid gap-3">
@@ -51,7 +53,7 @@ const ResetPassword: React.FC = () => {
       )
     }
   }, [dispatch, resetPasswordResult.data])
-
+  
   return (
     <div className="sm:ml-20 lg:ml-7">
       <VerificationCode />
@@ -71,13 +73,17 @@ const ResetPassword: React.FC = () => {
           resetPassword({
             ...state,
             postUrl: apiEndpoints.auth?.resetPassword,
-            token: localStorage.getItem("*****") as string,
+            request: {
+              oldPassword: location.state?.oldPassword,
+              password: state.request?.password,
+              confirmPassword: state.request?.confirmPassword
+            }
           })
         }
         fields={[
           {
-            name: "newPassword",
-            value: state.request?.newPassword,
+            name: "confirmPassword",
+            value: state.request?.confirmPassword,
           },
           {
             name: "password",
@@ -102,27 +108,27 @@ const ResetPassword: React.FC = () => {
                   type={"password"}
                   htmlFor={"password"}
                   onChange={(e) =>
-                    setResetInputField(e.target.value, "newPassword")
+                    setResetInputField(e.target.value, "password")
                   }
-                  value={state.request?.newPassword}
+                  value={state.request?.password}
                 />
               </Form.Item>
             </div>
           </Popover>
-          {(state.request?.newPassword?.length as any) < 8 && (
+          {(state.request?.password?.length as any) < 8 && (
             <p className="text-[#94A0B4] text-[0.7rem]">
               You need a stronger password 💪🏽
             </p>
           )}
         </div>
         <Form.Item
-          name={"password"}
+          name={"confirmPassword"}
           required
           rules={[
             { required: true, message: "Please enter password" },
             ({ getFieldValue }) => ({
               validator(_, value) {
-                if (!value || getFieldValue("newPassword") === value) {
+                if (!value || getFieldValue("password") === value) {
                   return Promise.resolve()
                 }
                 return Promise.reject(
@@ -132,14 +138,14 @@ const ResetPassword: React.FC = () => {
             }),
           ]}
           validateTrigger={["onChange", "onBlur"]}
-          dependencies={["newPassword"]}
+          dependencies={["password"]}
         >
           <LabeledInput
             label={"Confirm Password"}
-            type={"password"}
+            type={"confirmPassword"}
             htmlFor={"confirmPassword"}
-            value={state.request?.password}
-            onChange={(e) => setResetInputField(e.target.value, "password")}
+            value={state.request?.confirmPassword}
+            onChange={(e) => setResetInputField(e.target.value, "confirmPassword")}
           />
         </Form.Item>
         <div className="flex items-center justify-center mt-14">
