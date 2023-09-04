@@ -92,7 +92,7 @@ export const TransactionTable = () => {
       },
     },
   ]
-  
+
   const { apiDataLoading } = useFieldApiData()
 
   const { handleApiMethodController, result } = useApiMethods()
@@ -105,9 +105,7 @@ export const TransactionTable = () => {
       {},
       state.page,
     )
-
   }, [handleApiMethodController])
-    
 
   const dataSource =
     result.data &&
@@ -145,7 +143,7 @@ export const TransactionTable = () => {
             className="my-10 px-10"
           >
             <Row style={{ width: "100%" }}>
-              <Col xs={24} lg={3}>
+              <Col xs={24} lg={4}>
                 <Form.Item
                   initialValue="All"
                   label={
@@ -158,25 +156,34 @@ export const TransactionTable = () => {
                   <Select
                     className="border border-[#DEDFEC] rounded-md h-11 flex items-center"
                     suffixIcon={<img src={dropdown} alt="" />}
-                    onFocus={() => dispatch(setGlobalKey({
-                      key: "selectField",
-                      value: "Processor"
-                    }))}
+                    onFocus={() =>
+                      dispatch(
+                        setGlobalKey({
+                          key: "selectField",
+                          value: "Processor",
+                        }),
+                      )
+                    }
                     loading={apiDataLoading}
-                    onChange={(e) => handleApiMethodController(
-                      state,
-                      apiEndpoints.transaction.getTransactionsByProcessorName + e,
-                      "GET_BY_POST_METHOD",
-                      {},
-                      state.page,
-                    )}
+                    onChange={(e) =>
+                      handleApiMethodController(
+                        state,
+                        apiEndpoints.transaction
+                          .getTransactionsByProcessorName + e,
+                        "GET_BY_POST_METHOD",
+                        {},
+                        state.page,
+                      )
+                    }
                   >
                     <Select.Option value="all">All</Select.Option>
-                    {state.processor?.map((item: ApiResponse.Processor, index: number) => (
-                      <Select.Option key={index} value={item.name}>
-                        {item.name}
-                      </Select.Option>
-                    ))}
+                    {state.processor?.map(
+                      (item: ApiResponse.Processor, index: number) => (
+                        <Select.Option key={index} value={item.name}>
+                          {item.name}
+                        </Select.Option>
+                      ),
+                    )}
                   </Select>
                 </Form.Item>
               </Col>

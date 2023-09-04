@@ -21,6 +21,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { apiEndpoints } from "../../store/apiEndpoints"
 import useFilter from "../../custom-hooks/useFilter"
 import { setGlobalKey } from "../../store"
+import useFieldApiData from "../../custom-hooks/useFieldApiData"
 
 const Transactions: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -111,6 +112,7 @@ const Transactions: React.FC = () => {
     },
   ]
   const dateFormat = "YYYY-MM-DD"
+  const { apiDataLoading } = useFieldApiData()
 
   const { handleApiMethodController, result } = useApiMethods()
 
@@ -179,10 +181,34 @@ const Transactions: React.FC = () => {
                   <Select
                     className="border border-[#DEDFEC] rounded-md h-12 flex items-center"
                     suffixIcon={<img src={dropdown} alt="" />}
+                    onFocus={() =>
+                      dispatch(
+                        setGlobalKey({
+                          key: "selectField",
+                          value: "Processor",
+                        }),
+                      )
+                    }
+                    loading={apiDataLoading}
+                    onChange={(e) =>
+                      handleApiMethodController(
+                        state,
+                        apiEndpoints.transaction
+                          .getTransactionsByProcessorName + e,
+                        "GET_BY_POST_METHOD",
+                        {},
+                        state.page,
+                      )
+                    }
                   >
-                    {/* <Select.Option value="all">All</Select.Option> */}
-                    <Select.Option value="isw">Interswitch</Select.Option>
-                    <Select.Option value="nibss">NIBSS</Select.Option>
+                    <Select.Option value="all">All</Select.Option>
+                    {state.processor?.map(
+                      (item: ApiResponse.Processor, index: number) => (
+                        <Select.Option key={index} value={item.name}>
+                          {item.name}
+                        </Select.Option>
+                      ),
+                    )}
                   </Select>
                 </Form.Item>
               </Col>
@@ -200,6 +226,16 @@ const Transactions: React.FC = () => {
                   <Select
                     className="border border-[#DEDFEC] rounded-md h-12 flex items-center"
                     suffixIcon={<img src={dropdown} alt="" />}
+                    // onChange={(e) =>
+                    //   handleApiMethodController(
+                    //     state,
+                    //     apiEndpoints.transaction
+                    //       .getTransactionsByProcessorName + e,
+                    //     "GET_BY_POST_METHOD",
+                    //     {},
+                    //     state.page,
+                    //   )
+                    // }
                   >
                     <Select.Option value="all">All</Select.Option>
                     <Select.Option value="success">Success</Select.Option>
