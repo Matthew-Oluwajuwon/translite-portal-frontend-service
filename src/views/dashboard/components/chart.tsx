@@ -18,12 +18,17 @@ export const Chart = ({
     })
     .reduce((x, y) => {
       return x + (y?.value as number)
-    }, 0).toFixed(2)
+    }, 0)
+    .toFixed(2)
     .toString()
   const { numberWithCommas } = useAmountFormat()
 
+  const reversedData = Array.isArray(data)
+    ? data?.slice(0, 18).reverse().concat(data?.slice(18, 21))
+    : []
+
   const config = {
-    data: Array.isArray(data) ? data : [],
+    data: reversedData,
     xField: "day",
     yField: "value",
     seriesField: "type",

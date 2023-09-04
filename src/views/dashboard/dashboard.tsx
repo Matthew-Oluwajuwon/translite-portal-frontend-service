@@ -30,7 +30,7 @@ const Dashboard: React.FC = () => {
   // eslint-disable-next-line arrow-body-style
   const disabledDate: RangePickerProps["disabledDate"] = (current) => {
     // Can not select days after today and today
-    return current && current >= dayjs().startOf("day")
+    return current && current > dayjs().startOf("day")
   }
 
   const { setFieldChange } = useSetRequest()
@@ -53,7 +53,7 @@ const Dashboard: React.FC = () => {
       <Form.Item className="my-5">
         <DatePicker
           format={customFormat}
-          defaultValue={dayjs(dayjs().format(dateFormat), dateFormat)}
+          defaultValue={dayjs(state.request?.day ? state.request?.day : dayjs().format(dateFormat), dateFormat)}
           disabledDate={disabledDate}
           className="py-3 border-none font-[poppins-500] font-semibold text-[#424D61]"
           prevIcon={<img src={calendar} alt="" />}
