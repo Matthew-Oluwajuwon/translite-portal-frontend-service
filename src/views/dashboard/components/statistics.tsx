@@ -77,7 +77,7 @@ const Statistics = ({ data, isLoading }: { data: any; isLoading: boolean }) => {
               <span className="basis-[30%]">{item.icon}</span>
               <div className="w-full grid gap-3">
                 <p className="font-bold text-xl">{item.cardAmount}</p>
-                {/* <p className="font-bold text-lg -my-3">{item.cardCount}</p> */}
+                <p className="font-bold text-lg -my-3">{item.cardCount}</p>
                 <p className="text-[#94A0B4] text-[0.90rem]">
                   {item.cardTitle}
                 </p>

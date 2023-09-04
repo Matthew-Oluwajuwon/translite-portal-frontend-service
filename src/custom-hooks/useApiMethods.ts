@@ -42,7 +42,7 @@ const useApiMethods = () => {
         page: 1,
       })
     },
-    [getData, state],
+    [getData],
   )
 
   const handleApiMethodController = useCallback(

@@ -2,14 +2,25 @@
 import { Column, Pie } from "@ant-design/plots"
 import { Select, Spin } from "antd"
 import { ColumnConfig, PieConfig } from "@ant-design/charts"
+import { ApiResponse } from "../../../model/client/response"
+import useAmountFormat from "../../../custom-hooks/useAmountFormat"
 
 export const Chart = ({
   data,
   isLoading,
 }: {
-  data: any
+  data: Array<ApiResponse.SevenDaysReport>
   isLoading: boolean
 }) => {
+  const totalAmount = data
+    ?.filter((x) => {
+      return x.type?.toLowerCase() === "successful"
+    })
+    .reduce((x, y) => {
+      return x + (y?.value as number)
+    }, 0)
+    .toString()
+  const { numberWithCommas } = useAmountFormat()
 
   const config = {
     data: Array.isArray(data) ? data : [],
@@ -111,7 +122,7 @@ export const Chart = ({
               </div>
             </div>
             <h1 className="text-[#272848] font-bold font-[poppins-600] text-3xl my-10">
-              ₦200,456.00
+              ₦{numberWithCommas(totalAmount)}
             </h1>
             <Column
               {...config}
