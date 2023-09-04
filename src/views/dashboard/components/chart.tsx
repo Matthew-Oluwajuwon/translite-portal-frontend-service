@@ -18,7 +18,7 @@ export const Chart = ({
     })
     .reduce((x, y) => {
       return x + (y?.value as number)
-    }, 0)
+    }, 0).toFixed(2)
     .toString()
   const { numberWithCommas } = useAmountFormat()
 
