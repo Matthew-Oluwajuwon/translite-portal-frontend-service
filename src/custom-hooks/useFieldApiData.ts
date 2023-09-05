@@ -45,7 +45,7 @@ const useFieldApiData = () => {
   );
 
 
-  return { fetchSelectFieldData, apiDataLoading: data.isLoading };
+  return { fetchSelectFieldData, apiDataLoading: data.isLoading || data.isFetching };
 };
 
 
