@@ -156,28 +156,37 @@ export const TransactionTable = () => {
                   name={"processor"}
                 >
                   <Select
-                    className="border border-[#DEDFEC] rounded-md h-11 flex items-center"
-                    suffixIcon={<img src={dropdown} alt="" />}
-                    onFocus={() => dispatch(setGlobalKey({
-                      key: "selectField",
-                      value: "Processor"
-                    }))}
-                    loading={apiDataLoading}
-                    onChange={(e) => handleApiMethodController(
-                      state,
-                      apiEndpoints.transaction.getTransactionsByProcessorName + e,
-                      "GET_BY_POST_METHOD",
-                      {},
-                      state.page,
-                    )}
-                  >
-                    <Select.Option value="all">All</Select.Option>
-                    {state.processor?.map((item: ApiResponse.Processor, index: number) => (
-                      <Select.Option key={index} value={item.name}>
-                        {item.name}
-                      </Select.Option>
-                    ))}
-                  </Select>
+                onFocus={() => dispatch(setGlobalKey({
+                  key: "selectField",
+                  value: "Processor"
+                }))}
+                suffixIcon={<img src={dropdown} alt="" />}
+                className="border border-[#DEDFEC] rounded-md h-11 flex items-center"
+                onChange={(e) => handleApiMethodController(
+                  state,
+                  apiEndpoints.transaction.getTransactionsByProcessorName + e,
+                  "GET_BY_POST_METHOD",
+                  {},
+                  state.page,
+                )}
+                value={state.request?.processorName}
+                options={
+                  Array.isArray(state.processor)
+                    ? state.processor?.map((item: any) => {
+                        return {
+                          label: item.name,
+                          value: item.name,
+                        };
+                      })
+                    : []
+                }
+                loading={apiDataLoading}
+                filterOption={(input, option: any) =>
+                  (option?.label ?? "")
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
+              />
                 </Form.Item>
               </Col>
             </Row>

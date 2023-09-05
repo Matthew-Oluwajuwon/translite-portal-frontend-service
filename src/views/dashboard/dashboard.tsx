@@ -47,13 +47,18 @@ const Dashboard: React.FC = () => {
       "READ",
     )
   }, [handleApiMethodController, state.request?.day])
-  
+
   return (
     <div>
       <Form.Item className="my-5">
         <DatePicker
           format={customFormat}
-          defaultValue={dayjs(state.request?.day ? state.request?.day : dayjs().format(dateFormat), dateFormat)}
+          defaultValue={dayjs(
+            state.request?.day
+              ? state.request?.day
+              : dayjs().format(dateFormat),
+            dateFormat,
+          )}
           disabledDate={disabledDate}
           className="py-3 border-none font-[poppins-500] font-semibold text-[#424D61]"
           prevIcon={<img src={calendar} alt="" />}
@@ -69,7 +74,11 @@ const Dashboard: React.FC = () => {
       <Chart
         data={data.data?.data?.sevenDaysReport}
         isLoading={data.isLoading || data.isFetching}
-        barChartData={data.data?.data?.dayReport?.processorSuccessPercentage}
+        barChartData={
+          Array.isArray(data.data?.data?.dayReport?.processorSuccessPercentage)
+            ? data.data?.data?.dayReport?.processorSuccessPercentage
+            : []
+        }
       />
       <TransactionTable />
     </div>
