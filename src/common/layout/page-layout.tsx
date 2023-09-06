@@ -37,7 +37,7 @@ const PageLayout: React.FC = () => {
     <main className="min-h-[100svh] relative flex flex-col">
       <aside
         className={`bg-[#1C166A] ${
-          state.menuCollapsed ? "w-[6rem] px-0" : "w-[6rem] lg:w-[15.5rem]"
+          state.menuCollapsed ? "w-[6rem] px-0" : "w-[6rem] lg:w-[17.5rem]"
         } hidden md:block h-screen px-[1rem] fixed left-0`}
       >
         <div
@@ -55,7 +55,7 @@ const PageLayout: React.FC = () => {
               src={state.menuCollapsed ? DragOut : Drag}
               alt=""
               className={`hover:scale-110 absolute hover:transition-all cursor-pointer ${
-                state.menuCollapsed ? "left-[4rem]" : "left-[9.5rem]"
+                state.menuCollapsed ? "left-[4rem]" : "left-[10.5rem]"
               }`}
               onClick={toggleMenu}
             />
@@ -80,7 +80,7 @@ const PageLayout: React.FC = () => {
         className={`bg-[#F5F6FA] min-h-screen px-3 lg:px-10 relative ${
           state.menuCollapsed
             ? "ml-0 md:ml-[6rem]"
-            : "ml-0 md:ml-[6rem] lg:ml-[15.5rem]"
+            : "ml-0 md:ml-[6rem] lg:ml-[17.5rem]"
         }`}
       >
         <header className="flex items-center z-50 backdrop-blur-sm bg-opacity-50 justify-between py-5 sticky top-0 bg-[#F5F6FA]">

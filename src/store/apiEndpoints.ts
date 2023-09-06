@@ -13,5 +13,8 @@ export const apiEndpoints = {
   },
   processor: {
     getProcessors: "processor"
+  },
+  users: {
+    getUsers: "adminUser/all"
   }
 }

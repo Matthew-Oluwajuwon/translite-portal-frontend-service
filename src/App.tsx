@@ -19,6 +19,7 @@ import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { ErrorPage } from "./error-page"
 import { IsLoggedIn } from "./isLoggedIn"
+import Users from "@views/Users/Users"
 
 const App = () => {
   const router = createBrowserRouter([
@@ -65,7 +66,7 @@ const App = () => {
         },
         {
           element: <Terminals />,
-          path: ROUTE.TERMINAL_MGT,
+          path: ROUTE.SYSTEM_TERMINAL_MGT,
         },
         {
           path: ROUTE.CONFIGURATIONS,
@@ -81,6 +82,10 @@ const App = () => {
             },
           ],
         },
+        {
+          path: ROUTE.SYSTEM_USERS,
+          element: <Users />
+        }
       ],
       errorElement: <ErrorPage />,
     },

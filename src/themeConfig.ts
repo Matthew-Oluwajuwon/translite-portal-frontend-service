@@ -15,11 +15,10 @@ export const getThemeConfig = (): ThemeConfig | undefined => {
         itemSelectedBg: "#6D71F9",
         itemSelectedColor: "#ffffff",
         itemColor: "#94A0B4",
-        subMenuItemBg: "#f5f5f5",
         itemHoverColor: "#ffffff",
         controlHeightLG: 55,
         subMenuItemBorderRadius: 20,
-        lineWidth: 0
+        lineWidth: 0,
       },
       DatePicker: {
         colorBgContainer: "#ffffff",

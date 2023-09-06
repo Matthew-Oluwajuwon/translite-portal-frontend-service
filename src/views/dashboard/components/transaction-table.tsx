@@ -4,7 +4,7 @@ import { Button, Col, Form, Row, Select } from "antd"
 import IconRight from "../../../assets/icons/icon-right.svg"
 import { ColumnProps } from "antd/es/table"
 import { useNavigate } from "react-router-dom"
-import { TransactionTableComponent } from "../../../common/components/transaction-table"
+import { TableComponent } from "../../../common/components/table-component"
 import { ROUTE } from "../../../common/constants"
 import dropdown from "../../../assets/icons/dropdown.svg"
 import { ApiResponse } from "../../../model/client/response"
@@ -122,7 +122,7 @@ export const TransactionTable = () => {
 
   return (
     <div>
-      <TransactionTableComponent
+      <TableComponent
         btn={
           <Button
             type="primary"
