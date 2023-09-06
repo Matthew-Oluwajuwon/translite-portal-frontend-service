@@ -19,7 +19,7 @@ interface Props {
   url?: string
 }
 
-export const TransactionTableComponent: React.FC<Props> = ({
+export const TableComponent: React.FC<Props> = ({
   btn,
   column,
   dataSource,
@@ -33,18 +33,19 @@ export const TransactionTableComponent: React.FC<Props> = ({
   total,
 }) => {
   const dispatch = useAppDispatch()
-  
+
   const onPaginate = useCallback(
     (pageNumber: number) => {
-      dispatch(setGlobalKey({
-        key: "page",
-        value: pageNumber
-      }))
+      dispatch(
+        setGlobalKey({
+          key: "page",
+          value: pageNumber,
+        }),
+      )
     },
     [dispatch],
   )
-  
-  
+
   return (
     <div className="bg-white w-full rounded-lg my-5 table-shadow">
       <div className="flex justify-between items-center px-3 sm:px-10 py-5">
@@ -54,7 +55,7 @@ export const TransactionTableComponent: React.FC<Props> = ({
         {btn}
       </div>
       {forms}
-        
+
       <PageTable
         column={column}
         loading={loading}
@@ -66,6 +67,6 @@ export const TransactionTableComponent: React.FC<Props> = ({
         total={total}
         onPagination={onPaginate}
       />
-      </div>
+    </div>
   )
 }

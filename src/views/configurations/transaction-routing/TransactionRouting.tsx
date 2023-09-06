@@ -10,7 +10,7 @@ import {
 } from "../../../common/constants"
 import { setGlobalKey } from "../../../store"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { TransactionTableComponent } from "../../../common/components/transaction-table"
+import { TableComponent } from "../../../common/components/table-component"
 import {
   Button,
   Radio,
@@ -357,7 +357,7 @@ const TransactionRouting = () => {
         ) : state.configuration?.processorSelection ===
           TRANSACTION_CONFIGURATION_TYPES.CUSTOM?.toLowerCase() ? (
           <>
-            <TransactionTableComponent
+            <TableComponent
               btn={
                 <Button
                   type="primary"

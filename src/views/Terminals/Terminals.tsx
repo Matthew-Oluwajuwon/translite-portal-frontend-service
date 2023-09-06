@@ -2,7 +2,7 @@
 
 import { BREADCRUMB, MENU_KEYS, MENU_NAMES } from "../../common/constants"
 import { Button, Col, Form, Input, List, Row } from "antd"
-import { TransactionTableComponent } from "../../common/components/transaction-table"
+import { TableComponent } from "../../common/components/table-component"
 import { TableExpandModal } from "../../common/components/table-expand-modal"
 import Download from "../../assets/icons/download.svg"
 import Search from "../../assets/icons/Search.svg"
@@ -124,7 +124,7 @@ const Terminals: React.FC = () => {
         }
       />
       <TerminalCreateion />
-      <TransactionTableComponent
+      <TableComponent
         shouldExpand={true}
         tableName="System Terminals"
         btn={

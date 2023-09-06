@@ -88,3 +88,23 @@ body {
 .table-shadow {
   box-shadow: 0px 10px 13px 0px rgba(17, 38, 146, 0.05);
 }
+
+.ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
+  padding-bottom: 15px;
+  background-color: #6D71F9!important;
+  color: #f5f5f5!important;
+}
+
+.ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline > li {
+  margin-bottom: -10px!important;
+  margin-left: -15px;
+  margin-right: 0!important;
+}
+.ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline > li::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  margin-right: 15px;
+}
