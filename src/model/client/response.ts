@@ -33,6 +33,7 @@ export namespace ApiResponse {
   export class ProcessorSuccessPercentage {
     name?: string
     value?: string
+    type?: string;
   }
   
   export class SevenDaysReport {

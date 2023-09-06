@@ -8,10 +8,10 @@ import useAmountFormat from "../../../custom-hooks/useAmountFormat"
 export const Chart = ({
   data,
   isLoading,
-  barChartData
+  barChartData,
 }: {
   data: Array<ApiResponse.SevenDaysReport>
-  isLoading: boolean,
+  isLoading: boolean
   barChartData: Array<ApiResponse.ProcessorSuccessPercentage>
 }) => {
   const totalAmount = data
@@ -28,89 +28,6 @@ export const Chart = ({
   const reversedData = Array.isArray(data)
     ? data?.slice(0, 18).reverse().concat(data?.slice(18, 21))
     : []
-    
-    const dat = [
-      {
-        name: "NIBSS",
-        value: 40,
-        type: "Successful"
-      },
-      {
-        name: "NIBSS",
-        value: 10,
-        type: "Failed"
-      },
-      {
-        name: "ISW",
-        value: 10,
-        type: "Successful"
-      },
-      {
-        name: "ISW",
-        value: 40,
-        type: "Failed"
-      },
-      {
-        name: "NIBS",
-        value: 40,
-        type: "Successful"
-      },
-      {
-        name: "NIBS",
-        value: 10,
-        type: "Failed"
-      },
-      {
-        name: "IS",
-        value: 10,
-        type: "Successful"
-      },
-      {
-        name: "IS",
-        value: 40,
-        type: "Failed"
-      },
-      {
-        name: "NIB",
-        value: 40,
-        type: "Successful"
-      },
-      {
-        name: "NIB",
-        value: 10,
-        type: "Failed"
-      },
-      {
-        name: "I",
-        value: 10,
-        type: "Successful"
-      },
-      {
-        name: "I",
-        value: 40,
-        type: "Failed"
-      },
-      {
-        name: "NIBSS",
-        value: 40,
-        type: "Successful"
-      },
-      {
-        name: "NIBSS",
-        value: 10,
-        type: "Failed"
-      },
-      {
-        name: "ISW",
-        value: 10,
-        type: "Successful"
-      },
-      {
-        name: "ISW",
-        value: 40,
-        type: "Failed"
-      },
-    ]
 
   const config = {
     data: reversedData,
@@ -132,27 +49,48 @@ export const Chart = ({
       // cursor: 'pointer',
     },
   } as ColumnConfig
-  
+
+  interface BarChartProp {
+    name?: string
+    value?: string
+    type?: string
+  }
+
+  const data_2 = Array.isArray(barChartData)
+    ? barChartData?.map((item: BarChartProp) => {
+        return [
+          {
+            name: item?.name,
+            value: parseFloat(item?.value as string),
+            type: "Successful",
+          },
+          {
+            name: item?.name,
+            value: 100 - parseFloat(item?.value as string),
+            type: "Failed",
+          },
+        ]
+      })
+    : []
 
   const configs = {
-    data: dat,
+    data: Array.isArray(data_2[0]) ? data_2[0] : [],
     isStack: true,
-    xField: 'value',
-    yField: 'name',
-    seriesField: 'type',
-    barWidthRatio: 0.5,
+    xField: "value",
+    yField: "name",
+    seriesField: "type",
+    maxBarWidth: 35,
     label: {
-
-      position: 'middle',
+      position: "middle",
       layout: [
         {
-          type: 'interval-adjust-position',
-        }, 
-        {
-          type: 'interval-hide-overlap',
+          type: "interval-adjust-position",
         },
         {
-          type: 'adjust-color',
+          type: "interval-hide-overlap",
+        },
+        {
+          type: "adjust-color",
         },
       ],
     },
@@ -184,9 +122,9 @@ export const Chart = ({
                 </Select>
               </div>
             </div>
-            <h1 className="text-[#272848] font-bold font-[poppins-600] text-3xl my-10">
-              ₦{numberWithCommas(totalAmount)}
-            </h1>
+            <p className="text-[#272848]  font-sans font-bold text-3xl my-10">
+              {`₦${numberWithCommas(totalAmount)}`}
+            </p>
             <Column
               {...config}
               color={["#6D71F9", "#4FC62B", "#FF291F"]}
@@ -203,7 +141,7 @@ export const Chart = ({
         ) : (
           <>
             <h1 className="text-[#424D61] font-semibold text-center mt-5">
-              Performance Transaction Processor
+              Performance Transaction Processor (%)
             </h1>
             <Bar {...configs} color={["#4FC62B", "#FF291F"]} />
           </>
