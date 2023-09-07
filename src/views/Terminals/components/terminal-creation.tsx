@@ -9,7 +9,7 @@ import { useEffect, useState } from "react"
 import useSetRequest from "../../../custom-hooks/useSetRequest"
 
 const TerminalCreateion: React.FC = () => {
-  const state = useAppSelector((state) => {
+  const state = useAppSelector((state: { global: any }) => {
     return state.global
   })
   const [form] = useForm()

@@ -28,6 +28,9 @@ const initialState: State.Global = {
   configuration: {
     processorSelection: CHARGE_CONFIGURATION_TYPES.FLAT,
   },
+  user:{
+    showAddUserModal:false
+  },
   selectUrl: "",
   page: 2,
 }

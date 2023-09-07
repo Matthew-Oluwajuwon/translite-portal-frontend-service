@@ -17,6 +17,8 @@ import { useEffect } from "react"
 import { apiEndpoints } from "../../store/apiEndpoints"
 import useFilter from "../../custom-hooks/useFilter"
 import { setGlobalKey } from "../../store"
+import useToggle from "../../custom-hooks/useToggle"
+import AddNewUser from "./components/add-new-user"
 
 const Users: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -69,9 +71,10 @@ const Users: React.FC = () => {
   const { dataSource } = useFilter(
     Array.isArray(data.data?.data) ? data.data?.data : [],
   )
-
+  const { toggleAddUserModal } = useToggle()
   return (
     <div>
+      <AddNewUser />
       <TableComponent
         tableName="All System Users"
         column={columns}
@@ -80,7 +83,7 @@ const Users: React.FC = () => {
           <div className="flex items-center gap-5">
             <Button
               type="primary"
-              //   onClick={toggleCreateModal}
+              onClick={toggleAddUserModal}
               className="flex justify-between items-center text-[0.7rem] bg-[#6D71F9] sm:text-[1rem] font-semibold gap-2 py-6 px-2 sm:px-0 -pr-10 sm:pr-3"
             >
               <img src={Plus} alt="add" className="ml-2 sm:ml-0" />{" "}
@@ -111,10 +114,14 @@ const Users: React.FC = () => {
                     placeholder="Search users.."
                     prefix={<img src={Search} alt="search" />}
                     className="h-12"
-                    onChange={(e) => dispatch(setGlobalKey({
-                        key: "searchTerm",
-                        value: e.target.value
-                      }))}
+                    onChange={(e) =>
+                      dispatch(
+                        setGlobalKey({
+                          key: "searchTerm",
+                          value: e.target.value,
+                        }),
+                      )
+                    }
                   />
                 </Form.Item>
               </Col>

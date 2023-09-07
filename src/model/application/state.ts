@@ -51,6 +51,7 @@ export namespace State {
     transactionRouting?: TransactionRouting
     terminal: Terminals
     transaction?: Transaction
+    user?: User
     response?: any
     originalResponse?: any
     showFormModal?: boolean
@@ -74,5 +75,8 @@ export namespace State {
   
   export interface Transaction {
     response: Array<ApiResponse.Transaction>
+  }
+  export interface User {
+    showAddUserModal: boolean
   }
 }

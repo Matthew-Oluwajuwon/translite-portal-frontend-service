@@ -95,6 +95,16 @@ const useToggle = () => {
     )
   }, [dispatch, state])
 
+  const toggleAddUserModal =useCallback(()=>{
+       dispatch(
+         setAllGlobalKey({
+           ...state,
+           user:{
+            showAddUserModal: !state.user?.showAddUserModal
+           }
+         }),
+       )
+  },[dispatch, state])
   const toggleFormModalOption = useCallback(
     (showCreateModal: boolean, isSingleCreation: boolean) =>
       dispatch(
@@ -158,6 +168,7 @@ const useToggle = () => {
     toggleCreateModal,
     toggleFormModalOption,
     toggleAddNewRuleModal,
+    toggleAddUserModal,
     handleLogout,
     closeAllOpenModal,
   }
