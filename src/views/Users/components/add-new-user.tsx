@@ -31,8 +31,8 @@ const AddNewUser: React.FC = () => {
   const { toggleAddUserModal } = useToggle()
   const { setFieldChange } = useSetRequest()
   const { handleApiMethodController, data } = useApiMethods()
-  const refinedData = { ...state.request }
-  delete refinedData.day
+  const { firstName, lastName, email, adminRoleName, password } = state.request
+  const refinedData = { firstName, lastName, email, adminRoleName, password }
   const addNewUserHandler = () => {
     handleApiMethodController(
       state,
@@ -70,6 +70,10 @@ const AddNewUser: React.FC = () => {
           {
             name: "email",
             value: state.request?.email,
+          },
+          {
+            name: "password",
+            value: state.request?.password,
           },
           {
             name: "adminRoleName",
@@ -112,6 +116,19 @@ const AddNewUser: React.FC = () => {
               <Input
                 className="py-3"
                 onChange={(e) => setFieldChange("email", e.target.value)}
+              />
+            </Form.Item>
+          </Col>
+          <Col xs={24} md={28}>
+            <Form.Item
+              label={<span className="font-semibold text-base">Password</span>}
+              name={"password"}
+              rules={[{ required: true, message: "Password is required" }]}
+            >
+              <Input
+                type="password"
+                className="py-3"
+                onChange={(e) => setFieldChange("password", e.target.value)}
               />
             </Form.Item>
           </Col>
