@@ -3,18 +3,19 @@ export const apiEndpoints = {
   auth: {
     login: "authenticate",
     getAdminUser: "adminUser/info",
-    resetPassword: "adminUser/changeAdminPassword"
+    resetPassword: "adminUser/changeAdminPassword",
   },
   transaction: {
     dashboardDay: "transactions/dashboard/",
     getTransactions: "transactions",
     getTransactionsByProcessorName: "transactions/byProcessor/",
-    searchTransaction: "transactions/search"
+    searchTransaction: "transactions/search",
   },
   processor: {
-    getProcessors: "processor"
+    getProcessors: "processor",
   },
   users: {
-    getUsers: "adminUser/all"
-  }
+    getUsers: "adminUser/all",
+    addNewUser: "adminUser/add",
+  },
 }

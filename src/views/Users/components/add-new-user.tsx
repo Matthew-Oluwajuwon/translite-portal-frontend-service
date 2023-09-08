@@ -1,11 +1,13 @@
 /* eslint-disable prettier/prettier */
-import { Button, Form, Row, Col, Input, Select } from "antd"
+import { Button, Form, Row, Col, Input, Select, Spin } from "antd"
 import { PageModal } from "../../../common/components/modal"
 import { useAppSelector } from "../../../store/hooks"
 import useToggle from "../../../custom-hooks/useToggle"
 import { useForm } from "antd/es/form/Form"
 import { useEffect, useState } from "react"
-// import useSetRequest from "../../../custom-hooks/useSetRequest"
+import useApiMethods from "../../../custom-hooks/useApiMethods"
+import { apiEndpoints } from "../../../store/apiEndpoints"
+import useSetRequest from "../../../custom-hooks/useSetRequest"
 
 const AddNewUser: React.FC = () => {
   const state = useAppSelector((state: { global: any }) => {
@@ -27,8 +29,18 @@ const AddNewUser: React.FC = () => {
   }, [form, values])
 
   const { toggleAddUserModal } = useToggle()
-  //   const { setFieldChange } = useSetRequest()
-
+  const { setFieldChange } = useSetRequest()
+  const { handleApiMethodController, data } = useApiMethods()
+  const refinedData = { ...state.request }
+  delete refinedData.day
+  const addNewUserHandler = () => {
+    handleApiMethodController(
+      state,
+      apiEndpoints.users.addNewUser,
+      "CREATE",
+      refinedData,
+    )
+  }
   return (
     <PageModal
       openModal={state.user?.showAddUserModal}
@@ -37,7 +49,7 @@ const AddNewUser: React.FC = () => {
       handleCancel={toggleAddUserModal}
       centered={true}
     >
-      <div className="mx-20">
+      <div className="mx-5">
         <h1 className="text-[#130F49] text-2xl font-bold ">Add System User</h1>
       </div>
       <Form
@@ -45,19 +57,23 @@ const AddNewUser: React.FC = () => {
         layout="vertical"
         labelCol={{ span: 24 }}
         wrapperCol={{ span: 24 }}
-        className="mx-10 mt-10 mb-5"
+        className="mx-5 mt-10 mb-5"
         fields={[
           {
             name: "firstName",
-            value: "",
+            value: state.request?.firstName,
           },
           {
             name: "lastName",
-            value: "",
+            value: state.request?.lastName,
           },
           {
             name: "email",
-            value: "",
+            value: state.request?.email,
+          },
+          {
+            name: "adminRoleName",
+            value: state.request?.adminRoleName,
           },
         ]}
       >
@@ -69,7 +85,10 @@ const AddNewUser: React.FC = () => {
               }
               name={"firstName"}
             >
-              <Input className="py-3" />
+              <Input
+                className="py-3"
+                onChange={(e) => setFieldChange("firstName", e.target.value)}
+              />
             </Form.Item>
           </Col>
           <Col xs={24} md={28}>
@@ -77,7 +96,10 @@ const AddNewUser: React.FC = () => {
               label={<span className="font-semibold text-base">Last Name</span>}
               name={"lastName"}
             >
-              <Input className="py-3" />
+              <Input
+                className="py-3"
+                onChange={(e) => setFieldChange("lastName", e.target.value)}
+              />
             </Form.Item>
           </Col>
           <Col xs={24} md={28}>
@@ -87,7 +109,10 @@ const AddNewUser: React.FC = () => {
               }
               name={"email"}
             >
-              <Input className="py-3" />
+              <Input
+                className="py-3"
+                onChange={(e) => setFieldChange("email", e.target.value)}
+              />
             </Form.Item>
           </Col>
           <Col xs={24} md={28}>
@@ -100,6 +125,7 @@ const AddNewUser: React.FC = () => {
                 defaultValue={"System User"}
                 bordered
                 className="border border-[#DEDFEC] rounded-md py-2 flex items-center font-semibold"
+                onChange={(e) => setFieldChange("adminRoleName", e)}
               >
                 <Select.Option value="Super Admin">Super Admin</Select.Option>
                 <Select.Option value="System User">System User</Select.Option>
@@ -108,13 +134,16 @@ const AddNewUser: React.FC = () => {
             </Form.Item>
           </Col>
           <Col span={24}>
-            <Button
-              type="primary"
-              className="flex items-center justify-center bg-[#6D71F9] py-5 px-10 mx-auto"
-              disabled={submittable ? false : true}
-            >
-              Submit
-            </Button>
+            <Spin spinning={data?.isLoading}>
+              <Button
+                type="primary"
+                className="flex items-center justify-center bg-[#6D71F9] py-5 px-10 mx-auto"
+                disabled={submittable ? false : true}
+                onClick={addNewUserHandler}
+              >
+                Submit
+              </Button>
+            </Spin>
           </Col>
           <Col span={24} className="my-3">
             <Button
