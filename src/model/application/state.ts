@@ -43,8 +43,8 @@ export namespace State {
     updateUrl?: string
     selectUrl: string
     deleteUrl?: string
-    formMethod?: string;
-    page?: number;
+    formMethod?: string
+    page?: number
     action?: "CREATE" | "UPDATE" | "DELETE" | "READ" | "GET_BY_POST_METHOD"
     labelInput?: string
     configuration?: Configurations
@@ -72,11 +72,12 @@ export namespace State {
   export interface TransactionRouting {
     showAddNewRuleModal?: boolean
   }
-  
+
   export interface Transaction {
     response: Array<ApiResponse.Transaction>
   }
   export interface User {
-    showAddUserModal: boolean
+    showAddUserModal?: boolean
+    showAddUserResponseModal?: boolean
   }
 }
