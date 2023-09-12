@@ -159,7 +159,7 @@ const AddNewUser: React.FC = () => {
                 }
               >
                 <Select
-                  defaultValue={"System User"}
+                  // defaultValue={"System User"}
                   bordered
                   className="border border-[#DEDFEC] rounded-md py-2 flex items-center font-semibold"
                   onChange={(e) => setFieldChange("adminRoleName", e)}

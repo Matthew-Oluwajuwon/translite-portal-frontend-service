@@ -5,7 +5,7 @@ import { MENU_KEYS, BREADCRUMB } from "@common/constants"
 import usePageInfo from "../../custom-hooks/usePageInfo"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { TableComponent } from "@common/components/table-component"
-import { Button, Col, Form, Input, Row } from "antd"
+import { Button, Col, Form, Input, Row, Switch } from "antd"
 import Plus from "../../assets/icons/plus.svg"
 import Cloud from "../../assets/icons/cloud.svg"
 import Search from "../../assets/icons/Search.svg"
@@ -30,6 +30,9 @@ const Users: React.FC = () => {
     MENU_KEYS.SYSTEM_USERS,
     BREADCRUMB.SYSTEM_USERS,
   )
+  const permissionChangeHandler = (checked: boolean) => {
+    console.log(`switch to ${checked}`)
+  }
   const columns: ColumnProps<ApiResponse.UserInfo>[] = [
     {
       title: "USERNAME",
@@ -47,9 +50,17 @@ const Users: React.FC = () => {
       key: "3",
     },
     {
+      title: "PERMISSION",
+      dataIndex: "permission",
+      key: "4",
+      render: () => {
+        return <Switch defaultChecked onChange={permissionChangeHandler} />
+      },
+    },
+    {
       title: "ACTION",
       dataIndex: "",
-      key: "4",
+      key: "5",
       render: () => {
         return <img src={more} alt="" />
       },
