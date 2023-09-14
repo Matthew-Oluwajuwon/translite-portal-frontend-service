@@ -1,27 +1,24 @@
 /* eslint-disable prettier/prettier */
-import { Button, Form, Row, Col, Input, Select, Spin } from "antd"
+import { Button, Form, Row, Col, Input, Spin } from "antd"
 import { PageModal } from "../../../common/components/modal"
-import { useAppSelector, useAppDispatch } from "../../../store/hooks"
+import { useAppSelector } from "../../../store/hooks"
 import useToggle from "../../../custom-hooks/useToggle"
 import { useForm } from "antd/es/form/Form"
-import { useEffect, useState } from "react"
 import useApiMethods from "../../../custom-hooks/useApiMethods"
 import { apiEndpoints } from "../../../store/apiEndpoints"
 import useSetRequest from "../../../custom-hooks/useSetRequest"
-import { AddNewUserResponseModal } from "./addNewUserResponseModal"
-import { setAllGlobalKey } from "../../../store"
+import React from "react"
 
 const AddNewUser: React.FC = () => {
-  const dispatch = useAppDispatch()
   const state = useAppSelector((state: { global: any }) => {
     return state.global
   })
   const [form] = useForm()
-  const [submittable, setSubmittable] = useState(false)
+  const [submittable, setSubmittable] = React.useState(false)
   const values = Form.useWatch([], form)
 
-  useEffect(() => {
-    form.validateFields().then(
+  React.useEffect(() => {
+    form.validateFields({ validateOnly: true }).then(
       () => {
         setSubmittable(true)
       },
@@ -34,27 +31,7 @@ const AddNewUser: React.FC = () => {
   const { toggleAddUserModal } = useToggle()
   const { setFieldChange } = useSetRequest()
   const { handleApiMethodController, result } = useApiMethods()
-  const refinedData = { ...state.request }
-  const addNewUserHandler = () => {
-    handleApiMethodController(
-      state,
-      apiEndpoints.users.addNewUser,
-      "CREATE",
-      refinedData,
-    )
 
-    result.data?.responseCode === "00" &&
-      result.data?.status === "SUCCESS" &&
-      dispatch(
-        setAllGlobalKey({
-          ...state,
-          user: {
-            ...state.user,
-            showAddUserResponseModal: !state.user?.showAddUserResponseModal,
-          },
-        }),
-      )
-  }
   return (
     <PageModal
       openModal={state.user?.showAddUserModal}
@@ -63,7 +40,6 @@ const AddNewUser: React.FC = () => {
       handleCancel={toggleAddUserModal}
       centered={true}
     >
-      <AddNewUserResponseModal />
       <div className="mx-5">
         <h1 className="text-[#130F49] text-2xl font-bold ">Add System User</h1>
       </div>
@@ -74,6 +50,20 @@ const AddNewUser: React.FC = () => {
           labelCol={{ span: 24 }}
           wrapperCol={{ span: 24 }}
           className="mx-5 mt-10 mb-5"
+          onFinish={() =>
+            handleApiMethodController(
+              state,
+              apiEndpoints.users.addNewUser,
+              "CREATE",
+              {
+                firstName: state.request?.firstName,
+                lastName: state.request?.lastName,
+                email: state.request?.email,
+                adminRoleName: "NONE",
+                password: state.request?.password,
+              },
+            )
+          }
           fields={[
             {
               name: "firstName",
@@ -104,6 +94,7 @@ const AddNewUser: React.FC = () => {
                   <span className="font-semibold text-base">First Name</span>
                 }
                 name={"firstName"}
+                rules={[{ required: true, message: "First name is reqired" }]}
               >
                 <Input
                   className="py-3"
@@ -117,6 +108,7 @@ const AddNewUser: React.FC = () => {
                   <span className="font-semibold text-base">Last Name</span>
                 }
                 name={"lastName"}
+                rules={[{ required: true, message: "Last name is reqired" }]}
               >
                 <Input
                   className="py-3"
@@ -130,6 +122,13 @@ const AddNewUser: React.FC = () => {
                   <span className="font-semibold text-base">Email Address</span>
                 }
                 name={"email"}
+                rules={[
+                  { required: true, message: "Email is required" },
+                  {
+                    type: "email",
+                    message: "Email is invalid",
+                  },
+                ]}
               >
                 <Input
                   className="py-3"
@@ -143,7 +142,16 @@ const AddNewUser: React.FC = () => {
                   <span className="font-semibold text-base">Password</span>
                 }
                 name={"password"}
-                rules={[{ required: true, message: "Password is required" }]}
+                rules={[
+                  { required: true, message: "Password is required" },
+                  {
+                    pattern: new RegExp(
+                      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$!%^&*])[A-Za-z\d@#$!%^&*]{8,}$/,
+                    ),
+                    message:
+                      "Password format: Length 8 characters Uppercase, lowercase, numbers and special character is required",
+                  },
+                ]}
               >
                 <Input
                   type="password"
@@ -152,14 +160,14 @@ const AddNewUser: React.FC = () => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={24} md={28}>
+            {/* <Col xs={24} md={28}>
               <Form.Item
                 label={
                   <span className="font-semibold text-base">Select Role</span>
                 }
               >
                 <Select
-                  // defaultValue={"System User"}
+                  defaultValue={"System User"}
                   bordered
                   className="border border-[#DEDFEC] rounded-md py-2 flex items-center font-semibold"
                   onChange={(e) => setFieldChange("adminRoleName", e)}
@@ -169,13 +177,13 @@ const AddNewUser: React.FC = () => {
                   <Select.Option value="App Manager">App Manager</Select.Option>
                 </Select>{" "}
               </Form.Item>
-            </Col>
+            </Col> */}
             <Col span={24}>
               <Button
                 type="primary"
+                htmlType="submit"
                 className="flex items-center justify-center bg-[#6D71F9] py-5 px-10 mx-auto"
                 disabled={submittable ? false : true}
-                onClick={addNewUserHandler}
               >
                 Submit
               </Button>

@@ -1,11 +1,11 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { MENU_KEYS, BREADCRUMB } from "@common/constants"
+import { MENU_KEYS, BREADCRUMB, ResponseCode } from "@common/constants"
 import usePageInfo from "../../custom-hooks/usePageInfo"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { TableComponent } from "@common/components/table-component"
-import { Button, Col, Form, Input, Row, Switch } from "antd"
+import { Button, Col, Form, Input, Popconfirm, Row, Switch } from "antd"
 import Plus from "../../assets/icons/plus.svg"
 import Cloud from "../../assets/icons/cloud.svg"
 import Search from "../../assets/icons/Search.svg"
@@ -16,9 +16,10 @@ import useApiMethods from "../../custom-hooks/useApiMethods"
 import { useEffect } from "react"
 import { apiEndpoints } from "../../store/apiEndpoints"
 import useFilter from "../../custom-hooks/useFilter"
-import { setGlobalKey } from "../../store"
+import { setAllGlobalKey, setGlobalKey } from "../../store"
 import useToggle from "../../custom-hooks/useToggle"
 import AddNewUser from "./components/add-new-user"
+import { AddNewUserResponseModal } from "./components/addNewUserResponseModal"
 
 const Users: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -30,9 +31,10 @@ const Users: React.FC = () => {
     MENU_KEYS.SYSTEM_USERS,
     BREADCRUMB.SYSTEM_USERS,
   )
-  const permissionChangeHandler = (checked: boolean) => {
-    console.log(`switch to ${checked}`)
-  }
+  
+  
+  const { handleApiMethodController, data, result } = useApiMethods()
+
   const columns: ColumnProps<ApiResponse.UserInfo>[] = [
     {
       title: "USERNAME",
@@ -53,8 +55,21 @@ const Users: React.FC = () => {
       title: "PERMISSION",
       dataIndex: "permission",
       key: "4",
-      render: () => {
-        return <Switch defaultChecked onChange={permissionChangeHandler} />
+      render: (_: any, record: ApiResponse.UserInfo) => {
+        return (
+          <Popconfirm
+            title={`Are you sure you want to enable/disable ${
+              record.firstName + " " + record.lastName
+            }?`}
+            placement="leftTop"
+            okButtonProps={{
+              className: "bg-[#4C469B]"
+            }}
+            onConfirm={() => handleApiMethodController(state, apiEndpoints.users.enableAdminUser + record.email, "CREATE")}
+          >
+            <Switch checked />
+          </Popconfirm>
+        )
       },
     },
     {
@@ -67,8 +82,6 @@ const Users: React.FC = () => {
     },
   ]
 
-  const { handleApiMethodController, data } = useApiMethods()
-
   useEffect(() => {
     handleApiMethodController(
       state,
@@ -79,13 +92,26 @@ const Users: React.FC = () => {
     )
   }, [state.page])
 
+  // useEffect(() => {
+  //   if (result.data?.responseCode === ResponseCode.SUCCESS) {
+  //     dispatch(setAllGlobalKey({
+  //       ...state,
+  //       user: {
+  //         ...state.user,
+  //         showAddUserSuccessResponseModal: true
+  //       }
+  //     })) 
+  //   }
+  // }, [dispatch, result.data?.responseCode])
+
   const { dataSource } = useFilter(
     Array.isArray(data.data?.data) ? data.data?.data : [],
   )
   const { toggleAddUserModal } = useToggle()
   return (
     <div>
-      <AddNewUser />
+      {state.user?.showAddUserModal && <AddNewUser />}
+      {state.user?.showAddUserSuccessResponseModal && <AddNewUserResponseModal />}
       <TableComponent
         tableName="All System Users"
         column={columns}

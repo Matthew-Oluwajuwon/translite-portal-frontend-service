@@ -78,6 +78,6 @@ export namespace State {
   }
   export interface User {
     showAddUserModal?: boolean
-    showAddUserResponseModal?: boolean
+    showAddUserSuccessResponseModal?: boolean
   }
 }

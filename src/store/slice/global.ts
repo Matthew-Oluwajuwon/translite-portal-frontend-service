@@ -30,7 +30,7 @@ const initialState: State.Global = {
   },
   user: {
     showAddUserModal: false,
-    showAddUserResponseModal: false,
+    showAddUserSuccessResponseModal: false,
   },
   selectUrl: "",
   page: 2,

@@ -17,5 +17,7 @@ export const apiEndpoints = {
   users: {
     getUsers: "adminUser/all",
     addNewUser: "adminUser/add",
+    enableAdminUser: "adminUser/enableAdminUser/",
+    disableAdminUser: "adminUser/disableAdminUser/"
   },
 }

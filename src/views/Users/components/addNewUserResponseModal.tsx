@@ -18,7 +18,7 @@ export const AddNewUserResponseModal: React.FC = () => {
         ...state,
         user: {
           ...state.user,
-          showAddUserResponseModal: !state.user?.showAddUserResponseModal,
+          showAddUserSuccessResponseModal: !state.user?.showAddUserSuccessResponseModal,
         },
       }),
     )
@@ -26,12 +26,12 @@ export const AddNewUserResponseModal: React.FC = () => {
       replace: true,
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, navigate, state.user?.showAddUserResponseModal])
+  }, [dispatch, navigate, state.user?.showAddUserSuccessResponseModal])
 
   return (
     <SuccessModal
       onClick={handleClick}
-      openModal={state.user?.showAddUserResponseModal}
+      openModal={state.user?.showAddUserSuccessResponseModal}
     >
       <div className="my-10 mx-10">
         <h1 className="text-[#272848] text-xl font-bold text-center">

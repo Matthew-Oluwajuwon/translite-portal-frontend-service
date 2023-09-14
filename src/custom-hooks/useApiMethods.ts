@@ -13,6 +13,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../store/hooks"
 import Notify from "../common/components/notification"
 import { State } from "../model/application/state"
+import { ResponseCode } from '@common/constants';
 
 type FORM_ACTION =
   | "CREATE"
@@ -98,6 +99,11 @@ const useApiMethods = () => {
         setAllGlobalKey({
           ...state,
           showFormModal: false,
+          request: undefined,
+          user: {
+            ...state.user,
+            showAddUserModal: false,
+          }
         }),
       )
     }
@@ -113,17 +119,16 @@ const useApiMethods = () => {
 
   useEffect(() => {
     if (
-      postDataResult.data?.responseCode === "00" ||
-      updateDataResult.data?.responseCode === "00" ||
-      deleteDataResult.data?.responseCode === "00" ||
-      result.data?.responseCode === "00"
+      postDataResult.data?.responseCode === ResponseCode.SUCCESS ||
+      updateDataResult.data?.responseCode === ResponseCode.SUCCESS ||
+      deleteDataResult.data?.responseCode === ResponseCode.SUCCESS 
     ) {
       Notify(
         "success",
-        postDataResult.data?.failureReason ||
-          updateDataResult.data?.failureReason ||
-          deleteDataResult.data?.failureReason ||
-          result.data?.failureReason
+        postDataResult.data?.status ||
+          updateDataResult.data?.status ||
+          deleteDataResult.data?.status ||
+          result.data?.status
       )
     } else {
       Notify(
@@ -141,10 +146,8 @@ const useApiMethods = () => {
     postDataResult.data?.failureReason,
     updateDataResult.data?.responseCode,
     updateDataResult.data?.failureReason,
-    result.data?.failureReason,
-    result.data?.responseCode,
   ])
-  
+  console.log(postDataResult)
 
   return {
     handleApiMethodController,

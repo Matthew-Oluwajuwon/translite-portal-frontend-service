@@ -84,3 +84,8 @@ export enum FORM_METHODS {
   POST = "POST",
   GET = "GET",
 }
+
+
+export enum ResponseCode {
+  SUCCESS = "00"
+}
