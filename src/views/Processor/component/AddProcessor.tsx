@@ -30,25 +30,17 @@ const AddProcessor: React.FC = () => {
       centered
       modalFooter={false}
     >
-      {state.action === "CREATE" ? (
-        <div>
-          <h5 className="text-[#130F49] font-bold text-2xl ">
-            Setup New Processor
-          </h5>
-          <p className="text-base font-medium my-2 text-[#717E95]">
-            Add a new processor to the system
-          </p>
-        </div>
-      ) : (
-        <div>
-          <h5 className="text-[#130F49] font-bold text-2xl ">
-            Update Processor
-          </h5>
-          <p className="text-base font-medium my-2 text-[#717E95]">
-            Update an existing processor
-          </p>
-        </div>
-      )}
+      <div className="p-10">
+        
+      <h5 className="text-[#130F49] font-bold text-2xl ">
+        {state.action === "CREATE" ? "Setup New" : "Update"} Processor
+      </h5>
+      <p className="text-base font-medium my-2 text-[#717E95]">
+        {state.action === "CREATE"
+          ? "Add a new processor to the system"
+          : "Update an existing Processor"}
+        Add a new processor to the system
+      </p>
       <Form
         layout="vertical"
         labelCol={{ span: 24 }}
@@ -102,7 +94,7 @@ const AddProcessor: React.FC = () => {
                 name={"name"}
               >
                 <Input
-                  className="py-5 px-5 mb-[-1rem]"
+                  className="py-4 px-5 mb-[-1rem]"
                   onChange={(e) => setFormRequest(e.target.value, "name")}
                   value={state.request?.name}
                 />
@@ -115,7 +107,7 @@ const AddProcessor: React.FC = () => {
                 className="w-full"
               >
                 <Input
-                  className="py-3 px-5 mb-[-1rem]"
+                  className="py-4 px-5 mb-[-1rem]"
                   onChange={(e) => setFormRequest(e.target.value, "ip")}
                   value={state.request?.ip}
                 />
@@ -126,7 +118,7 @@ const AddProcessor: React.FC = () => {
                 className="w-full"
               >
                 <Input
-                  className="py-3 px-5 mb-[-1rem]"
+                  className="py-4 px-5 mb-[-1rem]"
                   onChange={(e) => setFormRequest(e.target.value, "port")}
                   value={state.request?.port}
                 />
@@ -211,6 +203,7 @@ const AddProcessor: React.FC = () => {
           </div>
         </Row>
       </Form>
+      </div>
     </PageModal>
   )
 }

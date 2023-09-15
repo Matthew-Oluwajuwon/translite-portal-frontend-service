@@ -43,7 +43,7 @@ export const PageTable: React.FC<PageProps.TableData> = ({
           showSizeChanger: false,
           total: total,
           pageSize: pageSize,
-          hideOnSinglePage: isNotPaginated,
+          hideOnSinglePage: true,
         }}
         scroll={{ x: scrollX }}
         className="cursor-pointer"

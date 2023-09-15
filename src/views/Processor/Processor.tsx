@@ -149,7 +149,7 @@ const Processor: React.FC = () => {
     <div>
       {state.showFormModal && <AddProcessor />}
       <TableComponent
-        tableName="All System Users"
+        tableName="List of Processors"
         column={columns}
         dataSource={dataSource}
         btn={
@@ -162,12 +162,9 @@ const Processor: React.FC = () => {
               <img src={Plus} alt="add" className="ml-2 sm:ml-0" />{" "}
               <div className="hidden md:block">Add New Processor</div>
             </Button>
-            <Button
-              type="default"
-              className="flex justify-between items-center text-[0.7rem] text-[#6D71F9] font-semibold border-none bg-[#eaebff] sm:text-[1rem] py-6"
-            >
-              <img src={download} alt="add" className="ml-2 sm:ml-0" />
-            </Button>
+            <button className="hover:shadow-md hover:scale-110 transition-all">
+            <img src={download} alt="download" className="rounded-md" />
+          </button>
           </div>
         }
         forms={
