@@ -20,6 +20,7 @@ import "react-toastify/dist/ReactToastify.css"
 import { ErrorPage } from "./error-page"
 import { IsLoggedIn } from "./isLoggedIn"
 import Users from "@views/Users/Users"
+import Processor from "@views/Processor/Processor"
 
 const App = () => {
   const router = createBrowserRouter([
@@ -85,6 +86,10 @@ const App = () => {
         {
           path: ROUTE.SYSTEM_USERS,
           element: <Users />
+        },
+        {
+          path: ROUTE.PROCESSOR,
+          element: <Processor />
         }
       ],
       errorElement: <ErrorPage />,

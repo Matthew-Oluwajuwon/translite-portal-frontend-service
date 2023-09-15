@@ -1,10 +1,12 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback } from "react"
 import { setAllGlobalKey, setGlobalKey } from "../store"
 import { useAppDispatch, useAppSelector } from "../store/hooks"
 import { useNavigate } from "react-router-dom"
 import { BREADCRUMB, CHARGE_CONFIGURATION_TYPES, MENU_KEYS, MENU_NAMES, ROUTE } from "@common/constants"
 import { State } from "../model/application/state"
+import { FORM_ACTION } from "./useApiMethods"
 
 const useToggle = () => {
   const dispatch = useAppDispatch()
@@ -28,6 +30,7 @@ const useToggle = () => {
       dispatch(
         setAllGlobalKey({
           ...state,
+          showFormModal: false,
           showLogoutModal: false,
           terminal: {
             ...state.terminal,
@@ -160,6 +163,19 @@ const useToggle = () => {
       replace: true,
     })
   }
+  
+  const toggleFormModal = useCallback(
+    (showFormModal: boolean, action?: FORM_ACTION, request?: any) => {
+      dispatch(setAllGlobalKey({
+        ...state,
+        showFormModal,
+        request,
+        action
+      }))
+    },
+    [dispatch],
+  )
+  
 
   return {
     toggleMenu,
@@ -171,6 +187,7 @@ const useToggle = () => {
     toggleAddUserModal,
     handleLogout,
     closeAllOpenModal,
+    toggleFormModal
   }
 }
 

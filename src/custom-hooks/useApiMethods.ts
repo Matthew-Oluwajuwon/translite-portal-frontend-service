@@ -15,7 +15,7 @@ import Notify from "../common/components/notification"
 import { State } from "../model/application/state"
 import { ResponseCode } from '@common/constants';
 
-type FORM_ACTION =
+export type FORM_ACTION =
   | "CREATE"
   | "UPDATE"
   | "DELETE"
@@ -147,7 +147,7 @@ const useApiMethods = () => {
     updateDataResult.data?.responseCode,
     updateDataResult.data?.failureReason,
   ])
-  console.log(postDataResult)
+
 
   return {
     handleApiMethodController,

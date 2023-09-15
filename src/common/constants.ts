@@ -47,7 +47,7 @@ export enum ROUTE {
   TERMINAL_MGT = "/terminals-Management",
   SYSTEM_TERMINAL_MGT = "/terminals-Management/system-terminal-management",
   PROCESSOR_TERMINAL_MGT = "/terminals-Management/processor-terminal-management",
-  PROCESSOR = "/processor",
+  PROCESSOR = "/processor-management",
   CONFIGURATIONS = "/configurations",
   TRANSACTION_ROUTING = "/configurations/transaction-routing",
   CHARGE_CONFIGURATION = "/configurations/charge-configurations",
@@ -61,8 +61,8 @@ export enum BREADCRUMB {
   TERMINAL_MGT = "Home > System Terminal Management",
   TRANSACTION_ROUTING = "Home > Transaction Routing",
   CHARGE_CONFIGURATION = "Home > Charge Configurations",
-  SYSTEM_USERS = "Home > System Users"
-
+  SYSTEM_USERS = "Home > System Users",
+  PROCESSOR = "Home > Processor Management"
 }
 
 export enum TRANSACTION_CONFIGURATION_TYPES {

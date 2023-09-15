@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { ApiResponse } from "model/client/response"
 import { ApiRequest } from "../client/request"
+import { FORM_ACTION } from "../../custom-hooks/useApiMethods"
 
 export namespace State {
   export interface Authentication {
@@ -45,7 +46,7 @@ export namespace State {
     deleteUrl?: string
     formMethod?: string
     page?: number
-    action?: "CREATE" | "UPDATE" | "DELETE" | "READ" | "GET_BY_POST_METHOD"
+    action?: FORM_ACTION
     labelInput?: string
     configuration?: Configurations
     transactionRouting?: TransactionRouting

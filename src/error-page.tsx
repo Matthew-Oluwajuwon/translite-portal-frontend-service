@@ -1,12 +1,10 @@
 /* eslint-disable prettier/prettier */
 import Button from "antd/es/button"
 import React from "react"
-import { useNavigate } from "react-router-dom"
 import Logo from "./assets/images/logo.svg"
 import NotFound from "./assets/images/not-found.svg"
 
 export const ErrorPage: React.FC = () => {
-  const navigate = useNavigate()
   return (
     <div className="min-h-[100svh] bg-[#4C469B] relative">
       <div className="pl-10 pt-10">
@@ -23,10 +21,10 @@ export const ErrorPage: React.FC = () => {
         </p>
         <Button
           type="primary"
-          onClick={() => navigate("/")}
+          onClick={() => window.history.back()}
           className="py-5 px-10 flex justify-center items-center"
         >
-          Back to Home
+          Back to Previous page
         </Button>
       </div>
     </div>

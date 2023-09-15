@@ -59,6 +59,10 @@ export namespace ApiResponse {
   export class Processor {
     id?: number
     name?: string
+    ip?: string
+    port?: number
+    allowKeyExchange?: boolean
+    cardSchemes?: any
     createdDate?: string
   }
   
