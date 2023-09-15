@@ -13,11 +13,14 @@ export const apiEndpoints = {
   },
   processor: {
     getProcessors: "processor",
+    cardSchemes: "processor/cardSchemes",
+    addProcessor:"processor/add",
+    updateProcessor:"processor/update/"
   },
   users: {
     getUsers: "adminUser/all",
     addNewUser: "adminUser/add",
     enableAdminUser: "adminUser/enableAdminUser/",
-    disableAdminUser: "adminUser/disableAdminUser/"
+    disableAdminUser: "adminUser/disableAdminUser/",
   },
 }
