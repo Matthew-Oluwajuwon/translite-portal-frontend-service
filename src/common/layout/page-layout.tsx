@@ -36,7 +36,7 @@ const PageLayout: React.FC = () => {
   return (
     <main className="min-h-[100svh] relative flex flex-col">
       <aside
-        className={`bg-[#1C166A] ${
+        className={`bg-[#1C166A] overflow-auto ${
           state.menuCollapsed ? "w-[6rem] px-0" : "w-[6rem] lg:w-[17.5rem]"
         } hidden md:block h-screen px-[1rem] fixed left-0`}
       >
