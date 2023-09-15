@@ -121,14 +121,15 @@ const useApiMethods = () => {
     if (
       postDataResult.data?.responseCode === ResponseCode.SUCCESS ||
       updateDataResult.data?.responseCode === ResponseCode.SUCCESS ||
-      deleteDataResult.data?.responseCode === ResponseCode.SUCCESS 
+      deleteDataResult.data?.responseCode === ResponseCode.SUCCESS ||
+      getDataByPostMethodResult.data?.responseCode === ResponseCode.SUCCESS
     ) {
       Notify(
         "success",
         postDataResult.data?.status ||
           updateDataResult.data?.status ||
-          deleteDataResult.data?.status ||
-          result.data?.status
+          deleteDataResult.data?.status 
+          // result.data?.status
       )
     } else {
       Notify(
@@ -136,7 +137,8 @@ const useApiMethods = () => {
         postDataResult.data?.failureReason ||
           updateDataResult.data?.failureReason ||
           deleteDataResult.data?.failureReason ||
-          result.data?.failureReason
+          result.data?.failureReason ||
+          getDataByPostMethodResult.data?.failureReason
       )
     }
   }, [
@@ -146,6 +148,8 @@ const useApiMethods = () => {
     postDataResult.data?.failureReason,
     updateDataResult.data?.responseCode,
     updateDataResult.data?.failureReason,
+    // getDataByPostMethodResult.data?.responseCode,
+    getDataByPostMethodResult.data?.failureReason
   ])
 
 

@@ -124,7 +124,7 @@ const Transactions: React.FC = () => {
       {},
       state.page,
     )
-  }, [state.request])
+  }, [state.page])
 
   const { dataSource } = useFilter(result.data?.data?.transactionDTOS)
 
@@ -138,9 +138,25 @@ const Transactions: React.FC = () => {
         shouldExpand={true}
         tableName="Transaction History"
         btn={
-          <button className="hover:shadow-md hover:scale-110 transition-all">
-            <img src={Download} alt="download" className="rounded-md" />
-          </button>
+          <div className="flex item-center gap-5">
+            <button
+              className="hover:scale-110 transition-all"
+              onClick={() =>
+                handleApiMethodController(
+                  state,
+                  apiEndpoints.transaction.getTransactions,
+                  "GET_BY_POST_METHOD",
+                  {},
+                  1,
+                )
+              }
+            >
+              Clear filter
+            </button>
+            <button className="hover:shadow-md hover:scale-110 transition-all">
+              <img src={Download} alt="download" className="rounded-md" />
+            </button>
+          </div>
         }
         forms={
           <Form
@@ -193,15 +209,15 @@ const Transactions: React.FC = () => {
                     onChange={(e) =>
                       handleApiMethodController(
                         state,
-                        apiEndpoints.transaction
-                          .getTransactionsByProcessorName + e,
+                        apiEndpoints.transaction.searchTransaction,
                         "GET_BY_POST_METHOD",
-                        {},
+                        {
+                          processedBy: e,
+                        },
                         state.page,
                       )
                     }
                   >
-                    <Select.Option value="all">All</Select.Option>
                     {state.processor?.map(
                       (item: ApiResponse.Processor, index: number) => (
                         <Select.Option key={index} value={item.name}>
@@ -226,19 +242,20 @@ const Transactions: React.FC = () => {
                   <Select
                     className="border border-[#DEDFEC] rounded-md h-12 flex items-center"
                     suffixIcon={<img src={dropdown} alt="" />}
-                    // onChange={(e) =>
-                    //   handleApiMethodController(
-                    //     state,
-                    //     apiEndpoints.transaction
-                    //       .getTransactionsByProcessorName + e,
-                    //     "GET_BY_POST_METHOD",
-                    //     {},
-                    //     state.page,
-                    //   )
-                    // }
+                    onChange={(e) =>
+                      handleApiMethodController(
+                        state,
+                        apiEndpoints.transaction.searchTransaction,
+                        "GET_BY_POST_METHOD",
+                        {
+                          status: e,
+                        },
+                        state.page,
+                      )
+                    }
                   >
                     <Select.Option value="all">All</Select.Option>
-                    <Select.Option value="success">Success</Select.Option>
+                    <Select.Option value="00">Success</Select.Option>
                     <Select.Option value="failed">Failed</Select.Option>
                   </Select>
                 </Form.Item>
@@ -268,6 +285,18 @@ const Transactions: React.FC = () => {
                         alt="seperator"
                         className="w-[4rem]"
                       />
+                    }
+                    onChange={(_date, dateString) =>
+                      handleApiMethodController(
+                        state,
+                        apiEndpoints.transaction.searchTransaction,
+                        "GET_BY_POST_METHOD",
+                        {
+                          fromDate: dateString[0],
+                          toDate: dateString[1],
+                        },
+                        state.page,
+                      )
                     }
                     // cellRender={(current) => {
                     //   const style: React.CSSProperties = {}
