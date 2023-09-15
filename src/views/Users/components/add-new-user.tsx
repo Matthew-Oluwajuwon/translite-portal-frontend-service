@@ -8,25 +8,13 @@ import useApiMethods from "../../../custom-hooks/useApiMethods"
 import { apiEndpoints } from "../../../store/apiEndpoints"
 import useSetRequest from "../../../custom-hooks/useSetRequest"
 import React from "react"
+import SubmitButton from "@common/components/SubmitButton"
 
 const AddNewUser: React.FC = () => {
   const state = useAppSelector((state: { global: any }) => {
     return state.global
   })
   const [form] = useForm()
-  const [submittable, setSubmittable] = React.useState(false)
-  const values = Form.useWatch([], form)
-
-  React.useEffect(() => {
-    form.validateFields({ validateOnly: true }).then(
-      () => {
-        setSubmittable(true)
-      },
-      () => {
-        setSubmittable(false)
-      },
-    )
-  }, [form, values])
 
   const { toggleAddUserModal } = useToggle()
   const { setFieldChange } = useSetRequest()
@@ -179,14 +167,7 @@ const AddNewUser: React.FC = () => {
               </Form.Item>
             </Col> */}
             <Col span={24}>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="flex items-center justify-center bg-[#6D71F9] py-5 px-10 mx-auto"
-                disabled={submittable ? false : true}
-              >
-                Submit
-              </Button>
+              <SubmitButton name={"Submit"} htmlType={"submit"} form={form}  />
             </Col>
             <Col span={24} className="my-3">
               <Button

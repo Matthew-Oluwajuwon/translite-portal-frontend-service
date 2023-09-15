@@ -7,6 +7,7 @@ import { Button, Col, Form, Input, Row, Select, Switch } from "antd"
 import useApiMethods, { FORM_ACTION } from "../../../custom-hooks/useApiMethods"
 import { apiEndpoints } from "../../../store/apiEndpoints"
 import useSetRequest from "../../../custom-hooks/useSetRequest"
+import SubmitButton from "@common/components/SubmitButton"
 const AddProcessor: React.FC = () => {
   const state = useAppSelector((state) => {
     return state.global
@@ -21,7 +22,10 @@ const AddProcessor: React.FC = () => {
       "GET_BY_POST_METHOD",
       {},
       state.page,
-    )
+    );
+    
+    const [form] = Form.useForm()
+    
   return (
     <PageModal
       openModal={state.showFormModal}
@@ -42,6 +46,7 @@ const AddProcessor: React.FC = () => {
         Add a new processor to the system
       </p>
       <Form
+        form={form}
         layout="vertical"
         labelCol={{ span: 24 }}
         wrapperCol={{ span: 24 }}
@@ -86,12 +91,12 @@ const AddProcessor: React.FC = () => {
           },
         ]}
       >
-        <Row style={{ width: "100%" }}>
-          <div className="w-full">
+        <Row style={{ width: "100%" }} gutter={16}>
             <Col span={24}>
               <Form.Item
                 label={<h2 className="text-[#272848] mt-5">Processor Name</h2>}
                 name={"name"}
+                rules={[{required: true, message: "Processor name is required"}]}
               >
                 <Input
                   className="py-4 px-5 mb-[-1rem]"
@@ -100,11 +105,11 @@ const AddProcessor: React.FC = () => {
                 />
               </Form.Item>
             </Col>
-            <Col className="flex gap-4" span={24}>
+            <Col span={12}>
               <Form.Item
                 label={<h2 className="text-[#272848] mt-5">IP Address</h2>}
                 name={"ip"}
-                className="w-full"
+                rules={[{required: true, message: "IP Address is required"}]}
               >
                 <Input
                   className="py-4 px-5 mb-[-1rem]"
@@ -112,10 +117,12 @@ const AddProcessor: React.FC = () => {
                   value={state.request?.ip}
                 />
               </Form.Item>
+            </Col>
+            <Col span={12}>
               <Form.Item
                 label={<h2 className="text-[#272848] mt-5">Port</h2>}
                 name={"port"}
-                className="w-full"
+                rules={[{required: true, message: "Port is required"}]}
               >
                 <Input
                   className="py-4 px-5 mb-[-1rem]"
@@ -124,7 +131,7 @@ const AddProcessor: React.FC = () => {
                 />
               </Form.Item>
             </Col>
-            <Col>
+            <Col span={24}>
               <Form.Item
                 label={
                   <h2 className="text-[#272848] mt-5">
@@ -132,6 +139,8 @@ const AddProcessor: React.FC = () => {
                   </h2>
                 }
                 name={"cardSchemes"}
+                
+                rules={[{required: true, message: "Card schemes is required"}]}
               >
                 <Select
                   className="border rounded-lg py-3 w-full"
@@ -169,7 +178,7 @@ const AddProcessor: React.FC = () => {
                   <h2 className="text-[#272848] mt-5">Allow Key Exchange</h2>
                 }
                 name={"allowKeyExchange"}
-                className="w-full"
+                rules={[{required: true, message: "Allow exchange key is required"}]}
               >
                 <Switch
                   checked={state.request?.allowKeyExchange}
@@ -183,13 +192,7 @@ const AddProcessor: React.FC = () => {
               </Form.Item>
             </Col>
             <Col span={24}>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="flex items-center justify-center bg-[#6D71F9] py-5 px-5 mx-auto"
-              >
-                Submit
-              </Button>
+              <SubmitButton name="Submit"htmlType="submit" form={form} />
             </Col>
             <Col span={24} className="my-1">
               <Button
@@ -200,7 +203,6 @@ const AddProcessor: React.FC = () => {
                 Cancel
               </Button>
             </Col>
-          </div>
         </Row>
       </Form>
       </div>

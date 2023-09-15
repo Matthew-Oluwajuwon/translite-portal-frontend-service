@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { MENU_KEYS, BREADCRUMB, ResponseCode } from "@common/constants"
+import { MENU_KEYS, BREADCRUMB } from "@common/constants"
 import usePageInfo from "../../custom-hooks/usePageInfo"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { TableComponent } from "@common/components/table-component"
@@ -16,7 +16,7 @@ import useApiMethods from "../../custom-hooks/useApiMethods"
 import { useEffect } from "react"
 import { apiEndpoints } from "../../store/apiEndpoints"
 import useFilter from "../../custom-hooks/useFilter"
-import { setAllGlobalKey, setGlobalKey } from "../../store"
+import { setGlobalKey } from "../../store"
 import useToggle from "../../custom-hooks/useToggle"
 import AddNewUser from "./components/add-new-user"
 import { AddNewUserResponseModal } from "./components/addNewUserResponseModal"
@@ -33,7 +33,7 @@ const Users: React.FC = () => {
   )
   
   
-  const { handleApiMethodController, data, result } = useApiMethods()
+  const { handleApiMethodController, data } = useApiMethods()
 
   const columns: ColumnProps<ApiResponse.UserInfo>[] = [
     {
