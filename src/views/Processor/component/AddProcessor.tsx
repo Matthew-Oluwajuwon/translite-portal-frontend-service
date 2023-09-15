@@ -30,7 +30,7 @@ const AddProcessor: React.FC = () => {
       centered
       modalFooter={false}
     >
-      <div className="p-10">
+      <div className="md:p-10">
         
       <h5 className="text-[#130F49] font-bold text-2xl ">
         {state.action === "CREATE" ? "Setup New" : "Update"} Processor
