@@ -171,7 +171,7 @@ const AddNewUser: React.FC = () => {
             </Col>
             <Col span={24} className="my-3">
               <Button
-                onClick={() => toggleAddUserModal}
+                onClick={toggleAddUserModal}
                 type="text"
                 className="flex items-center justify-center py-5 px-10 mx-auto"
               >

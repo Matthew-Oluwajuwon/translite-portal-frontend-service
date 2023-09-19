@@ -19,6 +19,7 @@ import { useEffect } from "react"
 import { apiEndpoints } from "../../store/apiEndpoints"
 import more from "../../assets/icons/more-action.svg"
 import AddProcessor from "./component/AddProcessor"
+import { useExcel } from "../../custom-hooks/useExcel"
 
 const Processor: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -144,6 +145,9 @@ const Processor: React.FC = () => {
       ? data.data?.data?.processorDTOS
       : [],
   )
+  
+  
+  const { downloadDataToExcel, generateData } = useExcel()
 
   return (
     <div>
@@ -162,7 +166,22 @@ const Processor: React.FC = () => {
               <img src={Plus} alt="add" className="ml-2 sm:ml-0" />{" "}
               <div className="hidden md:block">Add New Processor</div>
             </Button>
-            <button className="hover:shadow-md hover:scale-110 transition-all">
+            <button onClick={() =>
+                downloadDataToExcel({
+                  title: "Translite processor",
+                  column: [],
+                  rows: generateData(
+                    (dataSource as any) ?? [],
+                    dataSource?.length > 0 ? Object.keys(dataSource.filter((x) => {
+                      delete x.id 
+                      delete x.key
+                    return x
+                    })[0]) : [],
+                  ),
+                  extension: "xlsx",
+                  fileName: "Translite processor"
+                })
+              } className="hover:shadow-md hover:scale-110 transition-all">
             <img src={download} alt="download" className="rounded-md" />
           </button>
           </div>

@@ -20,6 +20,7 @@ import { setGlobalKey } from "../../store"
 import useToggle from "../../custom-hooks/useToggle"
 import AddNewUser from "./components/add-new-user"
 import { AddNewUserResponseModal } from "./components/addNewUserResponseModal"
+import { useExcel } from "../../custom-hooks/useExcel"
 
 const Users: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -31,8 +32,7 @@ const Users: React.FC = () => {
     MENU_KEYS.SYSTEM_USERS,
     BREADCRUMB.SYSTEM_USERS,
   )
-  
-  
+
   const { handleApiMethodController, data } = useApiMethods()
 
   const columns: ColumnProps<ApiResponse.UserInfo>[] = [
@@ -63,9 +63,15 @@ const Users: React.FC = () => {
             }?`}
             placement="leftTop"
             okButtonProps={{
-              className: "bg-[#4C469B]"
+              className: "bg-[#4C469B]",
             }}
-            onConfirm={() => handleApiMethodController(state, apiEndpoints.users.enableAdminUser + record.email, "CREATE")}
+            onConfirm={() =>
+              handleApiMethodController(
+                state,
+                apiEndpoints.users.enableAdminUser + record.email,
+                "CREATE",
+              )
+            }
           >
             <Switch checked />
           </Popconfirm>
@@ -100,18 +106,23 @@ const Users: React.FC = () => {
   //         ...state.user,
   //         showAddUserSuccessResponseModal: true
   //       }
-  //     })) 
+  //     }))
   //   }
   // }, [dispatch, result.data?.responseCode])
+
+  const { downloadDataToExcel, generateData } = useExcel()
 
   const { dataSource } = useFilter(
     Array.isArray(data.data?.data) ? data.data?.data : [],
   )
   const { toggleAddUserModal } = useToggle()
+
   return (
     <div>
       {state.user?.showAddUserModal && <AddNewUser />}
-      {state.user?.showAddUserSuccessResponseModal && <AddNewUserResponseModal />}
+      {state.user?.showAddUserSuccessResponseModal && (
+        <AddNewUserResponseModal />
+      )}
       <TableComponent
         tableName="All System Users"
         column={columns}
@@ -130,6 +141,26 @@ const Users: React.FC = () => {
               type="default"
               icon={<img src={Cloud} alt="add" className="ml-2 sm:ml-0" />}
               className="flex justify-between items-center text-[0.7rem] text-[#6D71F9] font-semibold border-none bg-[#eaebff] sm:text-[1rem] py-6 px-5"
+              onClick={() =>
+                downloadDataToExcel({
+                  title: "Translite users",
+                  column: [],
+                  rows: generateData(
+                    (dataSource as any) ?? [],
+                    dataSource?.length > 0
+                      ? Object.keys(
+                          dataSource.filter((x) => {
+                            delete x.id 
+                            delete x.key
+                          return x
+                          })[0],
+                        )
+                      : [],
+                  ),
+                  extension: "xlsx",
+                  fileName: "Translite users",
+                })
+              }
             >
               <div className="hidden md:block">Export</div>
             </Button>

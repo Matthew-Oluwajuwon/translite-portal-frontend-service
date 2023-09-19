@@ -22,6 +22,7 @@ import { apiEndpoints } from "../../store/apiEndpoints"
 import useFilter from "../../custom-hooks/useFilter"
 import { setGlobalKey } from "../../store"
 import useFieldApiData from "../../custom-hooks/useFieldApiData"
+import { useExcel } from "../../custom-hooks/useExcel"
 
 const Transactions: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -115,6 +116,7 @@ const Transactions: React.FC = () => {
   const { apiDataLoading } = useFieldApiData()
 
   const { handleApiMethodController, result } = useApiMethods()
+  const { downloadDataToExcel, generateData } = useExcel()
 
   useEffect(() => {
     handleApiMethodController(
@@ -153,7 +155,22 @@ const Transactions: React.FC = () => {
             >
               Clear filter
             </button>
-            <button className="hover:shadow-md hover:scale-110 transition-all">
+            <button onClick={() =>
+                downloadDataToExcel({
+                  title: "Translite transactions",
+                  column: [],
+                  rows: generateData(
+                    (dataSource as any) ?? [],
+                    dataSource?.length > 0 ? Object.keys(dataSource.filter((x) => {
+                      delete x.id 
+                      delete x.key
+                    return x
+                    })[0]) : [],
+                  ),
+                  extension: "xlsx",
+                  fileName: "Translite transactions"
+                })
+              } className="hover:shadow-md hover:scale-110 transition-all">
               <img src={Download} alt="download" className="rounded-md" />
             </button>
           </div>
@@ -192,11 +209,10 @@ const Transactions: React.FC = () => {
                     </span>
                   }
                   name={"processor"}
-                  initialValue="All"
                 >
                   <Select
                     className="border border-[#DEDFEC] rounded-md h-12 flex items-center"
-                    suffixIcon={<img src={dropdown} alt="" />}
+                    suffixIcon={!apiDataLoading ? null : <img src={dropdown} alt="" />}
                     onFocus={() =>
                       dispatch(
                         setGlobalKey({
@@ -206,6 +222,7 @@ const Transactions: React.FC = () => {
                       )
                     }
                     loading={apiDataLoading}
+                    allowClear
                     onChange={(e) =>
                       handleApiMethodController(
                         state,

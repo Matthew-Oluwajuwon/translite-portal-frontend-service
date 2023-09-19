@@ -26,8 +26,8 @@ const useFilter = (array: any[]) => {
 
   dataSource = dataSource?.map((item: any, index: number) => {
     return {
-      ...item,
       key: index + 1,
+      ...item,
     };
   });
 
