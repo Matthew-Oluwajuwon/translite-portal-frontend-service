@@ -141,20 +141,6 @@ const Transactions: React.FC = () => {
         tableName="Transaction History"
         btn={
           <div className="flex item-center gap-5">
-            <button
-              className="hover:scale-110 transition-all"
-              onClick={() =>
-                handleApiMethodController(
-                  state,
-                  apiEndpoints.transaction.getTransactions,
-                  "GET_BY_POST_METHOD",
-                  {},
-                  1,
-                )
-              }
-            >
-              Clear filter
-            </button>
             <button onClick={() =>
                 downloadDataToExcel({
                   title: "Translite transactions",

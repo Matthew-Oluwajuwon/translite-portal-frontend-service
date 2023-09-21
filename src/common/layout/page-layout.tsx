@@ -13,26 +13,36 @@ import useToggle from "../../custom-hooks/useToggle"
 import dropdown from "../../assets/icons/dropdown.svg"
 import useWindowResize from "../../custom-hooks/useWindowResize"
 import menuIcon from "../../assets/icons/menu.svg"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { ROUTE } from "@common/constants"
 import useUserInfo from "../../custom-hooks/useUserInfo"
+import { Logout } from "@common/components/logout"
+import Log from "../../assets/icons/Logout.svg"
 
 const PageLayout: React.FC = () => {
   const state = useAppSelector((state) => {
     return state.global
   })
-
-  const { toggleMenu, toggleOpenMenuDrawer, closeAllOpenModal } = useToggle()
+  const [showLogoutButton, setShowLogoutButton] = useState<boolean>(false)
+  const {
+    toggleMenu,
+    toggleOpenMenuDrawer,
+    closeAllOpenModal,
+    handleLogout,
+    toggleLogoutModal,
+  } = useToggle()
   const { windowWidth } = useWindowResize()
   const navigate = useNavigate()
   const [userInfo] = useUserInfo()
 
   useEffect(() => {
     if (!localStorage.getItem("***")) {
-     return navigate(ROUTE.INDEX, {replace: true})
+      return navigate(ROUTE.INDEX, { replace: true })
     }
   }, [])
-
+  const toggleLogoutButton = () => {
+    setShowLogoutButton(!showLogoutButton)
+  }
   return (
     <main className="min-h-[100svh] relative flex flex-col">
       <aside
@@ -71,8 +81,7 @@ const PageLayout: React.FC = () => {
             mode="inline"
             items={MenuItems}
             inlineCollapsed={state.menuCollapsed}
-            onClick={() => closeAllOpenModal(state)
-            }
+            onClick={() => closeAllOpenModal(state)}
           />
         </div>
       </aside>
@@ -126,20 +135,34 @@ const PageLayout: React.FC = () => {
               </div>
               <div>
                 <Menu
-                   defaultSelectedKeys={[state.selectedKey]}
-                   selectedKeys={[state.selectedKey]}
-                   className={`bg-[#1C166A] font-[poppins-500] font-medium ${
-                     state.menuCollapsed && "w-[4rem]"
-                   }`}
-                   mode="inline"
-                   items={MenuItems}
-                   inlineCollapsed={state.menuCollapsed}
+                  defaultSelectedKeys={[state.selectedKey]}
+                  selectedKeys={[state.selectedKey]}
+                  className={`bg-[#1C166A] font-[poppins-500] font-medium ${
+                    state.menuCollapsed && "w-[4rem]"
+                  }`}
+                  mode="inline"
+                  items={MenuItems}
+                  inlineCollapsed={state.menuCollapsed}
                   onClick={toggleOpenMenuDrawer}
                 />
               </div>
             </Drawer>
           </div>
-          <div className="flex items-center gap-2">
+          <div
+            className="flex items-center gap-2 cursor-pointer hover:scale-110 transition-all"
+            onClick={toggleLogoutButton}
+          >
+            {showLogoutButton && (
+              <div>
+                <button
+                  onClick={toggleLogoutModal}
+                  className="flex items-center justify-center gap-1 py-3 px-3 rounded-md text-[#FF291F] bg-[#FFF0F4] cursor-pointer hover:shadow-md hover:scale-110 transition-all text-[0.8rem]"
+                >
+                  <img src={Log} alt="logout" />
+                  <p className="hidden md:block">Log Out</p>
+                </button>
+              </div>
+            )}
             <img
               src={dropdown}
               alt=""
@@ -150,6 +173,13 @@ const PageLayout: React.FC = () => {
               {userInfo.lastName?.toUpperCase().charAt(0)}
             </span>
           </div>
+          {state.showLogoutModal && (
+            <Logout
+              openModal={state.showLogoutModal}
+              onCancel={toggleLogoutModal}
+              onClick={handleLogout}
+            />
+          )}
         </header>
         <section className="overflow-auto flex-grow">
           <Outlet />

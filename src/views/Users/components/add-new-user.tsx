@@ -167,7 +167,7 @@ const AddNewUser: React.FC = () => {
               </Form.Item>
             </Col> */}
             <Col span={24}>
-              <SubmitButton name={"Submit"} htmlType={"submit"} form={form}  />
+              <SubmitButton name={"Submit"} htmlType={"submit"} form={form}   />
             </Col>
             <Col span={24} className="my-3">
               <Button
