@@ -13,7 +13,7 @@ export enum MENU_KEYS {
   ROLES = "04",
   PERMISSION = "05",
   SYSTEM_TERMINAL_MGT = "06",
-  PROCESSOR_TERMINAL_MGT = "07"
+  PROCESSOR_TERMINAL_MGT = "07",
 }
 
 export enum MENU_NAMES {
@@ -30,7 +30,7 @@ export enum MENU_NAMES {
   PERMISSION = "Permissions",
   SYSTEM_TERMINAL_MGT = "System Terminal Mgt.",
   PROCESSOR_TERMINAL_MGT = "Processor Terminal Mgt.",
-  PROCESSOR = "Processor Mgt."
+  PROCESSOR = "Processor Mgt.",
 }
 
 export enum ROUTE {
@@ -44,9 +44,9 @@ export enum ROUTE {
   SYSTEM_USERS = "/user-management/system-users",
   ROLES = "/user-management/roles",
   PERMISSION = "/user-management/permission",
-  TERMINAL_MGT = "/terminals-Management",
-  SYSTEM_TERMINAL_MGT = "/terminals-Management/system-terminal-management",
-  PROCESSOR_TERMINAL_MGT = "/terminals-Management/processor-terminal-management",
+  TERMINAL_MGT = "/terminals-management",
+  SYSTEM_TERMINAL_MGT = "/terminals-management/system-terminal-management",
+  PROCESSOR_TERMINAL_MGT = "/terminals-management/processor-terminal-management",
   PROCESSOR = "/processor-management",
   CONFIGURATIONS = "/configurations",
   TRANSACTION_ROUTING = "/configurations/transaction-routing",
@@ -59,10 +59,11 @@ export enum BREADCRUMB {
   PROFILE = "Home > Profile",
   TRANSACTION = "Home > Transactions",
   TERMINAL_MGT = "Home > System Terminal Management",
+  PROCESSOR_TERMINAL_MGT = "Home > Terminals > Processor Terminal Management",
   TRANSACTION_ROUTING = "Home > Transaction Routing",
   CHARGE_CONFIGURATION = "Home > Charge Configurations",
   SYSTEM_USERS = "Home > System Users",
-  PROCESSOR = "Home > Processor Management"
+  PROCESSOR = "Home > Processor Management",
 }
 
 export enum TRANSACTION_CONFIGURATION_TYPES {
@@ -85,7 +86,6 @@ export enum FORM_METHODS {
   GET = "GET",
 }
 
-
 export enum ResponseCode {
-  SUCCESS = "00"
+  SUCCESS = "00",
 }

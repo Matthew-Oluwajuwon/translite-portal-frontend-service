@@ -2,10 +2,13 @@
 import { FORM_METHODS, ROUTE } from "@common/constants"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { State } from "../../model/application/state"
+import { Encryption } from "@common/utils/encryption"
 
 const userToken = () => {
   if (localStorage.getItem("*****") && localStorage.getItem("*****")?.length) {
-    return localStorage.getItem("*****")
+    return JSON.parse(
+      JSON.parse(Encryption.decrypt(localStorage.getItem("*****") as string)),
+    )
   }
   localStorage.clear()
   window.location.href = ROUTE.INDEX
@@ -113,6 +116,21 @@ export const globalApi = createApi({
         { type: "GetData", id: arg.id },
       ],
     }),
+    uploadData: builder.mutation({
+      query: (data) => {
+        return {
+          url: data.uploadUrl,
+          method: FORM_METHODS.POST,
+          body: data.request,
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        }
+      },
+      invalidatesTags: (_result, _error, arg) => [
+        { type: "GetData", id: arg.id },
+      ],
+    })
   }),
 });
 
@@ -124,5 +142,6 @@ export const {
   useDeleteDataMutation,
   useGetDataQuery,
   useLazyGetDataQuery,
-  useResetPasswordMutation
+  useResetPasswordMutation,
+  useUploadDataMutation
 } = globalApi;

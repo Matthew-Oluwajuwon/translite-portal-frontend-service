@@ -9,7 +9,7 @@ const usePageInfo = (
   breadcrumb: string,
 ) => {
   const dispatch = useAppDispatch()
-  const state = useAppSelector(state => {
+  const state = useAppSelector((state) => {
     return state.global
   })
   useLayoutEffect(() => {
@@ -22,7 +22,7 @@ const usePageInfo = (
         breadcrumb,
       }),
     )
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [breadcrumb, dispatch, pageTitle, selectedKey, state.selectedKey])
 }
 

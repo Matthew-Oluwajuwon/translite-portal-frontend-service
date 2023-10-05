@@ -33,7 +33,7 @@ const initialState: State.Global = {
     showAddUserSuccessResponseModal: false,
   },
   selectUrl: "",
-  page: 2,
+  page: 1,
 }
 
 const GlobalSlice = createSlice({

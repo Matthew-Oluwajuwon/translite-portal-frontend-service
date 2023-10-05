@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { ConfigProvider } from "antd"
-import { getThemeConfig } from "./themeConfig"
+import { getThemeConfig } from "./theme.config"
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import { ROUTE } from "./common/constants"
 import Dashboard from "@views/dashboard/dashboard"
@@ -21,7 +21,8 @@ import { ErrorPage } from "./error-page"
 import { IsLoggedIn } from "./isLoggedIn"
 import Users from "@views/Users/Users"
 import Processor from "@views/Processor/Processor"
-
+import SystemTerminal from "@views/Terminals/system-terminals/SystemTerminal"
+import ProcessorTerminal from "@views/Terminals/processor-terminal/ProcessorTerminal"
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -67,7 +68,17 @@ const App = () => {
         },
         {
           element: <Terminals />,
-          path: ROUTE.SYSTEM_TERMINAL_MGT,
+          path: ROUTE.TERMINAL_MGT,
+          children: [
+            {
+              path: ROUTE.SYSTEM_TERMINAL_MGT,
+              element: <SystemTerminal />,
+            },
+            {
+              path: ROUTE.PROCESSOR_TERMINAL_MGT,
+              element: <ProcessorTerminal />,
+            },
+          ],
         },
         {
           path: ROUTE.CONFIGURATIONS,
@@ -85,12 +96,12 @@ const App = () => {
         },
         {
           path: ROUTE.SYSTEM_USERS,
-          element: <Users />
+          element: <Users />,
         },
         {
           path: ROUTE.PROCESSOR,
-          element: <Processor />
-        }
+          element: <Processor />,
+        },
       ],
       errorElement: <ErrorPage />,
     },

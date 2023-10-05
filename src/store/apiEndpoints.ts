@@ -14,8 +14,8 @@ export const apiEndpoints = {
   processor: {
     getProcessors: "processor",
     cardSchemes: "processor/cardSchemes",
-    addProcessor:"processor/add",
-    updateProcessor:"processor/update/"
+    addProcessor: "processor/add",
+    updateProcessor: "processor/update/",
   },
   users: {
     getUsers: "adminUser/all",
@@ -23,7 +23,9 @@ export const apiEndpoints = {
     enableAdminUser: "adminUser/enableAdminUser/",
     disableAdminUser: "adminUser/disableAdminUser/",
   },
-  terminals: {
-    bulkUpload: "terminals/system/bulk"
-  }
+  terminal: {
+    bulkUpload: "terminals/system/bulk",
+    addNewTerminal: "terminals/system/",
+    getTerminals: "terminals/system?"
+  },
 }

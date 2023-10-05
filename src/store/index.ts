@@ -18,7 +18,8 @@ import {
   useGetDataQuery,
   useLazyGetDataQuery,
   globalApi,
-  useResetPasswordMutation
+  useResetPasswordMutation,
+  useUploadDataMutation
 } from "./apis/global.api"
 
 const reducer = combineReducers({
@@ -51,7 +52,8 @@ export {
   useDeleteDataMutation,
   usePostDataMutation,
   useLazyGetDataQuery,
-  useResetPasswordMutation
+  useResetPasswordMutation,
+  useUploadDataMutation
 }
 
 export type AppDispatch = typeof store.dispatch

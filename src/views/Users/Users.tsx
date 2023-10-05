@@ -33,7 +33,7 @@ const Users: React.FC = () => {
     BREADCRUMB.SYSTEM_USERS,
   )
 
-  const { handleApiMethodController, data } = useApiMethods()
+  const { handleApiMethodController, data, result } = useApiMethods()
 
   const columns: ColumnProps<ApiResponse.UserInfo>[] = [
     {
@@ -58,9 +58,9 @@ const Users: React.FC = () => {
       render: (_: any, record: ApiResponse.UserInfo) => {
         return (
           <Popconfirm
-            title={`Are you sure you want to enable/disable ${
-              record.firstName + " " + record.lastName
-            }?`}
+            title={`Are you sure you want to ${
+              record.disabled ? "enable" : "disable"
+            } ${record.firstName + " " + record.lastName}?`}
             placement="leftTop"
             okButtonProps={{
               className: "bg-[#4C469B]",
@@ -68,12 +68,14 @@ const Users: React.FC = () => {
             onConfirm={() =>
               handleApiMethodController(
                 state,
-                apiEndpoints.users.enableAdminUser + record.email,
+                (record.disabled
+                  ? apiEndpoints.users.enableAdminUser
+                  : apiEndpoints.users.disableAdminUser) + record.email,
                 "CREATE",
               )
             }
           >
-            <Switch checked />
+            <Switch className="bg-[#c4c4c4]" checked={!record.disabled} />
           </Popconfirm>
         )
       },
@@ -150,9 +152,9 @@ const Users: React.FC = () => {
                     dataSource?.length > 0
                       ? Object.keys(
                           dataSource.filter((x) => {
-                            delete x.id 
+                            delete x.id
                             delete x.key
-                          return x
+                            return x
                           })[0],
                         )
                       : [],
