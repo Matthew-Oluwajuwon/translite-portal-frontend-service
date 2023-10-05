@@ -23,4 +23,7 @@ export const apiEndpoints = {
     enableAdminUser: "adminUser/enableAdminUser/",
     disableAdminUser: "adminUser/disableAdminUser/",
   },
+  terminals: {
+    bulkUpload: "terminals/system/bulk"
+  }
 }

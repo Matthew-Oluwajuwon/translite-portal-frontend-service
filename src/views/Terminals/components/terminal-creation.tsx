@@ -7,6 +7,7 @@ import useToggle from "../../../custom-hooks/useToggle"
 import { useForm } from "antd/es/form/Form"
 import { useEffect, useState } from "react"
 import useSetRequest from "../../../custom-hooks/useSetRequest"
+import { apiEndpoints } from "../../../store/apiEndpoints"
 
 const TerminalCreateion: React.FC = () => {
   const state = useAppSelector((state: { global: any }) => {
@@ -25,10 +26,16 @@ const TerminalCreateion: React.FC = () => {
         setSubmittable(false)
       },
     )
-  }, [form, values])
+  }, [form, values]);
+  
   const props: UploadProps = {
     fileList: [],
+    action: apiEndpoints.terminals.bulkUpload,
+    onChange: (file) => {
+      
+    }
   }
+  
   const { toggleCreateModal, toggleFormModalOption } = useToggle()
   const { setFieldChange } = useSetRequest()
 
