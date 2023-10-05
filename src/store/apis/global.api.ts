@@ -2,10 +2,13 @@
 import { FORM_METHODS, ROUTE } from "@common/constants"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { State } from "../../model/application/state"
+import { Encryption } from "@common/utils/encryption"
 
 const userToken = () => {
   if (localStorage.getItem("*****") && localStorage.getItem("*****")?.length) {
-    return localStorage.getItem("*****")
+    return JSON.parse(
+      JSON.parse(Encryption.decrypt(localStorage.getItem("*****") as string)),
+    )
   }
   localStorage.clear()
   window.location.href = ROUTE.INDEX

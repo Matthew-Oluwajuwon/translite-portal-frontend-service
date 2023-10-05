@@ -39,15 +39,18 @@ const useAuthApi = () => {
         if (data.responseCode !== "00") {
           Notify("error", data.failureReason)
           setLoading(false)
-        } 
-         if (data.responseCode === "97") {
-         return navigate(ROUTE.RESET_PASSWORD)
+        }
+        if (data.responseCode === "97") {
+          return navigate(ROUTE.RESET_PASSWORD)
         } else {
           navigate(ROUTE.INDEX, {
             replace: true,
           })
           Notify("success", "Successful")
-          localStorage.setItem("***", Encryption.encrypt(JSON.stringify(data.data)))
+          localStorage.setItem(
+            "***",
+            Encryption.encrypt(JSON.stringify(data.data)),
+          )
           setLoading(false)
           navigate(ROUTE.DASHBOARD, {
             replace: true,
@@ -67,7 +70,10 @@ const useAuthApi = () => {
           const response: ApiResponse.API = result
 
           if (response.data.token) {
-            localStorage.setItem("*****", response.data?.token)
+            localStorage.setItem(
+              "*****",
+              Encryption.encrypt(JSON.stringify(response.data?.token)),
+            )
             try {
               getAdminInfo()
             } catch (error) {

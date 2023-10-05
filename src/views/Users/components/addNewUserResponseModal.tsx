@@ -18,7 +18,8 @@ export const AddNewUserResponseModal: React.FC = () => {
         ...state,
         user: {
           ...state.user,
-          showAddUserSuccessResponseModal: !state.user?.showAddUserSuccessResponseModal,
+          showAddUserSuccessResponseModal:
+            !state.user?.showAddUserSuccessResponseModal,
         },
       }),
     )

@@ -64,6 +64,7 @@ export namespace State {
   export interface Terminals {
     showCreateModal: boolean
     isSingleCreation: boolean
+    modalName?: string
   }
 
   export interface Configurations {

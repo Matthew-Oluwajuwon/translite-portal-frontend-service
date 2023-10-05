@@ -4,7 +4,13 @@ import { useCallback } from "react"
 import { setAllGlobalKey, setGlobalKey } from "../store"
 import { useAppDispatch, useAppSelector } from "../store/hooks"
 import { useNavigate } from "react-router-dom"
-import { BREADCRUMB, CHARGE_CONFIGURATION_TYPES, MENU_KEYS, MENU_NAMES, ROUTE } from "@common/constants"
+import {
+  BREADCRUMB,
+  CHARGE_CONFIGURATION_TYPES,
+  MENU_KEYS,
+  MENU_NAMES,
+  ROUTE,
+} from "@common/constants"
 import { State } from "../model/application/state"
 import { FORM_ACTION } from "./useApiMethods"
 
@@ -86,28 +92,32 @@ const useToggle = () => {
     [dispatch, state.showLogoutModal],
   )
 
-  const toggleCreateModal = useCallback(() => {
+  const toggleCreateModal = useCallback(
+    (modalName: string) => {
+      dispatch(
+        setAllGlobalKey({
+          ...state,
+          terminal: {
+            ...state.terminal,
+            showCreateModal: !state.terminal?.showCreateModal,
+            modalName: modalName,
+          },
+        }),
+      )
+    },
+    [dispatch],
+  )
+
+  const toggleAddUserModal = useCallback(() => {
     dispatch(
       setAllGlobalKey({
         ...state,
-        terminal: {
-          ...state.terminal,
-          showCreateModal: !state.terminal?.showCreateModal,
+        user: {
+          showAddUserModal: !state.user?.showAddUserModal,
         },
       }),
     )
   }, [dispatch, state])
-
-  const toggleAddUserModal =useCallback(()=>{
-       dispatch(
-         setAllGlobalKey({
-           ...state,
-           user:{
-            showAddUserModal: !state.user?.showAddUserModal
-           }
-         }),
-       )
-  },[dispatch, state])
   const toggleFormModalOption = useCallback(
     (showCreateModal: boolean, isSingleCreation: boolean) =>
       dispatch(
@@ -163,19 +173,20 @@ const useToggle = () => {
       replace: true,
     })
   }
-  
+
   const toggleFormModal = useCallback(
     (showFormModal: boolean, action?: FORM_ACTION, request?: any) => {
-      dispatch(setAllGlobalKey({
-        ...state,
-        showFormModal,
-        request,
-        action
-      }))
+      dispatch(
+        setAllGlobalKey({
+          ...state,
+          showFormModal,
+          request,
+          action,
+        }),
+      )
     },
     [dispatch],
   )
-  
 
   return {
     toggleMenu,
@@ -187,7 +198,7 @@ const useToggle = () => {
     toggleAddUserModal,
     handleLogout,
     closeAllOpenModal,
-    toggleFormModal
+    toggleFormModal,
   }
 }
 

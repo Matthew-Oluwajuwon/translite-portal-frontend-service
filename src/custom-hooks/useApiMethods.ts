@@ -13,7 +13,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../store/hooks"
 import Notify from "../common/components/notification"
 import { State } from "../model/application/state"
-import { ResponseCode } from '@common/constants';
+import { ResponseCode } from "@common/constants"
 
 export type FORM_ACTION =
   | "CREATE"
@@ -47,7 +47,13 @@ const useApiMethods = () => {
   )
 
   const handleApiMethodController = useCallback(
-    (state: State.Global, url: string, action: FORM_ACTION, request?: any, page?: number) => {
+    (
+      state: State.Global,
+      url: string,
+      action: FORM_ACTION,
+      request?: any,
+      page?: number,
+    ) => {
       setAction(action)
       if (url) {
         switch (action) {
@@ -77,7 +83,7 @@ const useApiMethods = () => {
               ...state,
               getPostUrl: url,
               request,
-              page
+              page,
             })
             break
           default:
@@ -103,7 +109,11 @@ const useApiMethods = () => {
           user: {
             ...state.user,
             showAddUserModal: false,
-          }
+          },
+          terminal: {
+            ...state.terminal,
+            showCreateModal: false,
+          },
         }),
       )
     }
@@ -128,8 +138,8 @@ const useApiMethods = () => {
         "success",
         postDataResult.data?.status ||
           updateDataResult.data?.status ||
-          deleteDataResult.data?.status 
-          // result.data?.status
+          deleteDataResult.data?.status,
+        // result.data?.status
       )
     } else {
       Notify(
@@ -138,7 +148,7 @@ const useApiMethods = () => {
           updateDataResult.data?.failureReason ||
           deleteDataResult.data?.failureReason ||
           result.data?.failureReason ||
-          getDataByPostMethodResult.data?.failureReason
+          getDataByPostMethodResult.data?.failureReason,
       )
     }
   }, [
@@ -149,9 +159,8 @@ const useApiMethods = () => {
     updateDataResult.data?.responseCode,
     updateDataResult.data?.failureReason,
     // getDataByPostMethodResult.data?.responseCode,
-    getDataByPostMethodResult.data?.failureReason
+    getDataByPostMethodResult.data?.failureReason,
   ])
-
 
   return {
     handleApiMethodController,

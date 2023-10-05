@@ -12,13 +12,14 @@ export namespace ApiResponse {
     email?: string
     firstName?: string
     lastName?: string
+    disabled?: boolean
   }
 
   export class Dashboard {
     dayReport?: DayReport
     sevenDaysReport?: SevenDaysReport[]
   }
-  
+
   export class DayReport {
     totalValue?: number
     failedValue?: number
@@ -29,21 +30,20 @@ export namespace ApiResponse {
     successPercentage?: string
     processorSuccessPercentage?: ProcessorSuccessPercentage[]
   }
-  
+
   export class ProcessorSuccessPercentage {
     name?: string
     value?: string
-    type?: string;
+    type?: string
   }
-  
+
   export class SevenDaysReport {
     day?: string
     type?: string
     value?: number
     count?: number
   }
-  
-  
+
   export class Transaction {
     id?: number
     rrn?: string
@@ -65,5 +65,4 @@ export namespace ApiResponse {
     cardSchemes?: any
     createdDate?: string
   }
-  
 }

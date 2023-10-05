@@ -125,7 +125,7 @@ const ProcessorTerminal: React.FC = () => {
           <div className="flex gap-3 items-center">
             <Button
               type="primary"
-              onClick={toggleCreateModal}
+              onClick={() => toggleCreateModal("Add Processor Terminal")}
               className="flex justify-between items-center text-[0.7rem] bg-[#6D71F9] sm:text-[1rem] gap-2 py-6 px-2 sm:px-0 -pr-10 sm:pr-3"
             >
               <img src={Plus} alt="add" className="ml-2 sm:ml-0" />{" "}
