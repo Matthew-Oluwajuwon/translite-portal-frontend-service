@@ -77,7 +77,7 @@ export enum CHARGE_CONFIGURATION_TYPES {
 }
 
 export enum TRANSACTION_PROCESSOR {
-  INTERWITCH = "Interwitch",
+  INTERWITCH = "Interswitch",
   NIBSS = "NIBSS",
 }
 

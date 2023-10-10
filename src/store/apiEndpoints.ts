@@ -26,6 +26,10 @@ export const apiEndpoints = {
   terminal: {
     bulkUpload: "terminals/system/bulk",
     addNewTerminal: "terminals/system/",
-    getTerminals: "terminals/system?"
+    getTerminals: "terminals/system?",
+  },
+  routing: {
+    getDefaultRouting: "routing/default",
+    setCustomRouting: "routing/setCustom",
   },
 }

@@ -44,7 +44,7 @@ const TransactionRouting = () => {
     MENU_KEYS.TRANSACTION_ROUTING,
     BREADCRUMB.TRANSACTION_ROUTING,
   )
-  
+
   const column: ColumnProps<any>[] = [
     {
       title: "BIN",
@@ -146,7 +146,7 @@ const TransactionRouting = () => {
 
   return (
     <div>
-      <AddNewRule />
+      {state.transactionRouting?.showAddNewRuleModal && <AddNewRule />}
       <div
         className="bg-[#ffffff] pt-[2rem] my-10 rounded-md mb-10"
         style={{ boxShadow: "0px 10px 13px rgba(17, 38, 146, 0.05)" }}
@@ -223,20 +223,17 @@ const TransactionRouting = () => {
                 </h3>
                 <Col span={24} className="my-10">
                   <Form.Item>
-                    <Radio.Group
-                    // onChange={(e) => handleChange(e.target.value)}
-                    // value={state.configuration?.processorSelection}
-                    >
+                    <Radio.Group>
                       <Space direction="vertical">
                         <div className="border border-[#DEDFEC] rounded-md p-5 w-[20rem]">
                           <Radio
                             value={TRANSACTION_PROCESSOR.INTERWITCH?.toLowerCase()}
+                            defaultChecked
                           >
                             {TRANSACTION_PROCESSOR.INTERWITCH}
                           </Radio>
                         </div>
                         <div className="border border-[#DEDFEC] rounded-md p-5 w-full">
-                          {" "}
                           <Radio
                             value={TRANSACTION_PROCESSOR.NIBSS?.toLowerCase()}
                           >

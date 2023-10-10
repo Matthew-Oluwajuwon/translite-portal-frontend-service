@@ -17,12 +17,12 @@ import { RcFile } from "antd/es/upload"
 const TerminalCreateion: React.FC = () => {
   const state = useAppSelector((state) => {
     return state.global
-  });
-  
+  })
+
   const [form] = useForm()
   const [submittable, setSubmittable] = useState(false)
   const values = Form.useWatch([], form)
-  const[uploadData, uploadResult] = useUploadDataMutation()
+  const [uploadData, uploadResult] = useUploadDataMutation()
 
   useEffect(() => {
     form.validateFields().then(
@@ -56,11 +56,10 @@ const TerminalCreateion: React.FC = () => {
     },
   }
 
-
   const { toggleFormModalOption } = useToggle()
   const { setFormRequest } = useSetRequest()
   const { handleApiMethodController, result } = useApiMethods()
-  
+
   console.log(uploadResult)
 
   return (
@@ -104,19 +103,21 @@ const TerminalCreateion: React.FC = () => {
           labelCol={{ span: 24 }}
           wrapperCol={{ span: 24 }}
           className="mx-20 mt-10 mb-5"
-          onFinish={() => !state.terminal?.isSingleCreation ? 
-            handleApiMethodController(
-              state,
-              apiEndpoints.terminal?.addNewTerminal +
+          onFinish={() =>
+            !state.terminal?.isSingleCreation
+              ? handleApiMethodController(
+                  state,
+                  apiEndpoints.terminal?.addNewTerminal +
                     state.request?.serialNo,
-              "CREATE",
-              state.terminal?.isSingleCreation && {
-                file: formData,
-              },
-            ) : uploadData({
-              uploadUrl: apiEndpoints.terminal.bulkUpload,
-              request: formData
-            })
+                  "CREATE",
+                  state.terminal?.isSingleCreation && {
+                    file: formData,
+                  },
+                )
+              : uploadData({
+                  uploadUrl: apiEndpoints.terminal.bulkUpload,
+                  request: formData,
+                })
           }
           fields={[
             {

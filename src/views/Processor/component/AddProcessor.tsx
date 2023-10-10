@@ -22,10 +22,10 @@ const AddProcessor: React.FC = () => {
       "GET_BY_POST_METHOD",
       {},
       state.page,
-    );
-    
-    const [form] = Form.useForm()
-    
+    )
+
+  const [form] = Form.useForm()
+
   return (
     <PageModal
       openModal={state.showFormModal}
@@ -35,68 +35,69 @@ const AddProcessor: React.FC = () => {
       modalFooter={false}
     >
       <div className="md:p-10">
-        
-      <h5 className="text-[#130F49] font-bold text-2xl ">
-        {state.action === "CREATE" ? "Setup New" : "Update"} Processor
-      </h5>
-      <p className="text-base font-medium my-2 text-[#717E95]">
-        {state.action === "CREATE"
-          ? "Add a new processor to the system"
-          : "Update an existing Processor"}
-        Add a new processor to the system
-      </p>
-      <Form
-        form={form}
-        layout="vertical"
-        labelCol={{ span: 24 }}
-        wrapperCol={{ span: 24 }}
-        className="font-semibold"
-        onFinish={() =>
-          handleApiMethodController(
-            state,
-            state.action === "CREATE"
-              ? apiEndpoints.processor.addProcessor
-              : apiEndpoints.processor.updateProcessor + state.request?.id,
-            state.action as FORM_ACTION,
+        <h5 className="text-[#130F49] font-bold text-2xl ">
+          {state.action === "CREATE" ? "Setup New" : "Update"} Processor
+        </h5>
+        <p className="text-base font-medium my-2 text-[#717E95]">
+          {state.action === "CREATE"
+            ? "Add a new processor to the system"
+            : "Update an existing Processor"}
+          Add a new processor to the system
+        </p>
+        <Form
+          form={form}
+          layout="vertical"
+          labelCol={{ span: 24 }}
+          wrapperCol={{ span: 24 }}
+          className="font-semibold"
+          onFinish={() =>
+            handleApiMethodController(
+              state,
+              state.action === "CREATE"
+                ? apiEndpoints.processor.addProcessor
+                : apiEndpoints.processor.updateProcessor + state.request?.id,
+              state.action as FORM_ACTION,
+              {
+                name: state.request?.name,
+                ip: state.request?.ip,
+                cardSchemes: state.request?.cardSchemes,
+                port: state.request?.port,
+                allowKeyExchange: state.request?.allowKeyExchange,
+              },
+              state.page,
+            )
+          }
+          fields={[
             {
-              name: state.request?.name,
-              ip: state.request?.ip,
-              cardSchemes: state.request?.cardSchemes,
-              port: state.request?.port,
-              allowKeyExchange: state.request?.allowKeyExchange,
+              name: "name",
+              value: state.request?.name,
             },
-            state.page,
-          )
-        }
-        fields={[
-          {
-            name: "name",
-            value: state.request?.name,
-          },
-          {
-            name: "ip",
-            value: state.request?.ip,
-          },
-          {
-            name: "port",
-            value: state.request?.port,
-          },
-          {
-            name: "allowKeyExchange",
-            value: state.request?.allowKeyExchange,
-          },
-          {
-            name: "cardSchemes",
-            value: state.request?.cardSchemes,
-          },
-        ]}
-      >
-        <Row style={{ width: "100%" }} gutter={16}>
+            {
+              name: "ip",
+              value: state.request?.ip,
+            },
+            {
+              name: "port",
+              value: state.request?.port,
+            },
+            {
+              name: "allowKeyExchange",
+              value: state.request?.allowKeyExchange,
+            },
+            {
+              name: "cardSchemes",
+              value: state.request?.cardSchemes,
+            },
+          ]}
+        >
+          <Row style={{ width: "100%" }} gutter={16}>
             <Col span={24}>
               <Form.Item
                 label={<h2 className="text-[#272848] mt-5">Processor Name</h2>}
                 name={"name"}
-                rules={[{required: true, message: "Processor name is required"}]}
+                rules={[
+                  { required: true, message: "Processor name is required" },
+                ]}
               >
                 <Input
                   className="py-4 px-5 mb-[-1rem]"
@@ -109,7 +110,7 @@ const AddProcessor: React.FC = () => {
               <Form.Item
                 label={<h2 className="text-[#272848] mt-5">IP Address</h2>}
                 name={"ip"}
-                rules={[{required: true, message: "IP Address is required"}]}
+                rules={[{ required: true, message: "IP Address is required" }]}
               >
                 <Input
                   className="py-4 px-5 mb-[-1rem]"
@@ -122,7 +123,7 @@ const AddProcessor: React.FC = () => {
               <Form.Item
                 label={<h2 className="text-[#272848] mt-5">Port</h2>}
                 name={"port"}
-                rules={[{required: true, message: "Port is required"}]}
+                rules={[{ required: true, message: "Port is required" }]}
               >
                 <Input
                   className="py-4 px-5 mb-[-1rem]"
@@ -139,8 +140,9 @@ const AddProcessor: React.FC = () => {
                   </h2>
                 }
                 name={"cardSchemes"}
-                
-                rules={[{required: true, message: "Card schemes is required"}]}
+                rules={[
+                  { required: true, message: "Card schemes is required" },
+                ]}
               >
                 <Select
                   className="border rounded-lg py-3 w-full"
@@ -178,7 +180,9 @@ const AddProcessor: React.FC = () => {
                   <h2 className="text-[#272848] mt-5">Allow Key Exchange</h2>
                 }
                 name={"allowKeyExchange"}
-                rules={[{required: true, message: "Allow exchange key is required"}]}
+                rules={[
+                  { required: true, message: "Allow exchange key is required" },
+                ]}
               >
                 <Switch
                   checked={state.request?.allowKeyExchange}
@@ -188,11 +192,11 @@ const AddProcessor: React.FC = () => {
                       ? "#38D79F"
                       : "#ACAEC4",
                   }}
-                />{" "}
+                />
               </Form.Item>
             </Col>
             <Col span={24}>
-              <SubmitButton name="Submit"htmlType="submit" form={form} />
+              <SubmitButton name="Submit" htmlType="submit" form={form} />
             </Col>
             <Col span={24} className="my-1">
               <Button
@@ -203,8 +207,8 @@ const AddProcessor: React.FC = () => {
                 Cancel
               </Button>
             </Col>
-        </Row>
-      </Form>
+          </Row>
+        </Form>
       </div>
     </PageModal>
   )

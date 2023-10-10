@@ -49,7 +49,13 @@ const Processor: React.FC = () => {
       title: "CARD SCHEME",
       dataIndex: "",
       render: (_: any, record: ApiResponse.Processor) => {
-        return <p>{record.cardSchemes ? record.cardSchemes?.map((x: string) => x) : "N/A"}</p>
+        return (
+          <p>
+            {record.cardSchemes
+              ? record.cardSchemes?.map((x: string) => x)
+              : "N/A"}
+          </p>
+        )
       },
       key: "4",
     },
@@ -145,8 +151,7 @@ const Processor: React.FC = () => {
       ? data.data?.data?.processorDTOS
       : [],
   )
-  
-  
+
   const { downloadDataToExcel, generateData } = useExcel()
 
   return (
@@ -166,24 +171,31 @@ const Processor: React.FC = () => {
               <img src={Plus} alt="add" className="ml-2 sm:ml-0" />{" "}
               <div className="hidden md:block">Add New Processor</div>
             </Button>
-            <button onClick={() =>
+            <button
+              onClick={() =>
                 downloadDataToExcel({
                   title: "Translite processor",
                   column: [],
                   rows: generateData(
                     (dataSource as any) ?? [],
-                    dataSource?.length > 0 ? Object.keys(dataSource.filter((x) => {
-                      delete x.id 
-                      delete x.key
-                    return x
-                    })[0]) : [],
+                    dataSource?.length > 0
+                      ? Object.keys(
+                          dataSource.filter((x) => {
+                            delete x.id
+                            delete x.key
+                            return x
+                          })[0],
+                        )
+                      : [],
                   ),
                   extension: "xlsx",
-                  fileName: "Translite processor"
+                  fileName: "Translite processor",
                 })
-              } className="hover:shadow-md hover:scale-110 transition-all">
-            <img src={download} alt="download" className="rounded-md" />
-          </button>
+              }
+              className="hover:shadow-md hover:scale-110 transition-all"
+            >
+              <img src={download} alt="download" className="rounded-md" />
+            </button>
           </div>
         }
         forms={
