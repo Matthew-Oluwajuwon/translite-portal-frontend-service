@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Button, Form, Row, Col, Input, UploadProps, Spin } from "antd"
 import { PageModal } from "../../../common/components/modal"
-import { useAppSelector } from "../../../store/hooks"
+import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import FileUpload from "../../../assets/images/upload.svg"
 import useToggle from "../../../custom-hooks/useToggle"
 import { useForm } from "antd/es/form/Form"
@@ -9,20 +9,20 @@ import { useEffect, useState } from "react"
 import useSetRequest from "../../../custom-hooks/useSetRequest"
 import { apiEndpoints } from "../../../store/apiEndpoints"
 import useApiMethods from "../../../custom-hooks/useApiMethods"
-import { useUploadDataMutation } from "../../../store"
+import { setAllGlobalKey } from "../../../store"
 import { Encryption } from "@common/utils/encryption"
 import Dragger from "antd/es/upload/Dragger"
-import { RcFile } from "antd/es/upload"
+import Notify from "@common/components/notification"
 
 const TerminalCreateion: React.FC = () => {
+  const dispatch = useAppDispatch()
   const state = useAppSelector((state) => {
     return state.global
-  });
-  
+  })
+
   const [form] = useForm()
   const [submittable, setSubmittable] = useState(false)
   const values = Form.useWatch([], form)
-  const[uploadData, uploadResult] = useUploadDataMutation()
 
   useEffect(() => {
     form.validateFields().then(
@@ -36,32 +36,69 @@ const TerminalCreateion: React.FC = () => {
   }, [form, values])
 
   let formData = new FormData()
+  // Add your authorization header here
+  const token = `${JSON.parse(
+    JSON.parse(Encryption.decrypt(localStorage.getItem("*****") as string)),
+  )}`
 
   const props: UploadProps = {
     name: "file",
     multiple: false,
     accept: ".xls, .xlsx",
     maxCount: 1,
-    fileList: undefined,
     headers: {
-      authorization: `Bearer ${JSON.parse(
-        JSON.parse(Encryption.decrypt(localStorage.getItem("*****") as string)),
-      )}`,
+      Authorization: token,
     },
-    onChange: (info) => {
-      info.file.status = "done"
-
-      // setFormRequest(info.file.originFileObj as RcFile, "file")
-      formData.append("file", info.file.originFileObj)
+    fileList: undefined,
+    customRequest: ({ file, onSuccess, onError }) => {
+      if (file instanceof File) {
+        const formData = new FormData();
+        formData.append("file", file);
+  
+        // Send the formData directly to the server using the fetch API
+        fetch(import.meta.env.VITE_APP_API_BASE_URL + apiEndpoints.terminal.bulkUpload, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        })
+          .then((response) => {
+            if (response.ok) {
+              Notify("success", "success")
+              handleApiMethodController(state, apiEndpoints.terminal.getTerminals + `page=${parseInt(state?.page as any) - 1}&size=${100}`, "READ")
+              dispatch(setAllGlobalKey({
+                ...state,
+                terminal: {
+                  ...state.terminal,
+                  showCreateModal: false
+                }
+              }))
+              if (onSuccess) {
+                onSuccess((res: any) => {
+                });
+              }
+            } else {
+              // Check if onError is defined before invoking it
+              if (onError) {
+                Notify("error", "Upload failed")
+              }
+            }
+          })
+          .catch((error) => {
+            // Check if onError is defined before invoking it
+            if (onError) {
+              Notify("error", "Upload failed")
+            }
+          });
+      }
     },
-  }
-
+  };
+  
 
   const { toggleFormModalOption } = useToggle()
   const { setFormRequest } = useSetRequest()
   const { handleApiMethodController, result } = useApiMethods()
-  
-  console.log(uploadResult)
 
   return (
     <PageModal
@@ -104,28 +141,21 @@ const TerminalCreateion: React.FC = () => {
           labelCol={{ span: 24 }}
           wrapperCol={{ span: 24 }}
           className="mx-20 mt-10 mb-5"
-          onFinish={() => !state.terminal?.isSingleCreation ? 
-            handleApiMethodController(
-              state,
-              apiEndpoints.terminal?.addNewTerminal +
+          onFinish={() =>
+               handleApiMethodController(
+                  state,
+                  apiEndpoints.terminal?.addNewTerminal +
                     state.request?.serialNo,
-              "CREATE",
-              state.terminal?.isSingleCreation && {
-                file: formData,
-              },
-            ) : uploadData({
-              uploadUrl: apiEndpoints.terminal.bulkUpload,
-              request: formData
-            })
+                  "CREATE",
+                  state.terminal?.isSingleCreation && {
+                    file: formData,
+                  },
+                )
           }
           fields={[
             {
               name: "serialNo",
               value: state.request?.serialNo,
-            },
-            {
-              name: "file",
-              value: state.request?.file,
             },
           ]}
         >

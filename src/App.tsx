@@ -24,6 +24,7 @@ import Processor from "@views/Processor/Processor"
 import SystemTerminal from "@views/Terminals/system-terminals/SystemTerminal"
 import ProcessorTerminal from "@views/Terminals/processor-terminal/ProcessorTerminal"
 const App = () => {
+  
   const router = createBrowserRouter([
     {
       element: <Auth />,

@@ -18,6 +18,7 @@ import { MENU_KEYS, ROUTE } from "@common/constants"
 import useUserInfo from "../../custom-hooks/useUserInfo"
 import { Logout } from "@common/components/logout"
 import Log from "../../assets/icons/Logout.svg"
+import { Encryption } from "@common/utils/encryption"
 
 const PageLayout: React.FC = () => {
   const state = useAppSelector((state) => {
@@ -36,7 +37,8 @@ const PageLayout: React.FC = () => {
   const [userInfo] = useUserInfo()
 
   useEffect(() => {
-    if (!localStorage.getItem("***")) {
+    if (!JSON.parse(JSON.parse(
+      Encryption.decrypt(localStorage.getItem("***") as string)))) {
       return navigate(ROUTE.INDEX, { replace: true })
     }
   }, [])

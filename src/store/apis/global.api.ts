@@ -3,6 +3,7 @@ import { FORM_METHODS, ROUTE } from "@common/constants"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { State } from "../../model/application/state"
 import { Encryption } from "@common/utils/encryption"
+import { apiEndpoints } from "../../store/apiEndpoints"
 
 const userToken = () => {
   if (localStorage.getItem("*****") && localStorage.getItem("*****")?.length) {
@@ -119,11 +120,11 @@ export const globalApi = createApi({
     uploadData: builder.mutation({
       query: (data) => {
         return {
-          url: data.uploadUrl,
+          url: apiEndpoints.terminal?.bulkUpload,
           method: FORM_METHODS.POST,
           body: data.request,
           headers: {
-            "Content-Type": "multipart/form-data"
+            'Content-Type': 'multipart/form-data'
           }
         }
       },
