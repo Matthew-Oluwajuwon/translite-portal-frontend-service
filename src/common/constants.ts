@@ -76,11 +76,6 @@ export enum CHARGE_CONFIGURATION_TYPES {
   PERCENTAGE = "Percentage",
 }
 
-export enum TRANSACTION_PROCESSOR {
-  INTERWITCH = "Interswitch",
-  NIBSS = "NIBSS",
-}
-
 export enum FORM_METHODS {
   POST = "POST",
   GET = "GET",

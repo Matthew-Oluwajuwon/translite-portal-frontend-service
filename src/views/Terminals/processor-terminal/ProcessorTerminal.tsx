@@ -23,6 +23,7 @@ import { useCallback, useEffect } from "react"
 import useFilter from "../../../custom-hooks/useFilter"
 import useSetRequest from "../../../custom-hooks/useSetRequest"
 import more from "../../../assets/icons/more-action.svg"
+import { LoadingOutlined } from "@ant-design/icons"
 
 const ProcessorTerminal: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -271,7 +272,11 @@ const ProcessorTerminal: React.FC = () => {
                 >
                   <Select
                     className="border border-[#DEDFEC] rounded-md h-12 flex items-center"
-                    suffixIcon={<img src={dropdown} alt="" />}
+                    suffixIcon={apiDataLoading ? (
+                      <LoadingOutlined className="text-[#4C469B]" spin />
+                    ) : (
+                      <img src={dropdown} alt="" />
+                    )}
                     placeholder="Select a processor"
                     onFocus={() =>
                       dispatch(

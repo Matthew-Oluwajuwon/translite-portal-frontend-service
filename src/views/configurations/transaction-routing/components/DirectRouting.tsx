@@ -31,11 +31,11 @@ const DirectRouting: React.FC = () => {
         ...state,
         request: {
           ...state.request,
-          processorId: data.data?.data?.id,
+          processorId: data.data?.data?.processorId,
         },
       }),
     )
-  }, [data.data?.data?.id, dispatch])
+  }, [data.data?.data?.processorId, dispatch])
 
   return (
     <Form

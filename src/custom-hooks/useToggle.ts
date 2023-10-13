@@ -10,7 +10,6 @@ import {
   MENU_NAMES,
   ROUTE,
 } from "@common/constants"
-import { State } from "../model/application/state"
 import { FORM_ACTION } from "./useApiMethods"
 import { ApiRequest } from "../model/client/request"
 
@@ -29,10 +28,10 @@ const useToggle = () => {
         value: !state.menuCollapsed,
       }),
     )
-  }, [dispatch, state.menuCollapsed])
+  }, [dispatch, state])
 
   const closeAllOpenModal = useCallback(
-    (state: State.Global) => {
+    () => {
       dispatch(
         setAllGlobalKey({
           ...state,
@@ -50,15 +49,16 @@ const useToggle = () => {
         }),
       )
     },
-    [dispatch],
+    [dispatch, state],
   )
 
   const toggleOpenMenuDrawer = useCallback(() => {
-    closeAllOpenModal(state)
+    closeAllOpenModal()
     dispatch(
       setAllGlobalKey({
         ...state,
         showLogoutModal: false,
+        openMenuDrawer: !state.openMenuDrawer,
         terminal: {
           ...state.terminal,
           isSingleCreation: false,
@@ -70,14 +70,7 @@ const useToggle = () => {
         },
       }),
     )
-    dispatch(
-      setGlobalKey({
-        key: "openMenuDrawer",
-        value: !state.openMenuDrawer,
-      }),
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, state.openMenuDrawer])
+  }, [closeAllOpenModal, dispatch, state])
 
   const toggleLogoutModal = useCallback(
     () => {

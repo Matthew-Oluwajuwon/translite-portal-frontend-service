@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-/* eslint-disable react-hooks/exhaustive-deps */
 
 import { Button } from "antd"
 import { setGlobalKey } from "../../store"
@@ -8,7 +7,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 import { ROUTE } from "../../common/constants"
 
-const Configurations = () => {
+const Configurations: React.FC = () => {
   const dispatch = useAppDispatch()
   const { pathname } = useLocation();
   const navigate = useNavigate()
@@ -27,7 +26,6 @@ const Configurations = () => {
         },
       }),
     )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, pathname])
   
   return (

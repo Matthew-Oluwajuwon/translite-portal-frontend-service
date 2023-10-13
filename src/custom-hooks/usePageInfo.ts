@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { useLayoutEffect } from "react"
-import { useAppDispatch, useAppSelector } from "../store/hooks"
-import { setAllGlobalKey } from "../store"
+import { useAppDispatch } from "../store/hooks"
+import { setGlobalKey } from "../store"
 
 const usePageInfo = (
   pageTitle: string,
@@ -9,21 +9,28 @@ const usePageInfo = (
   breadcrumb: string,
 ) => {
   const dispatch = useAppDispatch()
-  const state = useAppSelector((state) => {
-    return state.global
-  })
+
   useLayoutEffect(() => {
-    document.title = pageTitle + " | Translite"
+    document.title = pageTitle + " - Translite"
     dispatch(
-      setAllGlobalKey({
-        ...state,
-        selectedKey,
-        pageTitle,
-        breadcrumb,
+      setGlobalKey({
+        key: "selectedKey",
+        value: selectedKey,
       }),
     )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [breadcrumb, dispatch, pageTitle, selectedKey, state.selectedKey])
+    dispatch(
+      setGlobalKey({
+        key: "pageTitle",
+        value: pageTitle,
+      }),
+    )
+    dispatch(
+      setGlobalKey({
+        key: "breadcrumb",
+        value: breadcrumb,
+      }),
+    )
+  }, [breadcrumb, dispatch, pageTitle, selectedKey])
 }
 
 export default usePageInfo

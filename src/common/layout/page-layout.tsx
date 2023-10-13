@@ -105,7 +105,7 @@ const PageLayout: React.FC = () => {
             mode="inline"
             items={MenuItems}
             inlineCollapsed={state.menuCollapsed}
-            onClick={() => closeAllOpenModal(state)}
+            onClick={closeAllOpenModal}
             onOpenChange={onOpenChange}
             openKeys={openKeys}
           />

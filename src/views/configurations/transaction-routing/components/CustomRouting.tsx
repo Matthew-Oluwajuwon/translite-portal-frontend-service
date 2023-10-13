@@ -36,7 +36,7 @@ const CustomRouting: React.FC = () => {
       render: (_, record: ApiResponse.CustomConfiguration) => {
         return (
           <p>
-            ₦{record?.boundsDTOS?.map((x) => numberWithCommas(x?.upperBound))}
+            ₦{record?.boundsDTOS?.map((x) => numberWithCommas(x?.upperBound?.toFixed(2)))}
           </p>
         )
       },
@@ -48,7 +48,7 @@ const CustomRouting: React.FC = () => {
       render: (_, record: ApiResponse.CustomConfiguration) => {
         return (
           <p>
-            ₦{record?.boundsDTOS?.map((x) => numberWithCommas(x?.lowerBound))}
+            ₦{record?.boundsDTOS?.map((x) => numberWithCommas(x?.lowerBound?.toFixed(2)))}
           </p>
         )
       },
@@ -120,13 +120,19 @@ const CustomRouting: React.FC = () => {
                 )
               }
               placeholder="Select a card scheme"
-              onFocus={() =>
+              // onFocus={() =>
+              //   handleApiMethodController(
+              //     state,
+              //     apiEndpoints.processor.cardSchemes,
+              //     "GET_BY_POST_METHOD",
+              //   )
+              // }
+              onClick={() =>
                 handleApiMethodController(
                   state,
                   apiEndpoints.processor.cardSchemes,
                   "GET_BY_POST_METHOD",
-                )
-              }
+                )}
               loading={result.isLoading}
               allowClear
               onChange={(e) =>

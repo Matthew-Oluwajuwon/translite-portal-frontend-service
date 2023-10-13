@@ -4,9 +4,11 @@ import { PageModal } from "../../../../common/components/modal"
 import useToggle from "../../../../custom-hooks/useToggle"
 import { Button, Form, Row, Col, Input, Select } from "antd"
 import close from "../../../../assets/icons/Close.svg"
+import dropdown from "../../../../assets/icons/dropdown.svg"
 import useApiMethods from "../../../../custom-hooks/useApiMethods"
 import { apiEndpoints } from "../../../../store/apiEndpoints"
 import useSetRequest from "../../../../custom-hooks/useSetRequest"
+import { LoadingOutlined } from "@ant-design/icons"
 
 const AddNewRule: React.FC = () => {
   const state = useAppSelector((state) => {
@@ -107,6 +109,11 @@ const AddNewRule: React.FC = () => {
                     className="border rounded-lg p-2 w-full"
                     bordered
                     loading={result.isLoading}
+                    suffixIcon={result.isLoading ? (
+                      <LoadingOutlined className="text-[#4C469B]" spin />
+                    ) : (
+                      <img src={dropdown} alt="" />
+                    )}
                     onFocus={getCardSchemes}
                     onChange={(e) =>
                       setFormRequest(
@@ -139,6 +146,10 @@ const AddNewRule: React.FC = () => {
                     <Input
                       className="py-3 px-8"
                       placeholder="₦ 1,000,000 .00"
+                      // value={state.request?.upperBound
+                      //   ?.toString()
+                      //   .replace(/\D/g, "")
+                      //   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                       onChange={(e) =>
                         setFormRequest(e.target.value, "upperBound")
                       }
@@ -148,6 +159,10 @@ const AddNewRule: React.FC = () => {
                     <Input
                       className="py-3 px-8"
                       placeholder="₦ 1,000,000 .00"
+                      // value={state.request?.lowerBound
+                      //   ?.toString()
+                      //   .replace(/\D/g, "")
+                      //   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                       onChange={(e) =>
                         setFormRequest(e.target.value, "lowerBound")
                       }
@@ -170,6 +185,11 @@ const AddNewRule: React.FC = () => {
                         // data.data?.data?.processorDTOS[0].id,
                       )
                     }
+                    suffixIcon={data.isLoading ? (
+                      <LoadingOutlined className="text-[#4C469B]" spin />
+                    ) : (
+                      <img src={dropdown} alt="" />
+                    )}
                     value={state.request?.processorId}
                     loading={data.isLoading || data.isFetching}
                     options={

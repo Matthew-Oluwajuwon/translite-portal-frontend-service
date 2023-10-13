@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-/* eslint-disable react-hooks/exhaustive-deps */
 
 import { useCallback, useEffect } from "react"
 import {
@@ -8,7 +7,7 @@ import {
   MENU_NAMES,
   TRANSACTION_CONFIGURATION_TYPES,
 } from "../../../common/constants"
-import { setAllGlobalKey, setGlobalKey } from "../../../store"
+import { setGlobalKey } from "../../../store"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import {
   Button,
@@ -30,7 +29,7 @@ import CustomRouting from "./components/CustomRouting"
 import useApiMethods from "../../../custom-hooks/useApiMethods"
 import { apiEndpoints } from "../../../store/apiEndpoints"
 
-const TransactionRouting = () => {
+const TransactionRouting: React.FC = () => {
   const dispatch = useAppDispatch()
   const state = useAppSelector((state) => {
     return state.global
@@ -42,9 +41,7 @@ const TransactionRouting = () => {
     BREADCRUMB.TRANSACTION_ROUTING,
   )
 
-
-
-  const handleChange = useCallback(
+  const handleChange = useCallback( 
     (processorSelection: string) => {
       dispatch(
         setGlobalKey({
@@ -65,12 +62,12 @@ const TransactionRouting = () => {
       apiEndpoints.processor.getProcessors,
       "READ",
     )
-  }, [])
+  }, [handleApiMethodController, state])
   
   useEffect(() => {
-    dispatch(setAllGlobalKey({
-      ...state,
-      processor: data.data?.data?.processorDTOS
+    dispatch(setGlobalKey({
+      key: "processor",
+      value: data.data?.data?.processorDTOS
     }))
   }, [data.data?.data?.processorDTOS, dispatch])
 
