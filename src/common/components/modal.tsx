@@ -33,7 +33,7 @@ export const PageModal: React.FC<PageProps.ModalProps> = ({
       onOk={onOk}
       okButtonProps={{ type: "primary" }}
     >
-      <div className="h-[85vh] overflow-auto">{children}</div>
+      <div className="max-h-[85vh] overflow-auto">{children}</div>
     </Modal>
   )
 }
