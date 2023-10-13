@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback } from "react"
 import { setAllGlobalKey, setGlobalKey } from "../store"
 import { useAppDispatch, useAppSelector } from "../store/hooks"
@@ -13,6 +12,7 @@ import {
 } from "@common/constants"
 import { State } from "../model/application/state"
 import { FORM_ACTION } from "./useApiMethods"
+import { ApiRequest } from "../model/client/request"
 
 const useToggle = () => {
   const dispatch = useAppDispatch()
@@ -93,19 +93,22 @@ const useToggle = () => {
   )
 
   const toggleCreateModal = useCallback(
-    (modalName: string) => {
+    (modalName?: string, modalDesc?: string, record?: any) => {
       dispatch(
         setAllGlobalKey({
           ...state,
+          request: new ApiRequest.SearchTransaction(),
           terminal: {
             ...state.terminal,
             showCreateModal: !state.terminal?.showCreateModal,
-            modalName: modalName,
+            modalName,
+            modalDesc,
+            record
           },
         }),
       )
     },
-    [dispatch],
+    [dispatch, state],
   )
 
   const toggleAddUserModal = useCallback(() => {
@@ -118,18 +121,20 @@ const useToggle = () => {
       }),
     )
   }, [dispatch])
+
   const toggleFormModalOption = useCallback(
     (showCreateModal: boolean, isSingleCreation: boolean) =>
       dispatch(
-        setGlobalKey({
-          key: "terminal",
-          value: {
+        setAllGlobalKey({
+          ...state,
+          terminal: {
+            ...state.terminal,
             showCreateModal,
             isSingleCreation,
           },
         }),
       ),
-    [dispatch],
+    [dispatch, state],
   )
 
   const toggleAddNewRuleModal = useCallback(() => {

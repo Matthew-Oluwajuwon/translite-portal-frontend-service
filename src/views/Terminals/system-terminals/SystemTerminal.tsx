@@ -30,20 +30,7 @@ const SystemTerminal: React.FC = () => {
     MENU_KEYS.TERMINAL_MGT,
     BREADCRUMB.TERMINAL_MGT,
   )
-  // const TerminalKeys = [
-  //   {
-  //     key: "Terminal Keys",
-  //     value: "tltx1436789658jdhklhffas.trxlite/tmn102",
-  //   },
-  //   {
-  //     key: "ISW Keys",
-  //     value: "ISW2ngx1436789658jdhklhffas.trxlite/tmn102",
-  //   },
-  //   {
-  //     key: "NIBSS Keys",
-  //     value: "NIBSS2ngx1436789658jdhklhffas.trxlite/tmn102",
-  //   },
-  // ]
+
   const column: ColumnProps<ApiResponse.SystemTerminal>[] = [
     {
       title: "TERMINAL ID",
@@ -148,7 +135,7 @@ const SystemTerminal: React.FC = () => {
           <div className="flex gap-3 items-center">
             <Button
               type="primary"
-              onClick={() => toggleCreateModal("Add System Terminal")}
+              onClick={() => toggleCreateModal("Add New System Terminal", "Please add new terminals in unit or in bulk below")}
               className="flex justify-between items-center text-[0.7rem] bg-[#6D71F9] sm:text-[1rem] gap-2 py-6 px-2 sm:px-0 -pr-10 sm:pr-3"
             >
               <img src={Plus} alt="add" className="ml-2 sm:ml-0" />{" "}

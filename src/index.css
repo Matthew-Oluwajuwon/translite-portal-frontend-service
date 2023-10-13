@@ -98,10 +98,12 @@ body {
   margin-bottom: -10px !important;
   margin-right: 0 !important;
   width: max-content;
+  background-color: #F5F6FA !important;
 }
 
 .ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline .active {
   color: #6D71F9 !important;
+  background-color: #F5F6FA !important;
 }
 
 .ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline > li::before {

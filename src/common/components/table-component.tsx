@@ -17,6 +17,8 @@ interface Props {
   isNotPaginated?: boolean
   total?: number
   url?: string
+  emptyParagraphText?: string;
+  emptyHeadingText?: string
 }
 
 export const TableComponent: React.FC<Props> = ({
@@ -31,6 +33,8 @@ export const TableComponent: React.FC<Props> = ({
   scrollX,
   isNotPaginated,
   total,
+  emptyHeadingText,
+  emptyParagraphText
 }) => {
   const dispatch = useAppDispatch()
 
@@ -66,6 +70,8 @@ export const TableComponent: React.FC<Props> = ({
         isNotPaginated={isNotPaginated}
         total={total}
         onPagination={onPaginate}
+        emptyHeadingText={emptyHeadingText}
+        emptyParagraphText={emptyParagraphText}
       />
     </div>
   )

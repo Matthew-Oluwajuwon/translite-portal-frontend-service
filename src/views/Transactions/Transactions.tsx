@@ -23,6 +23,7 @@ import useFilter from "../../custom-hooks/useFilter"
 import { setGlobalKey } from "../../store"
 import useFieldApiData from "../../custom-hooks/useFieldApiData"
 import { useExcel } from "../../custom-hooks/useExcel"
+import { LoadingOutlined } from "@ant-design/icons"
 
 const Transactions: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -198,7 +199,11 @@ const Transactions: React.FC = () => {
                 >
                   <Select
                     className="border border-[#DEDFEC] rounded-md h-12 flex items-center"
-                    suffixIcon={!apiDataLoading ? null : <img src={dropdown} alt="" />}
+                    suffixIcon={apiDataLoading ? (
+                      <LoadingOutlined className="text-[#4C469B]" spin />
+                    ) : (
+                      <img src={dropdown} alt="" />
+                    )}
                     onFocus={() =>
                       dispatch(
                         setGlobalKey({
@@ -301,18 +306,6 @@ const Transactions: React.FC = () => {
                         state.page,
                       )
                     }
-                    // cellRender={(current) => {
-                    //   const style: React.CSSProperties = {}
-                    //   if (current.date() === 1) {
-                    //     style.border = "1px solid #1890ff"
-                    //     style.borderRadius = "50%"
-                    //   }
-                    //   return (
-                    //     <div className="ant-picker-cell-inner" style={style}>
-                    //       {current.date()}
-                    //     </div>
-                    //   )
-                    // }}
                   />
                 </Form.Item>
               </Col>

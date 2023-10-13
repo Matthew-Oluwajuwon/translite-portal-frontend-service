@@ -33,7 +33,7 @@ const Users: React.FC = () => {
     BREADCRUMB.SYSTEM_USERS,
   )
 
-  const { handleApiMethodController, data, result } = useApiMethods()
+  const { handleApiMethodController, data } = useApiMethods()
 
   const columns: ColumnProps<ApiResponse.UserInfo>[] = [
     {
@@ -100,17 +100,7 @@ const Users: React.FC = () => {
     )
   }, [state.page])
 
-  // useEffect(() => {
-  //   if (result.data?.responseCode === ResponseCode.SUCCESS) {
-  //     dispatch(setAllGlobalKey({
-  //       ...state,
-  //       user: {
-  //         ...state.user,
-  //         showAddUserSuccessResponseModal: true
-  //       }
-  //     }))
-  //   }
-  // }, [dispatch, result.data?.responseCode])
+
 
   const { downloadDataToExcel, generateData } = useExcel()
 
@@ -193,14 +183,6 @@ const Users: React.FC = () => {
                     }
                   />
                 </Form.Item>
-              </Col>
-              <Col span={6}>
-                <Button
-                  type="default"
-                  className="flex justify-between items-center text-[0.7rem] text-[#6D71F9] font-semibold border-none bg-[#eaebff] sm:text-[1rem] py-6 px-5"
-                >
-                  <div className="hidden md:block">Search</div>
-                </Button>
               </Col>
             </Row>
           </Form>

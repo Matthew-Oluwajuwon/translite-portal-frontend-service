@@ -21,7 +21,7 @@ export const TableExpandModal: React.FC<Props> = ({
 }) => {
   const dispatch = useAppDispatch()
   const state = useAppSelector((state) => state.global)
-  
+
   interface PropsData {
     key: string
     value: any
@@ -48,7 +48,7 @@ export const TableExpandModal: React.FC<Props> = ({
   useEffect(() => {
     GetData()
   }, [GetData])
-  
+
   const { numberWithCommas } = useAmountFormat()
 
   return (
@@ -106,8 +106,16 @@ export const TableExpandModal: React.FC<Props> = ({
                   <span className="font-bold text-[#272848] text-[1rem] lg:text-xl">
                     ₦{numberWithCommas(item.value)}
                   </span>
-                ) : (
-                  item.key?.toLowerCase().includes("date") ? dayjs(item.value).toString() : item.value
+                ) : item.key?.toLowerCase().includes("date") ? (
+                  dayjs(item.value).toString()
+                ) : item.key?.toLowerCase() === "processordto" ? (
+                  item.value.name
+                ) : item.key?.toLowerCase() === "terminalstatus" ? <div className="flex items-center">
+                  <div
+              className={item.value === "ACTIVE" ? "s" : "f"}
+            />{item.value}
+                </div> : (
+                  item.value
                 )}
               </Col>
             </Row>

@@ -62,16 +62,39 @@ export namespace ApiResponse {
     ip?: string
     port?: number
     allowKeyExchange?: boolean
-    cardSchemes?: any
+    cardSchemes?: string[]
     createdDate?: string
   }
-  
+
   export class SystemTerminal {
     id?: number
     serialNo?: string
     terminalId?: string
     uploadedBy?: string
     createdDate?: string
+  }
+
+  export class TerminalProcessor {
+    id?: number
+    terminalId?: string
+    uploadedBy?: string
+    createdDate?: string
+    processorDTO?: Processor
+    terminalStatus?: string
+  }
+  
+  export class CustomConfiguration {
+    id?: number
+    cardScheme?: string
+    boundsDTOS?: BoundsDtos[]
+    creationDate?: string
+    updatedDate?: any
+  }
+  
+  export class BoundsDtos {
+    processorName?: string
+    lowerBound?: number
+    upperBound?: number
   }
   
 }

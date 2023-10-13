@@ -77,10 +77,10 @@ const useAuthApi = () => {
             try {
               getAdminInfo()
             } catch (error) {
-              Notify("error", response.data?.failureReason)
+              Notify("error", response.data?.failureReason?.replaceAll("_", " "))
             }
           } else {
-            Notify("error", response.data?.failureReason)
+            Notify("error", response.data?.failureReason?.replaceAll("_", " "))
           }
         }
       }

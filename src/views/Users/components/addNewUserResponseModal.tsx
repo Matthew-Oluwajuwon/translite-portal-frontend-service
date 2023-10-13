@@ -8,7 +8,9 @@ import { ROUTE } from "@common/constants"
 
 export const AddNewUserResponseModal: React.FC = () => {
   const dispatch = useAppDispatch()
-  const state = useAppSelector((state: { global: any }) => state.global)
+  const state = useAppSelector((state) => {
+    return state.global
+  })
 
   const navigate = useNavigate()
 
@@ -33,13 +35,14 @@ export const AddNewUserResponseModal: React.FC = () => {
     <SuccessModal
       onClick={handleClick}
       openModal={state.user?.showAddUserSuccessResponseModal}
+      status={state.user?.userCreationResponseCode === "00"}
     >
       <div className="my-10 mx-10">
         <h1 className="text-[#272848] text-xl font-bold text-center">
-          Successful
+          {state.user?.userCreationResponseCode === "00" ? "Done" : "Failed to Create"}
         </h1>
         <p className="text-[#717E95] my-3 mx-auto text-center text-md w-full lg:w-[75%]">
-          User saved Succesfully!
+          {state.user?.userCreationMessage}
         </p>
       </div>
     </SuccessModal>

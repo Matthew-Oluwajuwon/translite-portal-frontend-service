@@ -15,6 +15,7 @@ import { apiEndpoints } from "../../../store/apiEndpoints"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import { setGlobalKey } from "../../../store"
 import useFieldApiData from "../../../custom-hooks/useFieldApiData"
+import { LoadingOutlined } from "@ant-design/icons"
 
 export const TransactionTable = () => {
   const dispatch = useAppDispatch()
@@ -145,7 +146,6 @@ export const TransactionTable = () => {
             <Row style={{ width: "100%" }}>
               <Col xs={24} lg={4}>
                 <Form.Item
-                  initialValue="All"
                   label={
                     <h1 className="font-[poppins-500] font-semibold text-[#0E0E30CC]">
                       Select Processor
@@ -158,7 +158,8 @@ export const TransactionTable = () => {
                   key: "selectField",
                   value: "Processor"
                 }))}
-                suffixIcon={<img src={dropdown} alt="" />}
+                allowClear
+                suffixIcon={apiDataLoading ? <LoadingOutlined className="text-[#4C469B]" spin /> : <img src={dropdown} alt="" />}
                 className="border border-[#DEDFEC] rounded-md h-11 flex items-center"
                 onChange={(e) => handleApiMethodController(
                   state,

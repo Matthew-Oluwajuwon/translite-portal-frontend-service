@@ -27,7 +27,9 @@ export const getThemeConfig = (): ThemeConfig | undefined => {
       Select: {
         colorBgContainerDisabled: "#F5F6FA",
         colorBorder: "none",
-        colorTextDisabled: "#272848"
+        colorTextDisabled: "#272848",
+        lineWidthFocus: 0,
+        controlOutlineWidth: 0
       }
     },
   }

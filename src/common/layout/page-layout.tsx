@@ -37,8 +37,11 @@ const PageLayout: React.FC = () => {
   const [userInfo] = useUserInfo()
 
   useEffect(() => {
-    if (!JSON.parse(JSON.parse(
-      Encryption.decrypt(localStorage.getItem("***") as string)))) {
+    if (
+      !JSON.parse(
+        JSON.parse(Encryption.decrypt(localStorage.getItem("***") as string)),
+      )
+    ) {
       return navigate(ROUTE.INDEX, { replace: true })
     }
   }, [])
@@ -54,11 +57,9 @@ const PageLayout: React.FC = () => {
     MENU_KEYS.CONFIGURATIONS,
   ]
 
-  const [openKeys, setOpenKeys] = useState([MENU_KEYS.CONFIGURATIONS])
+  const [openKeys, setOpenKeys] = useState<string[]>([])
   const onOpenChange: MenuProps["onOpenChange"] = (keys) => {
-    const latestOpenKey = keys.find(
-      (key) => openKeys.indexOf(key as any) === -1,
-    )
+    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1)
     if (rootSubmenuKeys.indexOf(latestOpenKey! as any) === -1) {
       setOpenKeys(keys as any)
     } else {
@@ -107,12 +108,11 @@ const PageLayout: React.FC = () => {
             onClick={() => closeAllOpenModal(state)}
             onOpenChange={onOpenChange}
             openKeys={openKeys}
-            defaultOpenKeys={[MENU_KEYS.CONFIGURATIONS]}
           />
         </div>
       </aside>
       <section
-        className={`bg-[#F5F6FA] min-h-screen px-3 lg:px-10 relative ${
+        className={`bg-[#F5F6FA] min-h-screen flex flex-col px-3 lg:px-10 relative ${
           state.menuCollapsed
             ? "ml-0 md:ml-[6rem]"
             : "ml-0 md:ml-[6rem] lg:ml-[17.5rem]"

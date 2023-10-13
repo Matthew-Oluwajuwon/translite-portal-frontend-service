@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks"
 import Notify from "../common/components/notification"
 import { State } from "../model/application/state"
 import { ResponseCode } from "@common/constants"
+import { ApiRequest } from "../model/client/request"
 
 export type FORM_ACTION =
   | "CREATE"
@@ -105,7 +106,7 @@ const useApiMethods = () => {
         setAllGlobalKey({
           ...state,
           showFormModal: false,
-          request: "",
+          request: new ApiRequest.SearchTransaction(),
           user: {
             ...state.user,
             showAddUserModal: false,
@@ -114,6 +115,9 @@ const useApiMethods = () => {
             ...state.terminal,
             showCreateModal: false,
           },
+          transactionRouting: {
+            showAddNewRuleModal: false
+          }
         }),
       )
     }

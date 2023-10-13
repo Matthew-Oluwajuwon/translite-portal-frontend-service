@@ -11,7 +11,7 @@ const useFieldApiData = () => {
   const state = useAppSelector(state => {
     return state.global
   })
-  const { handleApiMethodController, data } = useApiMethods();
+  const { handleApiMethodController, data, result } = useApiMethods();
   
   const fetchSelectFieldData = useCallback(
     (field: string) => {
@@ -29,12 +29,25 @@ const useFieldApiData = () => {
               })
           );
           break;
+          case "CardSchemes":
+          handleApiMethodController(
+            state,
+            apiEndpoints.processor.cardSchemes,
+            "GET_BY_POST_METHOD"
+          );
+          dispatch(
+            setGlobalKey({
+                key: "cardSchemes",
+                value: result?.data?.data?.cardSchemes,
+              })
+          );
+          break;
         default:
           break;
       }
       
     },
-    [data?.data?.data?.processorDTOS, dispatch, handleApiMethodController],
+    [data?.data?.data?.processorDTOS, dispatch],
   )
   
  

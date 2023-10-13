@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Spin, Table } from "antd"
+import { Empty, Spin, Table } from "antd"
 import React from "react"
 import { PageProps } from "../../model/application/props"
 import { setAllGlobalKey } from "../../store"
@@ -14,7 +14,8 @@ export const PageTable: React.FC<PageProps.TableData> = ({
   total,
   shouldExpand,
   scrollX,
-  isNotPaginated,
+  emptyHeadingText,
+  emptyParagraphText
 }) => {
   const dispatch = useAppDispatch()
   const state = useAppSelector((state) => {
@@ -53,6 +54,20 @@ export const PageTable: React.FC<PageProps.TableData> = ({
               onRowSelect(rowIndex as number, record)
             },
           }
+        }}
+        locale={{
+          emptyText: emptyHeadingText && emptyParagraphText ? (
+            <div className="h-60 grid place-content-center">
+              {" "}
+              <h1 className="text-[#182A2C] text-[1.5rem] font-bold">
+                {" "}
+                {emptyHeadingText}{" "}
+              </h1>
+              <p className="text-[#182A2C] text-[1rem]">
+                {emptyParagraphText}
+              </p>
+            </div>
+          ) : <Empty />,
         }}
       />
     </Spin>

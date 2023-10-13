@@ -59,12 +59,15 @@ export namespace State {
     searchTerm?: string
     processor?: Array<ApiResponse.Processor>
     selectField?: string
+    cardSchemes?: string[]
   }
 
   export interface Terminals {
     showCreateModal: boolean
     isSingleCreation: boolean
     modalName?: string
+    modalDesc?: string
+    record?: any
   }
 
   export interface Configurations {
@@ -81,5 +84,7 @@ export namespace State {
   export interface User {
     showAddUserModal?: boolean
     showAddUserSuccessResponseModal?: boolean
+    userCreationResponseCode?: string;
+    userCreationMessage?: string
   }
 }
