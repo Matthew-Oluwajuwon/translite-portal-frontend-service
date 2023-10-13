@@ -120,7 +120,7 @@ const useToggle = () => {
         },
       }),
     )
-  }, [dispatch])
+  }, [dispatch, state])
 
   const toggleFormModalOption = useCallback(
     (showCreateModal: boolean, isSingleCreation: boolean) =>
@@ -147,7 +147,7 @@ const useToggle = () => {
         },
       }),
     )
-  }, [dispatch])
+  }, [dispatch, state])
 
   const handleLogout = () => {
     localStorage.clear()
@@ -190,7 +190,7 @@ const useToggle = () => {
         }),
       )
     },
-    [dispatch],
+    [dispatch, state],
   )
 
   return {
