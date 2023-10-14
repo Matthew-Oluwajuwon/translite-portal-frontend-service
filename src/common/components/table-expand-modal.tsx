@@ -128,6 +128,7 @@ export const TableExpandModal: React.FC<Props> = ({
           <Button
             type="primary"
             className="flex justify-between bg-[#6D71F9] items-center gap-5 py-5 px-0 pl-3"
+            onClick={() => window.print()}
           >
             Download{" "}
             <img src={Download} className="text-[#ffffff]" alt="icon-right" />
