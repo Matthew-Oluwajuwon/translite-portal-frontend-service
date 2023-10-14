@@ -12,6 +12,7 @@ import {
 } from "@common/constants"
 import { FORM_ACTION } from "./useApiMethods"
 import { ApiRequest } from "../model/client/request"
+import { ApiResponse } from "../model/client/response"
 
 const useToggle = () => {
   const dispatch = useAppDispatch()
@@ -130,10 +131,12 @@ const useToggle = () => {
     [dispatch, state],
   )
 
-  const toggleAddNewRuleModal = useCallback(() => {
+  const toggleAddNewRuleModal = useCallback((record?: ApiResponse.CustomConfiguration) => {
     dispatch(
       setAllGlobalKey({
         ...state,
+        record,
+        request: record?.boundsDTOS,
         transactionRouting: {
           ...state.transactionRouting,
           showAddNewRuleModal: !state.transactionRouting?.showAddNewRuleModal,

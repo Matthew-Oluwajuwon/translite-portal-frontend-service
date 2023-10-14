@@ -3,7 +3,6 @@
 
 import { ColumnProps } from "antd/es/table/Column"
 import { ApiResponse } from "../../../../model/client/response"
-import more from "../../../../assets/icons/more-action.svg"
 import { TableComponent } from "@common/components/table-component"
 import { Button, Col, Input, Row, Select } from "antd"
 import useToggle from "../../../../custom-hooks/useToggle"
@@ -22,84 +21,68 @@ const CustomRouting: React.FC = () => {
   })
   const { toggleAddNewRuleModal } = useToggle()
   const { numberWithCommas } = useAmountFormat()
-  const column: ColumnProps<ApiResponse.CustomConfiguration>[] = [
-    {
-      title: "CARD SCHEME",
-      dataIndex: "cardScheme",
-      key: "1",
-      width: "15%",
-    },
+
+  const column: ColumnProps<ApiResponse.BoundsDtos>[] = [
     {
       title: "LOWER BOUND",
       dataIndex: "lowerBound",
       key: "3",
-      render: (_, record: ApiResponse.CustomConfiguration) => {
-        return (
-          <p>
-            ₦{record?.boundsDTOS?.map((x) => numberWithCommas(x?.lowerBound?.toFixed(2) + ", "))}
-          </p>
-        )
+      render: (_, record: ApiResponse.BoundsDtos) => {
+        return <p>₦{numberWithCommas(record?.lowerBound?.toFixed(2))}</p>
       },
     },
     {
       title: "UPPER BOUND",
       dataIndex: "upperBound",
       key: "2",
-      render: (_, record: ApiResponse.CustomConfiguration) => {
-        return (
-          <p>
-            ₦{record?.boundsDTOS?.map((x) => numberWithCommas(x?.upperBound?.toFixed(2) + ", "))}
-          </p>
-        )
+      render: (_, record: ApiResponse.BoundsDtos) => {
+        return <p>₦{numberWithCommas(record?.upperBound?.toFixed(2))}</p>
       },
     },
     {
       title: "PROCESSOR",
       dataIndex: "processor",
       key: "4",
-      render: (_, record: ApiResponse.CustomConfiguration) => {
-        return <p>{record?.boundsDTOS?.map((x) => x?.processorName + ", ")}</p>
+      render: (_, record: ApiResponse.BoundsDtos) => {
+        return <p>{record?.processorName}</p>
       },
     },
-    {
-      title: "CREATION DATE",
-      dataIndex: "creationDate",
-      key: "5",
-      render(_: any, record: ApiResponse.CustomConfiguration) {
-        return (
-          <div className="grid place-content-center text-center">
-            <p>{record?.creationDate?.split("T")[0].replaceAll("-", "/")}</p>
-            <p>
-              {record?.creationDate?.split("T")[1].split("+")[0].split(".")[0]}
-            </p>
-          </div>
-        )
-      },
-    },
-    {
-      title: "ACTION",
-      dataIndex: "",
-      fixed: "right",
-      width: "100px",
-      key: "6",
-      render(_: any, record: any) {
-        return <img src={more} alt="" />
-      },
-    },
+    // {
+    //   title: "CREATION DATE",
+    //   dataIndex: "creationDate",
+    //   key: "5",
+    //   render(_: any, record: ApiResponse.CustomConfiguration) {
+    //     return (
+    //       <div className="grid place-content-center text-center">
+    //         <p>{record?.creationDate?.split("T")[0].replaceAll("-", "/")}</p>
+    //         <p>
+    //           {record?.creationDate?.split("T")[1].split("+")[0].split(".")[0]}
+    //         </p>
+    //       </div>
+    //     )
+    //   },
+    // }
   ]
   const { handleApiMethodController, data, result } = useApiMethods()
-  const dataSource = data.data?.data ? [data.data?.data] : []
+  const dataSource = Array.isArray(data.data?.data?.boundsDTOS)
+    ? data.data?.data?.boundsDTOS
+    : []
 
   return (
     <TableComponent
       btn={
-        <Button
-          type="primary"
-          className="flex justify-between items-center gap-2 mt-3 py-6 px-0 pr-5 bg-[#6D71F9]"
-          onClick={toggleAddNewRuleModal}
-        >
-          <img src={PlusIcon} alt="icon-pluus" /> Add New Rule
-        </Button>
+        data.data?.data && (
+          <Button
+            type="primary"
+            className="flex justify-between items-center gap-2 mt-3 py-6 px-0 pr-5 bg-[#6D71F9]"
+            onClick={() => toggleAddNewRuleModal(data.data?.data)}
+          >
+            <img src={PlusIcon} alt="icon-pluus" />{" "}
+            {data.data?.data?.boundsDTOS?.length > 0
+              ? "Edit Rule"
+              : "Add New Rule"}
+          </Button>
+        )
       }
       forms={
         <Row>
@@ -132,7 +115,8 @@ const CustomRouting: React.FC = () => {
                   state,
                   apiEndpoints.processor.cardSchemes,
                   "GET_BY_POST_METHOD",
-                )}
+                )
+              }
               loading={result.isLoading}
               allowClear
               onChange={(e) =>

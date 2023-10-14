@@ -7,6 +7,7 @@ import Download from "../../assets/icons/white-download.svg"
 import { setAllGlobalKey } from "../../store"
 import useAmountFormat from "../../custom-hooks/useAmountFormat"
 import dayjs from "dayjs"
+import logo from "../../assets/images/Logo.png"
 
 interface Props {
   modalCardTitle: string
@@ -67,74 +68,87 @@ export const TableExpandModal: React.FC<Props> = ({
       }
       modalTitle={
         <div>
-          <h1 className="text-[#272848] text-xl text-center my-3">
+          <h1 className="text-[#272848] text-xl text-center my-3 print-title">
             {modalCardTitle}
           </h1>
         </div>
       }
       centered={true}
     >
-      <Divider />
-      <List
-        dataSource={
-          Array.isArray(GetData())
-            ? GetData().filter(
-                (x) =>
-                  x.value !== null &&
-                  x.key?.toLowerCase() !== "id" &&
-                  x.key !== "key" &&
-                  x.value !== false &&
-                  x.value !== true,
-              )
-            : []
-        }
-        className="mx-1 sm:mx-10 bg-[#F9F9F9] p-2"
-        renderItem={(item) => (
-          <List.Item>
-            <Row
-              style={{ width: "100%" }}
-              className="grid grid-cols-[6rem_1fr] lg:grid-cols-[12rem_1fr]"
-            >
-              <Col className="text-[0.7rem] lg:text-[0.8rem] text-[#717E95]">
-                {convertCamelCaseToTitle(
-                  item.key.toLowerCase() === "rrn" ? "RRN" : item.key,
-                )}
-                :
-              </Col>
-              <Col className="text-[0.7rem] lg:text-[0.8rem] text-[#272848] font-semibold">
-                {item.key?.toLowerCase() === "amount" ? (
-                  <span className="font-bold text-[#272848] text-[1rem] lg:text-xl">
-                    ₦{numberWithCommas(item.value)}
-                  </span>
-                ) : item.key?.toLowerCase().includes("date") ? (
-                  dayjs(item.value).toString()
-                ) : item.key?.toLowerCase() === "processordto" ? (
-                  item.value.name
-                ) : item.key?.toLowerCase() === "terminalstatus" ? <div className="flex items-center">
-                  <div
-              className={item.value === "ACTIVE" ? "s" : "f"}
-            />{item.value}
-                </div> : (
-                  item.value
-                )}
-              </Col>
-            </Row>
-          </List.Item>
-        )}
-      />
-      {extraContent}
-      {isDownloadable && (
-        <div className="flex items-center justify-center my-5">
-          <Button
-            type="primary"
-            className="flex justify-between bg-[#6D71F9] items-center gap-5 py-5 px-0 pl-3"
-            onClick={() => window.print()}
-          >
-            Download{" "}
-            <img src={Download} className="text-[#ffffff]" alt="icon-right" />
-          </Button>
+      <div className="print-wrapper">
+        <div className="text-center hidden print-img">
+          <img src={logo} alt="" className="mx-auto w-36 " />
+          <Divider dashed />
+          <h1>Xtratech Nigeria Limited</h1>
+          <p>C27/28 Emmanuel Plaza, Jabi, Abuja</p>
         </div>
-      )}
+        <Divider dashed />
+        <List
+          dataSource={
+            Array.isArray(GetData())
+              ? GetData().filter(
+                  (x) =>
+                    x.value !== null &&
+                    x.key?.toLowerCase() !== "id" &&
+                    x.key !== "key" &&
+                    x.value !== false &&
+                    x.value !== true,
+                )
+              : []
+          }
+          className="mx-1 sm:mx-10 bg-[#F9F9F9] p-2"
+          renderItem={(item) => (
+            <List.Item>
+              <Row
+                style={{ width: "100%" }}
+                className="grid grid-cols-[6rem_1fr] lg:grid-cols-[12rem_1fr] print-wrapper"
+              >
+                <Col className="text-[0.7rem] lg:text-[0.8rem] print-wrapper text-[#717E95]">
+                  {convertCamelCaseToTitle(
+                    item.key.toLowerCase() === "rrn" ? "RRN" : item.key,
+                  )}
+                  :
+                </Col>
+                <Col className="text-[0.7rem] lg:text-[0.8rem] print-wrapper text-[#272848] font-semibold">
+                  {item.key?.toLowerCase() === "amount" ? (
+                    <span className="font-bold text-[#272848] text-[1rem] lg:text-xl">
+                      ₦{numberWithCommas(item.value)}
+                    </span>
+                  ) : item.key?.toLowerCase().includes("date") ? (
+                    dayjs(item.value).toString()
+                  ) : item.key?.toLowerCase() === "processordto" ? (
+                    item.value.name
+                  ) : item.key?.toLowerCase() === "terminalstatus" ? (
+                    <div className="flex items-center">
+                      <div className={item.value === "ACTIVE" ? "s" : "f"} />
+                      {item.value}
+                    </div>
+                  ) : (
+                    item.value
+                  )}
+                </Col>
+              </Row>
+            </List.Item>
+          )}
+        />
+        {extraContent}
+        {isDownloadable && (
+          <div className="flex items-center justify-center my-5 print-download">
+            <Button
+              type="primary"
+              className="flex justify-between bg-[#6D71F9] items-center gap-5 py-5 px-0 pl-3"
+              onClick={() => window.print()}
+            >
+              Download{" "}
+              <img src={Download} className="text-[#ffffff]" alt="icon-right" />
+            </Button>
+          </div>
+        )}
+        <div className="print-img hidden text-center border-t border-dashed py-2">
+          <p>Thank you for coming</p>
+          <p>Powered by Translite</p>
+        </div>
+      </div>
     </PageModal>
   )
 }

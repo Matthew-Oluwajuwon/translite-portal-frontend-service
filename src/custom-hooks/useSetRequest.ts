@@ -39,7 +39,7 @@ const useSetRequest = () => {
             ...state?.request,
             [key]: value,
             [key2?.length ? (key2 as string) : (undefined as any)]:
-              options.filter((x: any) => x.value === value)[0]?.key,
+              options.filter((x: any) => x.id === value)[0]?.id,
 
             [removeValuekey as string]: undefined,
           },
