@@ -36,7 +36,7 @@ const CustomRouting: React.FC = () => {
       render: (_, record: ApiResponse.CustomConfiguration) => {
         return (
           <p>
-            ₦{record?.boundsDTOS?.map((x) => numberWithCommas(x?.lowerBound?.toFixed(2)))}
+            ₦{record?.boundsDTOS?.map((x) => numberWithCommas(x?.lowerBound?.toFixed(2) + ", "))}
           </p>
         )
       },
@@ -48,7 +48,7 @@ const CustomRouting: React.FC = () => {
       render: (_, record: ApiResponse.CustomConfiguration) => {
         return (
           <p>
-            ₦{record?.boundsDTOS?.map((x) => numberWithCommas(x?.upperBound?.toFixed(2)))}
+            ₦{record?.boundsDTOS?.map((x) => numberWithCommas(x?.upperBound?.toFixed(2) + ", "))}
           </p>
         )
       },
@@ -58,7 +58,7 @@ const CustomRouting: React.FC = () => {
       dataIndex: "processor",
       key: "4",
       render: (_, record: ApiResponse.CustomConfiguration) => {
-        return <p>{record?.boundsDTOS?.map((x) => x?.processorName)}</p>
+        return <p>{record?.boundsDTOS?.map((x) => x?.processorName + ", ")}</p>
       },
     },
     {
