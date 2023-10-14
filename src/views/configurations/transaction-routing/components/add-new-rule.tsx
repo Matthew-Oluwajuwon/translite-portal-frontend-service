@@ -82,7 +82,7 @@ const AddNewRule: React.FC = () => {
               previous upper bounds.
             </p>
             <p>For example</p>
-            <ul className="ml-10">
+            <ul className="ml-10 ul">
               <li>1st rule: 0 -100</li>
               <li>2nd rule: 101 - 200</li>
               <li>3rd rule: 201 - 210</li>

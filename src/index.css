@@ -146,6 +146,6 @@ body {
   }
 }
 
-ul {
+.ul {
   list-style-type: disc!important;
 }
