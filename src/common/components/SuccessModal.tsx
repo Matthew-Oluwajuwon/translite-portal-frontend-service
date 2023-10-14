@@ -9,7 +9,7 @@ export const SuccessModal: React.FC<PageProps.SuccessModal> = ({
   children,
   onClick,
   openModal,
-  status,
+  status = true,
   extraBtn,
   btnText
 }) => {

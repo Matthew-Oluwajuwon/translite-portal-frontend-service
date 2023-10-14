@@ -38,11 +38,11 @@ const Auth: React.FC = () => {
     // retreive token from cookies
     document.title =
       location.pathname === ROUTE.INDEX
-        ? "SIGN IN | Translite"
+        ? "SIGN IN - Translite"
         : location.pathname
             .toUpperCase()
             .replaceAll("/", "")
-            .replaceAll("-", " ") + " | Translite"
+            .replaceAll("-", " ") + " - Translite"
 
     // check if use is logged in
     if (info && info.length > 30) {
