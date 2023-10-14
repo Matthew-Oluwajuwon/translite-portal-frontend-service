@@ -30,18 +30,6 @@ const CustomRouting: React.FC = () => {
       width: "15%",
     },
     {
-      title: "UPPER BOUND",
-      dataIndex: "upperBound",
-      key: "2",
-      render: (_, record: ApiResponse.CustomConfiguration) => {
-        return (
-          <p>
-            ₦{record?.boundsDTOS?.map((x) => numberWithCommas(x?.upperBound?.toFixed(2)))}
-          </p>
-        )
-      },
-    },
-    {
       title: "LOWER BOUND",
       dataIndex: "lowerBound",
       key: "3",
@@ -49,6 +37,18 @@ const CustomRouting: React.FC = () => {
         return (
           <p>
             ₦{record?.boundsDTOS?.map((x) => numberWithCommas(x?.lowerBound?.toFixed(2)))}
+          </p>
+        )
+      },
+    },
+    {
+      title: "UPPER BOUND",
+      dataIndex: "upperBound",
+      key: "2",
+      render: (_, record: ApiResponse.CustomConfiguration) => {
+        return (
+          <p>
+            ₦{record?.boundsDTOS?.map((x) => numberWithCommas(x?.upperBound?.toFixed(2)))}
           </p>
         )
       },
@@ -107,9 +107,9 @@ const CustomRouting: React.FC = () => {
             type="text"
             placeholder="Search by.."
             prefix={<img src={Search} alt="search" />}
-            className="h-10 w-[15rem] mx-10 mb-10"
+            className="h-12 w-[15rem] mx-10 mb-10"
           />
-          <Col span={6}>
+          <Col span={4}>
             <Select
               className="border border-[#DEDFEC] rounded-md h-12 flex items-center"
               suffixIcon={

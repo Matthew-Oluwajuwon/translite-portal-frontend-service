@@ -11,7 +11,7 @@ import Cloud from "../../assets/icons/cloud.svg"
 import Search from "../../assets/icons/Search.svg"
 import { ColumnProps } from "antd/es/table"
 import { ApiResponse } from "../../model/client/response"
-import more from "../../assets/icons/more-action.svg"
+// import more from "../../assets/icons/more-action.svg"
 import useApiMethods from "../../custom-hooks/useApiMethods"
 import { useEffect } from "react"
 import { apiEndpoints } from "../../store/apiEndpoints"
@@ -52,8 +52,8 @@ const Users: React.FC = () => {
       key: "3",
     },
     {
-      title: "PERMISSION",
-      dataIndex: "permission",
+      title: "STATUS",
+      dataIndex: "",
       key: "4",
       render: (_: any, record: ApiResponse.UserInfo) => {
         return (
@@ -75,19 +75,19 @@ const Users: React.FC = () => {
               )
             }
           >
-            <Switch className="bg-[#c4c4c4]" checked={!record.disabled} />
+            <Switch className="bg-[#c4c4c4]" checked={!record.disabled} />{" "}{record.disabled ? "DISABLED" : "ENABLED"}
           </Popconfirm>
         )
       },
     },
-    {
-      title: "ACTION",
-      dataIndex: "",
-      key: "5",
-      render: () => {
-        return <img src={more} alt="" />
-      },
-    },
+    // {
+    //   title: "ACTION",
+    //   dataIndex: "",
+    //   key: "5",
+    //   render: () => {
+    //     return <img src={more} alt="" />
+    //   },
+    // },
   ]
 
   useEffect(() => {

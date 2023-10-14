@@ -127,7 +127,7 @@ export const Chart = ({
             </p>
             <Column
               {...config}
-              color={["#6D71F9", "#4FC62B", "#FF291F"]}
+              color={["#FF291F", "#4FC62B", "#6D71F9" ]}
               height={220}
             />
           </>

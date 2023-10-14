@@ -19,6 +19,7 @@ import { apiEndpoints } from "../../../store/apiEndpoints"
 import useFilter from "../../../custom-hooks/useFilter"
 import { ApiResponse } from "../../../model/client/response"
 import { setGlobalKey } from "../../../store"
+import { useExcel } from "../../../custom-hooks/useExcel"
 
 const SystemTerminal: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -85,12 +86,13 @@ const SystemTerminal: React.FC = () => {
   }, [])
   
   const { dataSource } = useFilter(data.data?.data?.systemTerminalDTOS)
+  const { downloadDataToExcel, generateData } = useExcel()
   
   return (
     <div>
       <TableExpandModal
         isDownloadable={false}
-        modalCardTitle="Terminal Details"
+        modalCardTitle="System Terminal Details"
         // extraContent={
         //   <div className="my-5">
         //     <span className="flex justify-between items-center px-10">
@@ -129,7 +131,7 @@ const SystemTerminal: React.FC = () => {
       />
       <TerminalCreateion />
       <TableComponent
-        shouldExpand={true}
+        shouldExpand={!state.terminal?.showCreateModal}
         tableName="System Terminals"
         btn={
           <div className="flex gap-3 items-center">
@@ -141,7 +143,26 @@ const SystemTerminal: React.FC = () => {
               <img src={Plus} alt="add" className="ml-2 sm:ml-0" />{" "}
               <div className="hidden md:block">Add System Terminal</div>
             </Button>
-            <button className="hover:shadow-md hover:scale-110 transition-all">
+            <button onClick={() =>
+                downloadDataToExcel({
+                  title: "Translite system terminals",
+                  column: [],
+                  rows: generateData(
+                    (dataSource as any) ?? [],
+                    dataSource?.length > 0
+                      ? Object.keys(
+                          dataSource.filter((x) => {
+                            delete x.id
+                            delete x.key
+                            return x
+                          })[0],
+                        )
+                      : [],
+                  ),
+                  extension: "xlsx",
+                  fileName: "Translite system terminals",
+                })
+              } className="hover:shadow-md hover:scale-110 transition-all">
               <img src={Download} alt="download" className="rounded-md" />
             </button>
           </div>

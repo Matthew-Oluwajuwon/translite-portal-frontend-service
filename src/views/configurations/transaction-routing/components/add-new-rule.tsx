@@ -142,19 +142,6 @@ const AddNewRule: React.FC = () => {
               </Col>
               <Col className="border rounded-lg p-5 mt-4">
                 <Row className="flex gap-4">
-                  <Form.Item label={<p>Upper bound</p>} className="w-full">
-                    <Input
-                      className="py-3 px-8"
-                      placeholder="₦ 1,000,000 .00"
-                      // value={state.request?.upperBound
-                      //   ?.toString()
-                      //   .replace(/\D/g, "")
-                      //   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                      onChange={(e) =>
-                        setFormRequest(e.target.value, "upperBound")
-                      }
-                    />
-                  </Form.Item>
                   <Form.Item label={<p>Lower bound</p>} className="w-full">
                     <Input
                       className="py-3 px-8"
@@ -165,6 +152,19 @@ const AddNewRule: React.FC = () => {
                       //   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                       onChange={(e) =>
                         setFormRequest(e.target.value, "lowerBound")
+                      }
+                    />
+                  </Form.Item>
+                  <Form.Item label={<p>Upper bound</p>} className="w-full">
+                    <Input
+                      className="py-3 px-8"
+                      placeholder="₦ 1,000,000 .00"
+                      // value={state.request?.upperBound
+                      //   ?.toString()
+                      //   .replace(/\D/g, "")
+                      //   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      onChange={(e) =>
+                        setFormRequest(e.target.value, "upperBound")
                       }
                     />
                   </Form.Item>
@@ -212,7 +212,7 @@ const AddNewRule: React.FC = () => {
                 <Button
                   type="primary"
                   htmlType="submit"
-                  className="flex items-center justify-center bg-[#6D71F9] py-5 px-5 mx-auto"
+                  className="flex items-center justify-center bg-[#6D71F9] py-5 px-10 mx-auto"
                   loading={result.isLoading}
                 >
                   Submit

@@ -24,6 +24,7 @@ import useFilter from "../../../custom-hooks/useFilter"
 import useSetRequest from "../../../custom-hooks/useSetRequest"
 import more from "../../../assets/icons/more-action.svg"
 import { LoadingOutlined } from "@ant-design/icons"
+import { useExcel } from "../../../custom-hooks/useExcel"
 
 const ProcessorTerminal: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -188,6 +189,7 @@ const ProcessorTerminal: React.FC = () => {
   const { setFormRequest } = useSetRequest()
 
   const { handleApiMethodController, data } = useApiMethods()
+  const { downloadDataToExcel, generateData } = useExcel()
 
   useEffect(() => {
     if (state.request?.processorId && !state.terminal?.showCreateModal) {
@@ -208,11 +210,11 @@ const ProcessorTerminal: React.FC = () => {
     <div>
       <TableExpandModal
         isDownloadable={false}
-        modalCardTitle="Terminal Details"
+        modalCardTitle="Processor Terminal Details"
       />
       <TerminalCreateion />
       <TableComponent
-        shouldExpand={true}
+        shouldExpand={!state.terminal?.showCreateModal}
         tableName="Processor Terminals"
         btn={
           <div className="flex gap-3 items-center">
@@ -229,7 +231,26 @@ const ProcessorTerminal: React.FC = () => {
               <img src={Plus} alt="add" className="ml-2 sm:ml-0" />{" "}
               <div className="hidden md:block">Add Processor Terminal</div>
             </Button>
-            <button className="hover:shadow-md hover:scale-110 transition-all">
+            <button onClick={() =>
+                downloadDataToExcel({
+                  title: "Translite processor terminals",
+                  column: [],
+                  rows: generateData(
+                    (dataSource as any) ?? [],
+                    dataSource?.length > 0
+                      ? Object.keys(
+                          dataSource.filter((x) => {
+                            delete x.id
+                            delete x.key
+                            return x
+                          })[0],
+                        )
+                      : [],
+                  ),
+                  extension: "xlsx",
+                  fileName: "Translite processor terminals",
+                })
+              } className="hover:shadow-md hover:scale-110 transition-all">
               <img src={Download} alt="download" className="rounded-md" />
             </button>
           </div>

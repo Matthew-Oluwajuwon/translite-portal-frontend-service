@@ -21,7 +21,7 @@ import {
 } from "antd"
 import AddNewRule from "./components/add-new-rule"
 
-import BtnSettings from "../../../assets/icons/btn-settings.svg"
+// import BtnSettings from "../../../assets/icons/btn-settings.svg"
 import Info from "../../../assets/icons/info.svg"
 import usePageInfo from "../../../custom-hooks/usePageInfo"
 import DirectRouting from "./components/DirectRouting"
@@ -89,7 +89,7 @@ const TransactionRouting: React.FC = () => {
             <br /> please configure a route rule below
           </span>
         </div>
-        <Button
+        {/* <Button
           type="primary"
           className="hidden md:flex mx-20 justify-between items-center gap-1 px-0 pr-3 py-5 hover:scale-95 cursor-pointer bg-[#6D71F9]"
           onClick={() =>
@@ -106,7 +106,7 @@ const TransactionRouting: React.FC = () => {
         >
           <img src={BtnSettings} className="text-[#ffffff]" alt="icon-right" />
           Configure Settings
-        </Button>
+        </Button> */}
         <div className="my-10 mx-20">
           <h3 className="text-[#94A0B4] text-[0.9rem] my-3">
             Processor Selection
@@ -120,11 +120,11 @@ const TransactionRouting: React.FC = () => {
             >
               {TRANSACTION_CONFIGURATION_TYPES.DIRECT}
             </Radio>
-            <Radio
+            {/* <Radio
               value={TRANSACTION_CONFIGURATION_TYPES.AUTOMATIC?.toLowerCase()}
             >
               {TRANSACTION_CONFIGURATION_TYPES.AUTOMATIC}
-            </Radio>
+            </Radio> */}
             <Radio
               value={TRANSACTION_CONFIGURATION_TYPES.CUSTOM?.toLowerCase()}
             >
