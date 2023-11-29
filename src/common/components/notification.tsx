@@ -5,6 +5,8 @@ const Notify = (type: TypeOptions, message: any) => {
   toast(message, {
     type,
     position: "bottom-center",
+    theme: "colored",
+    hideProgressBar: true
   })
 }
 

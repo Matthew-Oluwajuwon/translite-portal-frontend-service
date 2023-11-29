@@ -6,7 +6,7 @@ export const apiEndpoints = {
     resetPassword: "adminUser/changeAdminPassword",
   },
   transaction: {
-    dashboardDay: "transactions/dashboard/",
+    dashboardDay: "dashboard/",
     getTransactions: "transactions",
     getTransactionsByProcessorName: "transactions/byProcessor/",
     searchTransaction: "transactions/search",
