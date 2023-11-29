@@ -22,6 +22,9 @@ export default defineConfig({
     alias: {
       "@views": "/src/views",
       "@common": "/src/common",
+      "@model": "/src/model",
+      "@custom-hooks": "/src/custom-hooks",
+      "@store": "/src/store",
       // ...other aliases
     },
   },

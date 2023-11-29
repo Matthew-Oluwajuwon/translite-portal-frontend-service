@@ -4,7 +4,7 @@ import GrayChecker from "../assets/icons/gray-check.svg"
 import GreenCheck from "../assets/icons/green-check.svg"
 import RedCheck from "../assets/icons/red-check.svg"
 import { useAppDispatch, useAppSelector } from "../store/hooks"
-import { setAuthKey, setField } from "../store"
+import { setAllAuthKey, setAuthKey, setField } from "../store"
 import { ApiRequest } from "../model/client/request"
 
 export const useAuthQuery = () => {
@@ -42,6 +42,22 @@ export const useAuthQuery = () => {
     },
     [dispatch],
   )
+  
+  const setAuthRequestField = useCallback(
+    (key: any, value: any) => {
+      dispatch(
+        setAllAuthKey({
+          ...state,
+          request: {
+            ...state.request,
+            [key]: value,
+          },
+        }),
+      )
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [dispatch, state],
+  )
 
   const passwordValidator = () => {
     if (!state.isUpperCase) {
@@ -63,9 +79,9 @@ export const useAuthQuery = () => {
     {
       text: "Minimum number of characters: 8",
       img:
-        state.request?.newPassword === ""
+        state.request?.password === ""
           ? GrayChecker
-          : state.request?.newPassword === undefined
+          : state.request?.password === undefined
           ? GrayChecker
           : state.isPasswordLength
           ? GreenCheck
@@ -74,9 +90,9 @@ export const useAuthQuery = () => {
     {
       text: "Contains a capital letter",
       img:
-        state.request?.newPassword === ""
+        state.request?.password === ""
           ? GrayChecker
-          : state.request?.newPassword === undefined
+          : state.request?.password === undefined
           ? GrayChecker
           : state.isUpperCase
           ? GreenCheck
@@ -85,9 +101,9 @@ export const useAuthQuery = () => {
     {
       text: "Contains a lowercase letter",
       img:
-        state.request?.newPassword === ""
+        state.request?.password === ""
           ? GrayChecker
-          : state.request?.newPassword === undefined
+          : state.request?.password === undefined
           ? GrayChecker
           : state.isLowerCase
           ? GreenCheck
@@ -96,9 +112,9 @@ export const useAuthQuery = () => {
     {
       text: "Contains a number",
       img:
-        state.request?.newPassword === ""
+        state.request?.password === ""
           ? GrayChecker
-          : state.request?.newPassword === undefined
+          : state.request?.password === undefined
           ? GrayChecker
           : state.hasNumber
           ? GreenCheck
@@ -107,9 +123,9 @@ export const useAuthQuery = () => {
     {
       text: "Includes a special character",
       img:
-        state.request?.newPassword === ""
+        state.request?.password === ""
           ? GrayChecker
-          : state.request?.newPassword === undefined
+          : state.request?.password === undefined
           ? GrayChecker
           : state.isSpecialChar
           ? GreenCheck
@@ -121,5 +137,6 @@ export const useAuthQuery = () => {
     setResetInputField,
     passwordValidator,
     contentData,
+    setAuthRequestField
   }
 }

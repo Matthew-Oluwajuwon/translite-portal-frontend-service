@@ -2,7 +2,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { State } from "../../model/application/state"
 import { Global } from "../../model/application/payload"
-import { MENU_KEYS } from "../../common/constants"
+import {
+  BREADCRUMB,
+  CHARGE_CONFIGURATION_TYPES,
+  MENU_KEYS,
+  MENU_NAMES,
+} from "../../common/constants"
 
 const initialState: State.Global = {
   menuCollapsed: false,
@@ -11,10 +16,24 @@ const initialState: State.Global = {
   showLogoutModal: false,
   openMenuDrawer: false,
   openKey: MENU_KEYS.CONFIGURATIONS,
+  breadcrumb: BREADCRUMB.DASHBOARD,
+  pageTitle: MENU_NAMES.DASHBOARD,
   terminal: {
     isSingleCreation: false,
-    showCreateModal: false
-  }
+    showCreateModal: false,
+  },
+  transactionRouting: {
+    showAddNewRuleModal: false,
+  },
+  configuration: {
+    processorSelection: CHARGE_CONFIGURATION_TYPES.FLAT,
+  },
+  user: {
+    showAddUserModal: false,
+    showAddUserSuccessResponseModal: false,
+  },
+  selectUrl: "",
+  page: 1,
 }
 
 const GlobalSlice = createSlice({
@@ -30,9 +49,9 @@ const GlobalSlice = createSlice({
       return state
     },
     setAllGlobalKey: (state, action: PayloadAction<State.Global>) => {
-      state = action.payload as any;
-      return state;
-    }
+      state = action.payload as any
+      return state
+    },
   },
 })
 

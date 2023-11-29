@@ -12,7 +12,10 @@
   font-family: "poppins-500";
   src: url("./assets/fonts/Poppins-Regular.ttf");
 }
-
+@font-face {
+  font-family: "ibm";
+  src: url("./assets/fonts/IBMPlexMono-Regular.ttf");
+}
 
 html,
 body {
@@ -21,8 +24,8 @@ body {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 10px;
+  height: 10px;
 }
 
 /* Track */
@@ -47,7 +50,7 @@ body {
   border-radius: 12px;
   display: block;
 }
-  
+
 .ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
   border-radius: 13px !important;
 }
@@ -87,4 +90,62 @@ body {
 
 .table-shadow {
   box-shadow: 0px 10px 13px 0px rgba(17, 38, 146, 0.05);
+}
+
+.ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
+  padding-bottom: 15px;
+  background-color: #F5F6FA !important;
+  color: #1c1a39 !important;
+}
+
+.ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline > li {
+  margin-bottom: -10px !important;
+  margin-right: 0 !important;
+  width: max-content;
+  background-color: #F5F6FA !important;
+}
+
+.ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline .active {
+  color: #6D71F9 !important;
+  background-color: #F5F6FA !important;
+}
+
+.ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline > li::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #1c1a39;
+  margin-right: 15px;
+  margin-left: -15px;
+}
+
+.ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline .active::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #6D71F9;
+  margin-right: 15px;
+  margin-left: 33px;
+  margin-top: 24px;
+}
+
+@media print {
+  .print-wrapper {
+    font-family: 'Courier New', Courier, monospace;
+  }
+  .print-title {
+    display: none;
+  }
+  .print-img {
+    display: block;
+  }
+  .print-download {
+    display: none;
+  }
+}
+
+.ul {
+  list-style-type: disc!important;
 }

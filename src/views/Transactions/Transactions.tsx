@@ -1,11 +1,9 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable react-hooks/exhaustive-deps */
 
-import { useLayoutEffect } from "react"
-import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { setAllGlobalKey } from "../../store"
 import { BREADCRUMB, MENU_KEYS, MENU_NAMES } from "../../common/constants"
 import { Col, DatePicker, Form, Input, Row, Select } from "antd"
-import { TransactionTableComponent } from "../../common/components/transaction-table"
+import { TableComponent } from "../../common/components/table-component"
 import { TableExpandModal } from "../../common/components/table-expand-modal"
 import Download from "../../assets/icons/download.svg"
 import Search from "../../assets/icons/Search.svg"
@@ -14,36 +12,34 @@ import { ColumnProps } from "antd/es/table"
 import dayjs from "dayjs"
 import customParseFormat from "dayjs/plugin/customParseFormat"
 import dropdown from "../../assets/icons/dropdown.svg"
-import { data } from "@views/dashboard/components/mock-data"
+import usePageInfo from "../../custom-hooks/usePageInfo"
+import { ApiResponse } from "../../model/client/response"
+import useAmountFormat from "../../custom-hooks/useAmountFormat"
+import useApiMethods from "../../custom-hooks/useApiMethods"
+import { useEffect } from "react"
+import { useAppDispatch, useAppSelector } from "../../store/hooks"
+import { apiEndpoints } from "../../store/apiEndpoints"
+import useFilter from "../../custom-hooks/useFilter"
+import { setGlobalKey } from "../../store"
+import useFieldApiData from "../../custom-hooks/useFieldApiData"
+import { useExcel } from "../../custom-hooks/useExcel"
+import { LoadingOutlined } from "@ant-design/icons"
 
 const Transactions: React.FC = () => {
   const dispatch = useAppDispatch()
   const state = useAppSelector((state) => {
     return state.global
   })
-  useLayoutEffect(() => {
-    document.title = MENU_NAMES.TRANSACTION + " | Translite"
-    dispatch(
-      setAllGlobalKey({
-        ...state,
-        selectedKey: MENU_KEYS.TRANSACTION,
-        pageTitle: MENU_NAMES.TRANSACTION,
-        breadcrumb: BREADCRUMB.TRANSACTION,
-      }),
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch])
+  usePageInfo(
+    MENU_NAMES.TRANSACTION,
+    MENU_KEYS.TRANSACTION,
+    BREADCRUMB.TRANSACTION,
+  )
 
   dayjs.extend(customParseFormat)
+  const { numberWithCommas } = useAmountFormat()
 
   const column: ColumnProps<any>[] = [
-    {
-      title: "SN",
-      dataIndex: "key",
-      ellipsis: true,
-      width: "60px",
-      key: "1",
-    },
     {
       title: "RRN",
       dataIndex: "rrn",
@@ -54,13 +50,22 @@ const Transactions: React.FC = () => {
       title: "AMOUNT",
       dataIndex: "amount",
       ellipsis: true,
+      render: (_: any, record: ApiResponse.Transaction) => {
+        return <p>₦{numberWithCommas(record.amount)}</p>
+      },
       key: "3",
     },
     {
       title: "PROCESSOR",
-      dataIndex: "processor",
+      dataIndex: "processedBy",
       ellipsis: true,
       key: "4",
+    },
+    {
+      title: "PAN",
+      dataIndex: "pan",
+      ellipsis: true,
+      key: "40",
     },
     {
       title: "TERMINAL ID | PLAN",
@@ -77,14 +82,17 @@ const Transactions: React.FC = () => {
     },
     {
       title: "DATE | TIME",
-      dataIndex: "dateTime",
+      dataIndex: "",
       key: "6",
       ellipsis: true,
-      render(_: any, record: any) {
+      render(_: any, record: ApiResponse.Transaction) {
         return (
-          <span className="grid place-content-center text-center">
-            {record.dateTime}
-          </span>
+          <div className="grid place-content-center text-center">
+            <p>{record.createdDate?.split("T")[0].replaceAll("-", "/")}</p>
+            <p>
+              {record.createdDate?.split("T")[1].split("+")[0].split(".")[0]}
+            </p>
+          </div>
         )
       },
     },
@@ -93,16 +101,35 @@ const Transactions: React.FC = () => {
       dataIndex: "status",
       key: "7",
       ellipsis: true,
-      render(_: any, record: any) {
+      render(_: any, record: ApiResponse.Transaction) {
         return (
-          <span className="grid place-content-center text-center">
-            {record.status}
+          <span className="grid place-content-center">
+            <span className={record.responseCode === "00" ? "s" : "f"}>
+              {record.responseCode === "00" ? "Success" : "Failed"}
+              <p className="text-center">{record.responseCode}</p>
+            </span>
           </span>
         )
       },
     },
   ]
   const dateFormat = "YYYY-MM-DD"
+  const { apiDataLoading } = useFieldApiData()
+
+  const { handleApiMethodController, result } = useApiMethods()
+  const { downloadDataToExcel, generateData } = useExcel()
+
+  useEffect(() => {
+    handleApiMethodController(
+      state,
+      apiEndpoints.transaction.getTransactions,
+      "GET_BY_POST_METHOD",
+      {},
+      state.page,
+    )
+  }, [state.page])
+
+  const { dataSource } = useFilter(result.data?.data?.transactionDTOS)
 
   return (
     <div>
@@ -110,13 +137,30 @@ const Transactions: React.FC = () => {
         isDownloadable={true}
         modalCardTitle="Transaction Details"
       />
-      <TransactionTableComponent
+      <TableComponent
         shouldExpand={true}
         tableName="Transaction History"
         btn={
-          <button className="hover:shadow-md hover:scale-110 transition-all">
-            <img src={Download} alt="download" className="rounded-md" />
-          </button>
+          <div className="flex item-center gap-5">
+            <button onClick={() =>
+                downloadDataToExcel({
+                  title: "Translite transactions",
+                  column: [],
+                  rows: generateData(
+                    (dataSource as any) ?? [],
+                    dataSource?.length > 0 ? Object.keys(dataSource.filter((x) => {
+                      delete x.id 
+                      delete x.key
+                    return x
+                    })[0]) : [],
+                  ),
+                  extension: "xlsx",
+                  fileName: "Translite transactions"
+                })
+              } className="hover:shadow-md hover:scale-110 transition-all">
+              <img src={Download} alt="download" className="rounded-md" />
+            </button>
+          </div>
         }
         forms={
           <Form
@@ -133,6 +177,14 @@ const Transactions: React.FC = () => {
                     placeholder="Search by.."
                     prefix={<img src={Search} alt="search" />}
                     className="h-12"
+                    onChange={(e) =>
+                      dispatch(
+                        setGlobalKey({
+                          key: "searchTerm",
+                          value: e.target.value,
+                        }),
+                      )
+                    }
                   />
                 </Form.Item>
               </Col>
@@ -144,15 +196,43 @@ const Transactions: React.FC = () => {
                     </span>
                   }
                   name={"processor"}
-                  initialValue="All"
                 >
                   <Select
                     className="border border-[#DEDFEC] rounded-md h-12 flex items-center"
-                    suffixIcon={<img src={dropdown} alt="" />}
+                    suffixIcon={apiDataLoading ? (
+                      <LoadingOutlined className="text-[#4C469B]" spin />
+                    ) : (
+                      <img src={dropdown} alt="" />
+                    )}
+                    onFocus={() =>
+                      dispatch(
+                        setGlobalKey({
+                          key: "selectField",
+                          value: "Processor",
+                        }),
+                      )
+                    }
+                    loading={apiDataLoading}
+                    allowClear
+                    onChange={(e) =>
+                      handleApiMethodController(
+                        state,
+                        apiEndpoints.transaction.searchTransaction,
+                        "GET_BY_POST_METHOD",
+                        {
+                          processedBy: e,
+                        },
+                        state.page,
+                      )
+                    }
                   >
-                    <Select.Option value="all">All</Select.Option>
-                    <Select.Option value="isw">ISW</Select.Option>
-                    <Select.Option value="nibss">NIBSS</Select.Option>
+                    {state.processor?.map(
+                      (item: ApiResponse.Processor, index: number) => (
+                        <Select.Option key={index} value={item.name}>
+                          {item.name}
+                        </Select.Option>
+                      ),
+                    )}
                   </Select>
                 </Form.Item>
               </Col>
@@ -170,9 +250,20 @@ const Transactions: React.FC = () => {
                   <Select
                     className="border border-[#DEDFEC] rounded-md h-12 flex items-center"
                     suffixIcon={<img src={dropdown} alt="" />}
+                    onChange={(e) =>
+                      handleApiMethodController(
+                        state,
+                        apiEndpoints.transaction.searchTransaction,
+                        "GET_BY_POST_METHOD",
+                        {
+                          status: e,
+                        },
+                        state.page,
+                      )
+                    }
                   >
                     <Select.Option value="all">All</Select.Option>
-                    <Select.Option value="success">Success</Select.Option>
+                    <Select.Option value="00">Success</Select.Option>
                     <Select.Option value="failed">Failed</Select.Option>
                   </Select>
                 </Form.Item>
@@ -186,8 +277,11 @@ const Transactions: React.FC = () => {
                   }
                   name={"date"}
                   initialValue={[
-                    dayjs("2022-09-03", dateFormat),
-                    dayjs("2023-11-22", dateFormat),
+                    dayjs(dayjs().format(dateFormat), dateFormat),
+                    dayjs(
+                      dayjs().subtract(30, "day").format(dateFormat),
+                      dateFormat,
+                    ),
                   ]}
                 >
                   <DatePicker.RangePicker
@@ -200,28 +294,29 @@ const Transactions: React.FC = () => {
                         className="w-[4rem]"
                       />
                     }
-                    cellRender={(current) => {
-                      const style: React.CSSProperties = {}
-                      if (current.date() === 1) {
-                        style.border = "1px solid #1890ff"
-                        style.borderRadius = "50%"
-                      }
-                      return (
-                        <div className="ant-picker-cell-inner" style={style}>
-                          {current.date()}
-                        </div>
+                    onChange={(_date, dateString) =>
+                      handleApiMethodController(
+                        state,
+                        apiEndpoints.transaction.searchTransaction,
+                        "GET_BY_POST_METHOD",
+                        {
+                          fromDate: dateString[0],
+                          toDate: dateString[1],
+                        },
+                        state.page,
                       )
-                    }}
+                    }
                   />
                 </Form.Item>
               </Col>
             </Row>
           </Form>
         }
-        loading={false}
+        loading={result.isLoading}
         column={column}
-        dataSource={data}
+        dataSource={dataSource}
         scrollX={1000}
+        total={result.data?.data?.totalCount}
       />
     </div>
   )

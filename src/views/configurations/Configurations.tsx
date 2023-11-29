@@ -2,20 +2,17 @@
 
 import { Button } from "antd"
 import { setGlobalKey } from "../../store"
-import { useAppDispatch, useAppSelector } from "../../store/hooks"
+import { useAppDispatch } from "../../store/hooks"
 import { Outlet, useLocation, useNavigate } from "react-router-dom"
-import { useLayoutEffect } from "react"
+import { useEffect } from "react"
 import { ROUTE } from "../../common/constants"
 
-const Configurations = () => {
+const Configurations: React.FC = () => {
   const dispatch = useAppDispatch()
-  const state = useAppSelector((state) => {
-    return state.global
-  })
   const { pathname } = useLocation();
   const navigate = useNavigate()
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     dispatch(
       setGlobalKey({
         key: "terminal",
@@ -29,16 +26,19 @@ const Configurations = () => {
         },
       }),
     )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, pathname])
-
+  
   return (
     <div>
       <div className="h-10 bg-[#ffffff] flex items-center px-3 sm:px-20 py-[3rem] gap-1 sm:gap-3 my-10 rounded-md">
         <Button
-          type={state.terminal?.isSingleCreation ? "text" : "primary"}
+          type={pathname
+            .toLowerCase()
+            .includes(ROUTE.TRANSACTION_ROUTING) ? "primary" : "text"}
           className={
-            !state.terminal?.isSingleCreation
+            pathname
+            .toLowerCase()
+            .includes(ROUTE.TRANSACTION_ROUTING)
               ? "bg-[#6D71F9] text-white py-5 flex items-center justify-center"
               : " py-5 flex items-center justify-center"
           }
@@ -56,9 +56,13 @@ const Configurations = () => {
           Transaction Routing
         </Button>
         <Button
-          type={!state.terminal?.isSingleCreation ? "text" : "primary"}
+          type={pathname
+            .toLowerCase()
+            .includes(ROUTE.CHARGE_CONFIGURATION) ? "primary" : "text"}
           className={
-            state.terminal?.isSingleCreation
+            pathname
+            .toLowerCase()
+            .includes(ROUTE.CHARGE_CONFIGURATION)
               ? "bg-[#6D71F9] text-white py-5 flex items-center justify-center"
               : " py-5 flex items-center justify-center"
           }

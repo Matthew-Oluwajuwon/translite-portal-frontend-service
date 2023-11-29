@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Spin, Table } from "antd"
+import { Empty, Spin, Table } from "antd"
 import React from "react"
 import { PageProps } from "../../model/application/props"
 import { setAllGlobalKey } from "../../store"
@@ -13,18 +13,25 @@ export const PageTable: React.FC<PageProps.TableData> = ({
   pageSize,
   total,
   shouldExpand,
-  scrollX
+  scrollX,
+  emptyHeadingText,
+  emptyParagraphText
 }) => {
   const dispatch = useAppDispatch()
-  const state = useAppSelector((state) => state.global)
+  const state = useAppSelector((state) => {
+    return state.global
+  })
   const onRowSelect = (_rowIndex: number, record: any) => {
-    dispatch(
+    if (shouldExpand) {
+      dispatch(
         setAllGlobalKey({
-        ...state,
-        expand: shouldExpand ? true : false,
-        record,
-      }),
-    )
+          ...state,
+          expand: true,
+          record,
+        }),
+      )
+      
+    }
   }
   return (
     <Spin spinning={loading}>
@@ -37,6 +44,7 @@ export const PageTable: React.FC<PageProps.TableData> = ({
           showSizeChanger: false,
           total: total,
           pageSize: pageSize,
+          hideOnSinglePage: true,
         }}
         scroll={{ x: scrollX }}
         className="cursor-pointer"
@@ -46,6 +54,20 @@ export const PageTable: React.FC<PageProps.TableData> = ({
               onRowSelect(rowIndex as number, record)
             },
           }
+        }}
+        locale={{
+          emptyText: emptyHeadingText && emptyParagraphText ? (
+            <div className="h-60 grid place-content-center">
+              {" "}
+              <h1 className="text-[#182A2C] text-[1.5rem] font-bold">
+                {" "}
+                {emptyHeadingText}{" "}
+              </h1>
+              <p className="text-[#182A2C] text-[1rem]">
+                {emptyParagraphText}
+              </p>
+            </div>
+          ) : <Empty />,
         }}
       />
     </Spin>

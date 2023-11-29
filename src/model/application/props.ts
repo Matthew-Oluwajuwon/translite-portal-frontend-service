@@ -24,6 +24,9 @@ export namespace PageProps {
     onClick?: () => void
     children?: any
     onCancel?: () => any
+    status?: boolean
+    extraBtn?: React.ReactNode
+    btnText?: string
   }
   export class PageLayoutProps {
     children?: any
@@ -38,8 +41,16 @@ export namespace PageProps {
     loading?: boolean
     total?: number
     pageSize?: number
-    onPagination?: () => void
+    onPagination?: (e: number) => void
     shouldExpand?: boolean
     scrollX?: number
+    isNotPaginated?: boolean
+    emptyParagraphText?: string;
+    emptyHeadingText?: string
+  }
+  
+  export class SelectOptionValues {
+    key?: any;
+    value?: any;
   }
 }

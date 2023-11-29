@@ -1,0 +1,22 @@
+<svg width="116" height="116" viewBox="0 0 116 116" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path opacity="0.5" d="M35.6453 88.6825C54.5779 88.6825 67.5792 96.5 76.702 96.5C85.8248 96.5 104.985 92.3196 104.985 58.8655C104.985 25.4113 79.2092 20.5 69.175 20.5C22.1869 20.5 2.11567 88.6825 35.6453 88.6825Z" fill="#F5F3F7"/>
+<circle opacity="0.5" cx="1.99487" cy="23" r="1" stroke="#F03D3E" stroke-width="2"/>
+<circle opacity="0.5" cx="97.5051" cy="30" r="3.5" stroke="#F03D3E" stroke-width="2"/>
+<circle opacity="0.5" cx="17.5051" cy="39" r="3.5" stroke="#F03D3E" stroke-width="2"/>
+<circle opacity="0.5" cx="108.005" cy="37.5" r="2" stroke="#F03D3E" stroke-width="2"/>
+<g opacity="0.5">
+<line x1="112.005" y1="20.5" x2="112.005" y2="26.5" stroke="#F03D3E" stroke-width="2" stroke-linecap="round"/>
+<line x1="109.005" y1="23.5" x2="115.005" y2="23.5" stroke="#F03D3E" stroke-width="2" stroke-linecap="round"/>
+</g>
+<g opacity="0.5">
+<line x1="4.00513" y1="27.5" x2="4.00513" y2="33.5" stroke="#F03D3E" stroke-width="2" stroke-linecap="round"/>
+<line x1="1.00513" y1="30.5" x2="7.00513" y2="30.5" stroke="#F03D3E" stroke-width="2" stroke-linecap="round"/>
+</g>
+<g opacity="0.5">
+<line x1="22.0051" y1="21.5" x2="22.0051" y2="25.5" stroke="#F03D3E" stroke-width="2" stroke-linecap="round"/>
+<line x1="20.0051" y1="23.5" x2="24.0051" y2="23.5" stroke="#F03D3E" stroke-width="2" stroke-linecap="round"/>
+</g>
+<rect x="24.9949" y="25" width="66.0002" height="66.0002" rx="33.0001" fill="#F03D3E"/>
+<path d="M45.9949 70L69.9949 46" stroke="white" stroke-width="3.36023" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M45.9949 46L69.9949 70" stroke="white" stroke-width="3.36023" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

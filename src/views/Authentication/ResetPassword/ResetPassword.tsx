@@ -3,11 +3,14 @@ import { Button, Form, Popover } from "antd"
 import CardHeader from "../components/CardHeader"
 import LabeledInput from "../components/LabelInput"
 import { useAuthQuery } from "../../../custom-hooks/useAuthQuery"
-import { useAppSelector, useAppDispatch } from "../../../store/hooks"
-import { setAuthKey } from "../../../store"
+import { useAppDispatch, useAppSelector } from "../../../store/hooks"
+import { setAuthKey, useResetPasswordMutation } from "../../../store"
 import { VerificationCode } from "../components/verification-code"
 import { ForgotPasswordResponseModal } from "../SendMailForPasswordChange/ForgotPasswordResponeModal"
 import { ResetPasswordResponseModal } from "./ResetPasswordModal"
+import { apiEndpoints } from "../../../store/apiEndpoints"
+import { useEffect } from "react"
+import Notify from "@common/components/notification"
 
 const ResetPassword: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -15,6 +18,7 @@ const ResetPassword: React.FC = () => {
     return state.auth
   })
   const { contentData, passwordValidator, setResetInputField } = useAuthQuery()
+  const [resetPassword, resetPasswordResult] = useResetPasswordMutation()
 
   const content = (
     <div className="grid gap-3">
@@ -27,11 +31,32 @@ const ResetPassword: React.FC = () => {
     </div>
   )
 
+  useEffect(() => {
+    if (resetPasswordResult.data?.responseCode === "00") {
+      Notify("success", resetPasswordResult.data?.status)
+      dispatch(
+        setAuthKey({
+          key: "showChangePasswordResponseModal",
+          value: true,
+        }),
+      )
+    } else {
+      Notify(
+        "error",
+        resetPasswordResult.data?.failureReason
+          ?.toLowerCase()
+          .includes("invalid token")
+          ? "Unable to reset password, kindly login to try again"
+          : resetPasswordResult.data?.failureReason,
+      )
+    }
+  }, [dispatch, resetPasswordResult.data])
+  
   return (
     <div className="sm:ml-20 lg:ml-7">
       <VerificationCode />
       <ForgotPasswordResponseModal />
-      <ResetPasswordResponseModal />
+      {state.showChangePasswordResponseModal && <ResetPasswordResponseModal />}
       <CardHeader
         cardDescription="Please reset your admin password to continue, this will only happen the first time you login!"
         cardTitle={
@@ -42,10 +67,25 @@ const ResetPassword: React.FC = () => {
         }
       />
       <Form
+        onFinish={() =>
+          resetPassword({
+            ...state,
+            postUrl: apiEndpoints.auth?.resetPassword,
+            request: {
+              oldPassword: state.request?.oldPassword,
+              password: state.request?.password,
+              confirmPassword: state.request?.confirmPassword
+            }
+          })
+        }
         fields={[
           {
-            name: "newPassword",
-            value: state.request?.newPassword,
+            name: "confirmPassword",
+            value: state.request?.confirmPassword,
+          },
+          {
+            name: "oldPassword",
+            value: state.request?.oldPassword,
           },
           {
             name: "password",
@@ -54,6 +94,21 @@ const ResetPassword: React.FC = () => {
         ]}
         className="grid gap-7 mt-20"
       >
+        <Form.Item
+          name={"oldPassword"}
+          required
+          rules={[
+            { required: true, message: "Please enter old password" },
+          ]}
+        >
+          <LabeledInput
+            label={"Old Password"}
+            type={"oldPassword"}
+            htmlFor={"oldPassword"}
+            value={state.request?.oldPassword}
+            onChange={(e) => setResetInputField(e.target.value, "oldPassword")}
+          />
+        </Form.Item>
         <div>
           <Popover content={content} trigger="focus" placement="top">
             <div>
@@ -70,27 +125,27 @@ const ResetPassword: React.FC = () => {
                   type={"password"}
                   htmlFor={"password"}
                   onChange={(e) =>
-                    setResetInputField(e.target.value, "newPassword")
+                    setResetInputField(e.target.value, "password")
                   }
-                  value={state.request?.newPassword}
+                  value={state.request?.password}
                 />
               </Form.Item>
             </div>
           </Popover>
-          {(state.request?.newPassword?.length as any) < 8 && (
+          {(state.request?.password?.length as any) < 8 && (
             <p className="text-[#94A0B4] text-[0.7rem]">
               You need a stronger password 💪🏽
             </p>
           )}
         </div>
         <Form.Item
-          name={"password"}
+          name={"confirmPassword"}
           required
           rules={[
             { required: true, message: "Please enter password" },
             ({ getFieldValue }) => ({
               validator(_, value) {
-                if (!value || getFieldValue("newPassword") === value) {
+                if (!value || getFieldValue("password") === value) {
                   return Promise.resolve()
                 }
                 return Promise.reject(
@@ -100,25 +155,22 @@ const ResetPassword: React.FC = () => {
             }),
           ]}
           validateTrigger={["onChange", "onBlur"]}
-          dependencies={["newPassword"]}
+          dependencies={["password"]}
         >
           <LabeledInput
             label={"Confirm Password"}
-            type={"password"}
+            type={"confirmPassword"}
             htmlFor={"confirmPassword"}
-            value={state.request?.password}
-            onChange={(e) => setResetInputField(e.target.value, "password")}
+            value={state.request?.confirmPassword}
+            onChange={(e) => setResetInputField(e.target.value, "confirmPassword")}
           />
         </Form.Item>
         <div className="flex items-center justify-center mt-14">
           <Button
             type="primary"
             className="flex items-center justify-center p-5 px-7 bg-[#6D71F9] font-semibold"
-            onClick={() =>
-              dispatch(
-                setAuthKey({ key: "showVerficationCodeModal", value: true }),
-              )
-            }
+            htmlType="submit"
+            loading={resetPasswordResult.isLoading}
           >
             Reset my Password
           </Button>

@@ -8,7 +8,6 @@ const initialState: State.Authentication = {
   hasValue: false,
   isFocused: false,
   isRevealPassword: false,
-  request: new ApiRequest.Auth(),
   showPassword: false,
   isPasswordLength: false,
   isUpperCase: false,
@@ -21,6 +20,8 @@ const initialState: State.Authentication = {
   showForgotPasswordResponseModal: false,
   inputType: "",
   showLogoutModal: false,
+  postUrl: "",
+  formMethod: "",
 }
 
 const AuthSlice = createSlice({
@@ -41,13 +42,17 @@ const AuthSlice = createSlice({
         request: {
           ...state.request,
           [action.payload.key]: action.payload.value,
-        },
+        } as ApiRequest.Auth,
       }
+      return state
+    },
+    setAllAuthKey: (state, action: PayloadAction<State.Authentication>) => {
+      state = action.payload as any
       return state
     },
   },
 })
 
-export const { setAuthKey, setField } = AuthSlice.actions
+export const { setAuthKey, setField, setAllAuthKey } = AuthSlice.actions
 
 export const AuthReducer = AuthSlice.reducer

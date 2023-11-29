@@ -1,16 +1,14 @@
 /* eslint-disable prettier/prettier */
 
-import { useCallback, useLayoutEffect } from "react"
+import { useCallback, useEffect } from "react"
 import {
   BREADCRUMB,
   MENU_KEYS,
   MENU_NAMES,
   TRANSACTION_CONFIGURATION_TYPES,
-  TRANSACTION_PROCESSOR,
 } from "../../../common/constants"
-import { setAllGlobalKey, setGlobalKey } from "../../../store"
+import { setGlobalKey } from "../../../store"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { TransactionTableComponent } from "../../../common/components/transaction-table"
 import {
   Button,
   Radio,
@@ -18,121 +16,32 @@ import {
   Form,
   Row,
   Col,
-  Space,
   Select,
   Input,
 } from "antd"
+import AddNewRule from "./components/add-new-rule"
 
-import BtnSettings from "../../../assets/icons/btn-settings.svg"
+// import BtnSettings from "../../../assets/icons/btn-settings.svg"
 import Info from "../../../assets/icons/info.svg"
-import PlusIcon from "../../../assets/icons/plus.svg"
-import Search from "../../../assets/icons/Search.svg"
-import { ColumnProps } from "antd/es/table/Column"
-import more from "../../../assets/icons/more-action.svg"
+import usePageInfo from "../../../custom-hooks/usePageInfo"
+import DirectRouting from "./components/DirectRouting"
+import CustomRouting from "./components/CustomRouting"
+import useApiMethods from "../../../custom-hooks/useApiMethods"
+import { apiEndpoints } from "../../../store/apiEndpoints"
 
-const TransactionRouting = () => {
+const TransactionRouting: React.FC = () => {
   const dispatch = useAppDispatch()
   const state = useAppSelector((state) => {
     return state.global
   })
-  useLayoutEffect(() => {
-    document.title = MENU_NAMES.TRANSACTION_ROUTING + " | Translite"
-    dispatch(
-      setAllGlobalKey({
-        ...state,
-        selectedKey: MENU_KEYS.TRANSACTION_ROUTING,
-        pageTitle: MENU_NAMES.TRANSACTION_ROUTING,
-        breadcrumb: BREADCRUMB.TRANSACTION_ROUTING,
-        openKey: MENU_KEYS.CONFIGURATIONS,
-      }),
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch])
-  const column: ColumnProps<any>[] = [
-    {
-      title: "BIN",
-      dataIndex: "bin",
-      key: "1",
-      width: "15%",
-    },
-    {
-      title: "UPPER BOUND",
-      dataIndex: "upperBound",
-      key: "2",
-    },
-    {
-      title: "LOWER BOUND",
-      dataIndex: "lowerBound",
-      key: "3",
-    },
-    {
-      title: "PROCESSOR",
-      dataIndex: "processor",
-      key: "4",
-    },
-    {
-      title: "CREATION DATE",
-      dataIndex: "creationDate",
-      key: "5",
-    },
-    {
-      title: "ACTION",
-      dataIndex: "",
-      fixed: "right",
-      width: "100px",
-      key: "6",
-      render(_: any, record: any) {
-        return <img src={more} alt="" />
-      },
-    },
-  ]
 
-  const data = [
-    {
-      bin: "123456, 236781, 876549, 76590, 54324, 126754, 567354, 89622, 567544",
-      upperBound: "-",
-      lowerBound: "-",
-      processor: "Interswitch",
-      creationDate: "20/20/20",
-    },
-    {
-      bin: "123456",
-      upperBound: "₦1,000,000 .00",
-      lowerBound: "₦1,000,000 .00",
-      processor: "NIBSS",
-      creationDate: "20/20/20",
-    },
-    {
-      bin: "123456",
-      upperBound: "₦1,000,000 .00",
-      lowerBound: "₦1,000,000 .00",
-      processor: "NIBSS",
-      creationDate: "20/20/20",
-    },
-    {
-      bin: "123456",
-      upperBound: "₦1,000,000 .00",
-      lowerBound: "₦1,000,000 .00",
-      processor: "NIBSS",
-      creationDate: "20/20/20",
-    },
-    {
-      bin: "123456",
-      upperBound: "₦1,000,000 .00",
-      lowerBound: "₦1,000,000 .00",
-      processor: "NIBSS",
-      creationDate: "20/20/20",
-    },
-    {
-      bin: "123456",
-      upperBound: "₦1,000,000 .00",
-      lowerBound: "₦1,000,000 .00",
-      processor: "NIBSS",
-      creationDate: "20/20/20",
-    },
-  ]
+  usePageInfo(
+    MENU_NAMES.TRANSACTION_ROUTING,
+    MENU_KEYS.TRANSACTION_ROUTING,
+    BREADCRUMB.TRANSACTION_ROUTING,
+  )
 
-  const handleChange = useCallback(
+  const handleChange = useCallback( 
     (processorSelection: string) => {
       dispatch(
         setGlobalKey({
@@ -145,9 +54,26 @@ const TransactionRouting = () => {
     },
     [dispatch],
   )
+  
+  const { handleApiMethodController, data } = useApiMethods()
+  useEffect(() => {
+    handleApiMethodController(
+      state,
+      apiEndpoints.processor.getProcessors,
+      "READ",
+    )
+  }, [handleApiMethodController, state])
+  
+  useEffect(() => {
+    dispatch(setGlobalKey({
+      key: "processor",
+      value: data.data?.data?.processorDTOS
+    }))
+  }, [data.data?.data?.processorDTOS, dispatch])
 
   return (
     <div>
+      {state.transactionRouting?.showAddNewRuleModal && <AddNewRule />}
       <div
         className="bg-[#ffffff] pt-[2rem] my-10 rounded-md mb-10"
         style={{ boxShadow: "0px 10px 13px rgba(17, 38, 146, 0.05)" }}
@@ -163,7 +89,7 @@ const TransactionRouting = () => {
             <br /> please configure a route rule below
           </span>
         </div>
-        <Button
+        {/* <Button
           type="primary"
           className="hidden md:flex mx-20 justify-between items-center gap-1 px-0 pr-3 py-5 hover:scale-95 cursor-pointer bg-[#6D71F9]"
           onClick={() =>
@@ -180,14 +106,13 @@ const TransactionRouting = () => {
         >
           <img src={BtnSettings} className="text-[#ffffff]" alt="icon-right" />
           Configure Settings
-        </Button>
+        </Button> */}
         <div className="my-10 mx-20">
           <h3 className="text-[#94A0B4] text-[0.9rem] my-3">
             Processor Selection
           </h3>
           <Radio.Group
             onChange={(e) => handleChange(e.target.value)}
-            value={state.configuration?.processorSelection}
             className="flex items-center justify-center sm:justify-start"
           >
             <Radio
@@ -195,11 +120,11 @@ const TransactionRouting = () => {
             >
               {TRANSACTION_CONFIGURATION_TYPES.DIRECT}
             </Radio>
-            <Radio
+            {/* <Radio
               value={TRANSACTION_CONFIGURATION_TYPES.AUTOMATIC?.toLowerCase()}
             >
               {TRANSACTION_CONFIGURATION_TYPES.AUTOMATIC}
-            </Radio>
+            </Radio> */}
             <Radio
               value={TRANSACTION_CONFIGURATION_TYPES.CUSTOM?.toLowerCase()}
             >
@@ -210,75 +135,7 @@ const TransactionRouting = () => {
         <Divider />
         {state.configuration?.processorSelection ===
         TRANSACTION_CONFIGURATION_TYPES.DIRECT?.toLowerCase() ? (
-          <>
-            <Form
-              layout="vertical"
-              labelCol={{ span: 24 }}
-              wrapperCol={{ span: 24 }}
-              className="w-[20rem] mx-3 sm:mx-20 pb-20"
-            >
-              <Row style={{ width: "100%" }}>
-                <h3 className="text-[#94A0B4] text-[0.9rem]">
-                  Please select a preferred processor from below list to route
-                  transactions through!
-                </h3>
-                <Col span={24} className="my-10">
-                  <Form.Item>
-                    <Radio.Group
-                    // onChange={(e) => handleChange(e.target.value)}
-                    // value={state.configuration?.processorSelection}
-                    >
-                      <Space direction="vertical">
-                        <div className="border border-[#DEDFEC] rounded-md p-5 w-[20rem]">
-                          <Radio
-                            value={TRANSACTION_PROCESSOR.INTERWITCH?.toLowerCase()}
-                          >
-                            {TRANSACTION_PROCESSOR.INTERWITCH}
-                          </Radio>
-                        </div>
-                        <div className="border border-[#DEDFEC] rounded-md p-5 w-full">
-                          {" "}
-                          <Radio
-                            value={TRANSACTION_PROCESSOR.NIBSS?.toLowerCase()}
-                          >
-                            {TRANSACTION_PROCESSOR.NIBSS}
-                          </Radio>
-                        </div>
-                      </Space>
-                    </Radio.Group>
-                  </Form.Item>
-                </Col>
-                <Col
-                  span={24}
-                  className="flex items-center justify-center gap-5"
-                >
-                  <Button
-                    type="primary"
-                    className="flex items-center justify-center py-5 px-10 bg-[#6D71F9]"
-                  >
-                    Submit
-                  </Button>
-                  <Button
-                    onClick={() =>
-                      dispatch(
-                        setGlobalKey({
-                          key: "configuration",
-                          value: {
-                            ...state.configuration,
-                            cancelConfig: true,
-                          },
-                        }),
-                      )
-                    }
-                    type="text"
-                    className="flex items-center bg-[#2728480D] text-[#272848] font-semibold justify-center py-5 px-10"
-                  >
-                    Cancel
-                  </Button>
-                </Col>
-              </Row>
-            </Form>
-          </>
+            <DirectRouting />
         ) : state.configuration?.processorSelection ===
           TRANSACTION_CONFIGURATION_TYPES.AUTOMATIC?.toLowerCase() ? (
           <>
@@ -357,34 +214,7 @@ const TransactionRouting = () => {
           </>
         ) : state.configuration?.processorSelection ===
           TRANSACTION_CONFIGURATION_TYPES.CUSTOM?.toLowerCase() ? (
-          <>
-            <TransactionTableComponent
-              btn={
-                <Button
-                  type="primary"
-                  className="flex justify-between items-center gap-2 mt-3 py-6 px-0 pr-5 bg-[#6D71F9]"
-                  //   onClick={() => navigate(ROUTE.TRANSACTION)}
-                >
-                  <img src={PlusIcon} alt="icon-pluus" /> Add New Rule
-                </Button>
-              }
-              forms={
-                <Input
-                  type="text"
-                  placeholder="Search by.."
-                  prefix={<img src={Search} alt="search" />}
-                  className="h-10 w-[15rem] mx-10 mb-10"
-                />
-              }
-              shouldExpand={false}
-              column={column}
-              dataSource={data}
-              loading={false}
-              pageSize={5}
-              tableName="Rule List"
-              scrollX={1000}
-            />
-          </>
+          <CustomRouting />
         ) : null}
       </div>
     </div>
